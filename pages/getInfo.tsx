@@ -10,11 +10,18 @@ export default function Page() {
     handleSubmit,
   } = useForm<{
     nickname: string;
-
-    background: "yellow" | "blue" | "green" | "red" | "purple";
+    background: string;
+    lpDesign: string;
   }>({
     mode: "onChange",
+    defaultValues: {
+      background: "pink",
+      lpDesign: "red",
+    },
   });
+
+  const isBackground = watch("background");
+  const isLpDesign = watch("lpDesign");
 
   const onSubmit = (data: { nickname: string; background: string }) => {
     console.log(data);
@@ -28,7 +35,7 @@ export default function Page() {
         <div className="w-full h-full flex flex-col justify-center m-auto">
           <form onSubmit={handleSubmit(onSubmit, onError)}>
             <div className=" z-10 m-auto px-8 space-y-10 my-20">
-              <div className="flex flex-col w-full space-y-2 ">
+              <div className="flex flex-col w-full space-y-6 ">
                 <Inputlabel
                   label="닉네임"
                   required
@@ -50,12 +57,104 @@ export default function Page() {
                     placeholder="닉네임을 입력해주세요."
                   ></Input>
                 </Inputlabel>
+
+                <Inputlabel
+                  label="배경색 선택"
+                  required
+                  errorMessage={errors.background?.message}
+                >
+                  <div className="flex flex-row space-x-4">
+                    <RadioButton
+                      {...register("background", {})}
+                      id="bg-pink"
+                      name="background"
+                      value="pink"
+                      label="bg-pink"
+                      selected={isBackground}
+                      className="bg-customPink"
+                    />
+                    <RadioButton
+                      {...register("background", {})}
+                      id="bg-blue"
+                      name="background"
+                      value="blue"
+                      label="bg-blue"
+                      selected={isBackground}
+                      className="bg-customSkyblue"
+                    />
+                    <RadioButton
+                      {...register("background", {})}
+                      id="bg-silver"
+                      name="background"
+                      value="silver"
+                      label="bg-silver"
+                      selected={isBackground}
+                      className="bg-customSilver"
+                    />
+                    <RadioButton
+                      {...register("background", {})}
+                      id="bg-gold"
+                      name="background"
+                      value="gold"
+                      label="bg-gold"
+                      selected={isBackground}
+                      className="bg-customGold"
+                    />
+                  </div>
+                </Inputlabel>
+
+                <Inputlabel
+                  label="LP 디자인 선택"
+                  required
+                  errorMessage={errors.lpDesign?.message}
+                >
+                  <div className="flex flex-row space-x-4 pb-10">
+                    <RadioButton
+                      {...register("lpDesign", {})}
+                      id="lp-red"
+                      name="lpDesign"
+                      value="red"
+                      label="lp-red"
+                      selected={isLpDesign}
+                      className="bg-customRed"
+                    />
+                    <RadioButton
+                      {...register("lpDesign", {})}
+                      id="lp-blue"
+                      name="lpDesign"
+                      value="blue"
+                      label="lp-blue"
+                      selected={isLpDesign}
+                      className="bg-customBlue"
+                    />
+                    <RadioButton
+                      {...register("lpDesign", {})}
+                      id="lp-silver"
+                      name="lpDesign"
+                      value="silver"
+                      label="lp-silver"
+                      selected={isLpDesign}
+                      className="bg-customBlack"
+                    />
+                    <RadioButton
+                      {...register("lpDesign", {})}
+                      id="lp-gold"
+                      name="lpDesign"
+                      value="gold"
+                      label="lp-gold"
+                      selected={isLpDesign}
+                      className="bg-customGold"
+                    />
+                  </div>
+                </Inputlabel>
               </div>
-              <div className="flex flex-col w-full space-y-2">
-                <span className=" font-bold">배경색 선택</span>
-                <div className="flex flex-row w-full space-x-2"></div>
-              </div>
-              <button type="submit">제출하기</button>
+
+              <button
+                type="submit"
+                className="w-full h-10 bg-black text-white rounded"
+              >
+                미리보기{" "}
+              </button>
             </div>
           </form>
         </div>
@@ -118,7 +217,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         />
       </div>
       {errorMessage !== "" && (
-        <p className="text-red-500 text-sm pt-0.5">{errorMessage}</p>
+        <p className="text-red-500 text-sm">{errorMessage}</p>
       )}
     </>
   );
@@ -126,30 +225,49 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 
 interface RadioButtonProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  selected: string;
+  id: string;
+  selected: boolean | string;
   className: string;
   name: string;
   value: string;
+  defaultChecked?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
 const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
-  ({ label, selected, className, name, value, ...props }, ref) => {
+  (
+    { label, selected, id, className, name, value, defaultChecked, ...props },
+    ref
+  ) => {
     return (
       <>
         <label
+          htmlFor={id}
           className={classNames(
-            "rounded-full h-10 w-10 p-3 border cursor-pointer",
-            className
+            "relative rounded-full h-10 w-10  border-1 cursor-pointer",
+            className,
+            selected === value && "border border-black"
           )}
         >
-          <input
-            type="radio"
-            {...props}
-            ref={ref}
-            required
-            className="hidden "
-          ></input>
+          <div className="flex itmes-center">
+            <input
+              id={id}
+              value={value}
+              name={name}
+              type="radio"
+              {...props}
+              ref={ref}
+              required
+              className="hidden"
+            ></input>
+            {selected === value && (
+              <img
+                src="/assets/icons/selected.svg"
+                alt="selected"
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10"
+              />
+            )}
+          </div>
         </label>
       </>
     );

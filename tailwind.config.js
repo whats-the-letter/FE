@@ -14,6 +14,8 @@ module.exports = {
       customRed: "#D85252",
       customBlue: "#4483F2",
       customBlack: "#555555",
+      black: "#000000",
+      white: "#FFFFFF",
     },
   },
   plugins: [],
