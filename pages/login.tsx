@@ -15,7 +15,7 @@ export default function Page() {
           담아 보내보세요. <br /> 이번 푸른 용의 해에는 특별한 방식으로 <br />
           마음을 전달해보는 건 어떨까요?
         </span>
-        <button className="bg-[#FAE100] rounded-md text-center w-full md:w-60 h-10 p-2 px-4 flex items-center">
+        <button className="bg-[#FAE100] rounded-md text-center w-full max-w-sm h-10 p-2 px-4 flex items-center">
           <img src="/assets/icons/kakao.svg" alt="kakao" />
           <p className="text-center text-[371D1E] text-base m-auto">
             카카오로 시작하기
