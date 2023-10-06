@@ -2,7 +2,8 @@
 module.exports = {
   content: [
     "./pages/**/*.{js,jsx,ts,tsx}",
-    "./components/**/*.{js,jsx,ts,tsx}",
+    "./features/**/*.{js,ts,jsx,tsx,mdx}",
+    "./common/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -14,6 +15,9 @@ module.exports = {
         customRed: "#D85252",
         customBlue: "#4483F2",
         customBlack: "#555555",
+      },
+      fontFamily: {
+        pretendard: ["Pretendard", "sans-serif"],
       },
     },
   },
