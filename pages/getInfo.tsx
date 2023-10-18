@@ -1,9 +1,7 @@
 import { useForm } from "react-hook-form";
 import Inputlabel from "../features/common/components/InputLabel";
 import Input from "../features/common/components/Input";
-
-import { InputHTMLAttributes, forwardRef } from "react";
-import { classNames } from "../features/common/utils/classNames";
+import RoundRadioButton from "../features/common/components/RoundRadioButton";
 
 export default function Page() {
   const {
@@ -39,6 +37,7 @@ export default function Page() {
           <form onSubmit={handleSubmit(onSubmit, onError)}>
             <div className=" z-10 m-auto px-8 space-y-10 my-20">
               <div className="flex flex-col w-full space-y-6 ">
+                {/* 닉네임 입력 */}
                 <Inputlabel
                   label="닉네임"
                   required
@@ -61,93 +60,51 @@ export default function Page() {
                   ></Input>
                 </Inputlabel>
 
+                {/* 배경색 선택 */}
                 <Inputlabel
                   label="배경색 선택"
                   required
                   errorMessage={errors.background?.message}
                 >
                   <div className="flex flex-row space-x-4">
-                    <RadioButton
-                      {...register("background", {})}
-                      id="bg-pink"
-                      name="background"
-                      value="pink"
-                      label="bg-pink"
-                      selected={isBackground}
-                      className="bg-customPink"
-                    />
-                    <RadioButton
-                      {...register("background", {})}
-                      id="bg-blue"
-                      name="background"
-                      value="blue"
-                      label="bg-blue"
-                      selected={isBackground}
-                      className="bg-customSkyblue"
-                    />
-                    <RadioButton
-                      {...register("background", {})}
-                      id="bg-silver"
-                      name="background"
-                      value="silver"
-                      label="bg-silver"
-                      selected={isBackground}
-                      className="bg-customSilver"
-                    />
-                    <RadioButton
-                      {...register("background", {})}
-                      id="bg-gold"
-                      name="background"
-                      value="gold"
-                      label="bg-gold"
-                      selected={isBackground}
-                      className="bg-customGold"
-                    />
+                    {["pink", "skyblue", "silver", "gold"].map((color) => (
+                      <RoundRadioButton
+                        key={color}
+                        {...register("background", {})}
+                        id={`bg-${color}`}
+                        name="background"
+                        value={color}
+                        label={`bg-${color}`}
+                        selected={isBackground}
+                        className={`bg-custom${
+                          color.charAt(0).toUpperCase() + color.slice(1)
+                        }`}
+                      />
+                    ))}
                   </div>
                 </Inputlabel>
 
+                {/* LP 디자인 선택 */}
                 <Inputlabel
                   label="LP 디자인 선택"
                   required
                   errorMessage={errors.lpDesign?.message}
                 >
                   <div className="flex flex-row space-x-4 pb-10">
-                    <RadioButton
-                      {...register("lpDesign", {})}
-                      id="lp-red"
-                      name="lpDesign"
-                      value="red"
-                      label="lp-red"
-                      selected={isLpDesign}
-                      className="bg-customRed"
-                    />
-                    <RadioButton
-                      {...register("lpDesign", {})}
-                      id="lp-blue"
-                      name="lpDesign"
-                      value="blue"
-                      label="lp-blue"
-                      selected={isLpDesign}
-                      className="bg-customBlue"
-                    />
-                    <RadioButton
-                      {...register("lpDesign", {})}
-                      id="lp-silver"
-                      name="lpDesign"
-                      value="silver"
-                      label="lp-silver"
-                      selected={isLpDesign}
-                      className="bg-customBlack"
-                    />
-                    <RadioButton
-                      {...register("lpDesign", {})}
-                      id="lp-gold"
-                      name="lpDesign"
-                      value="gold"
-                      label="lp-gold"
-                      selected={isLpDesign}
-                      className="bg-customGold"
-                    />
+                    {["red", "blue", "black", "gold"].map((color) => (
+                      <RoundRadioButton
+                        key={color}
+                        {...register("lpDesign", {})}
+                        id={`lp-${color}`}
+                        name="lpDesign"
+                        value={color}
+                        label={`lp-${color}`}
+                        selected={isLpDesign}
+                        className={`bg-custom${
+                          color.charAt(0).toUpperCase() + color.slice(1)
+                        }`}
+                      />
+                    ))}
                   </div>
                 </Inputlabel>
               </div>
@@ -165,54 +122,3 @@ export default function Page() {
     </>
   );
 }
-
-interface RadioButtonProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  id: string;
-  selected: boolean | string;
-  className: string;
-  name: string;
-  value: string;
-  defaultChecked?: boolean;
-}
-
-// eslint-disable-next-line react/display-name
-const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
-  (
-    { label, selected, id, className, name, value, defaultChecked, ...props },
-    ref
-  ) => {
-    return (
-      <>
-        <label
-          htmlFor={id}
-          className={classNames(
-            "relative rounded-full h-10 w-10  border-1 cursor-pointer",
-            className,
-            selected === value && "border border-black"
-          )}
-        >
-          <div className="flex itmes-center">
-            <input
-              id={id}
-              value={value}
-              name={name}
-              type="radio"
-              {...props}
-              ref={ref}
-              required
-              className="hidden"
-            ></input>
-            {selected === value && (
-              <img
-                src="/assets/icons/selected.svg"
-                alt="selected"
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10"
-              />
-            )}
-          </div>
-        </label>
-      </>
-    );
-  }
-);
