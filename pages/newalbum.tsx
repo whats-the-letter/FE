@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import EditorAlbum from "../features/collection/components/AlbumSelect";
+
 import BackSelect from "../features/collection/components/BackSelect";
 import MusicSelect from "../features/collection/components/MusicSelect";
 import PhrasesSelect from "../features/collection/components/PhrasesSelect";
+import AlbumSelect from "../features/collection/components/AlbumSelect";
 
 export default function Page() {
   const {
     formState: { errors },
-    watch,
     register,
     handleSubmit,
-  } = useForm<{ editor: string }>({
+  } = useForm<{ editor: string; phrases: string }>({
     mode: "onChange",
     defaultValues: {
       editor: "editor-love",
+      phrases: "editor-1",
     },
   });
 
@@ -33,10 +34,10 @@ export default function Page() {
   };
 
   const phrasesSelection = {
-    "text-1": "/assets/editor/editor-1.svg",
-    "text-2": "/assets/editor/editor-2.svg",
-    "text-3": "/assets/editor/editor-3.svg",
-    "text-4": "/assets/editor/editor-4.svg",
+    "editor-1": "/assets/editor/editor-1.svg",
+    "editor-2": "/assets/editor/editor-2.svg",
+    "editor-3": "/assets/editor/editor-3.svg",
+    "editor-4": "/assets/editor/editor-4.svg",
   };
 
   const [isEditor, setIsEditor] = useState("editor-love");
@@ -48,21 +49,18 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex flex-row justify-between w-full">
-        {/* <button className="flex items-center h-10 w-fit" type="submit">
-          <span className="font-pretendard mx-2">다음 </span>
-          <img src="/assets/icons/chevron_right.svg" alt="arrow-right" />
-        </button> */}
-      </div>
+      <div className="flex flex-row justify-between w-full"></div>
       <div className="flex flex-col w-full space-y-6 justify-center items-center">
         <form>
-          <EditorAlbum
+          <AlbumSelect
+            {...register("editor", {})}
             albumSelection={albumSelection}
             labelMap={labelMap}
             isEditor={isEditor}
             onAlbumChange={(editor) => setIsEditor(editor)}
           />
           <PhrasesSelect
+            {...register("phrases", {})}
             albumSelection={albumSelection}
             isEditor={isEditor}
             phrasesSelection={phrasesSelection}
