@@ -14,7 +14,7 @@ const BackgroundSnow: React.FC = () => {
               transform: translateY(100vh);
             }
           }
-            .bg-snow-background {
+          .bg-snow-background {
                 background: radial-gradient(ellipse at bottom, 
                 #1b2735 0%, #090a0f 100%);
                 background-size: 100% 200%;
