@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import Inputlabel from "../features/common/components/InputLabel";
 import Input from "../features/common/components/Input";
-import RoundRadioButton from "../features/collection/components/RoundRadioButton";
+import RoundRadioButton from "../features/common/components/RoundRadioButton";
 
 export default function Page() {
   const {
