@@ -8,13 +8,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        customPink: "#FACBDC",
-        customSkyblue: "#B4DEF5",
-        customSilver: "#D8D8D8",
-        customGold: "#E5B06A",
-        customRed: "#D85252",
-        customBlue: "#4483F2",
-        customBlack: "#555555",
+        custom_pink: "#FACBDC",
+        custom_skyblue: "#B4DEF5",
+        custom_silver: "#D8D8D8",
+        custom_gold: "#E5B06A",
+        custom_red: "#D85252",
+        custom_blue: "#4483F2",
+        custom_black: "#555555",
       },
       fontFamily: {
         pretendard: ["Pretendard", "sans-serif"],
