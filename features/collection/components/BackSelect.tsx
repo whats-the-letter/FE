@@ -27,7 +27,7 @@ const BackSelect = forwardRef<HTMLInputElement, BackSelectProps>(
     ref
   ) => {
     return (
-     <>
+      <>
         <span className="text-lg text-center font-pretendard z-10">
           배경을 선택해주세요
         </span>

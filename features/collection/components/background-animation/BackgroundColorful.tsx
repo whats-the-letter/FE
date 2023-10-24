@@ -2,7 +2,7 @@ import React from "react";
 
 const BackgroundColorful = () => {
   return (
-    <div className="container fixed top-0 left-0 z-[-1] m-0 p-0 w-screen h-screen id-wrap">
+    <div className="fixed top-0 left-0 z-[-1] m-0 p-0 w-full h-full id-wrap">
       <svg
         width="100%"
         height="100%"
