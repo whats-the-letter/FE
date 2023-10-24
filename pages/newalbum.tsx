@@ -5,17 +5,21 @@ import BackSelect from "../features/collection/components/BackSelect";
 import MusicSelect from "../features/collection/components/MusicSelect";
 import PhrasesSelect from "../features/collection/components/PhrasesSelect";
 import AlbumSelect from "../features/collection/components/AlbumSelect";
+import BackgroundColorful from "../features/collection/components/background-animation/BackgroundColorful";
+import BackgroundSnow from "../features/collection/components/background-animation/BackgroundSnow";
+import BackgroundCircles from "../features/collection/components/background-animation/BackgroundCircles";
 
 export default function Page() {
   const {
     formState: { errors },
     register,
     handleSubmit,
-  } = useForm<{ editor: string; phrases: string }>({
+  } = useForm<{ editor: string; phrases: string; back: string }>({
     mode: "onChange",
     defaultValues: {
       editor: "editor-love",
       phrases: "editor-1",
+      back: "colorful",
     },
   });
 
@@ -40,10 +44,21 @@ export default function Page() {
     "editor-4": "/assets/editor/editor-4.svg",
   };
 
+  const backSelection = {
+    colorful: <BackgroundColorful />,
+    snow: <BackgroundSnow />,
+    circles: <BackgroundCircles />,
+  };
+
   const [isEditor, setIsEditor] = useState("editor-love");
   const [isPhrases, setIsPhrases] = useState("editor-1");
+  const [isBack, setIsBack] = useState("colorful");
 
-  const onSubmit: SubmitHandler<{ editor: string }> = (data) => {
+  const onSubmit: SubmitHandler<{
+    editor: string;
+    phrases: string;
+    back: string;
+  }> = (data) => {
     console.log(data);
   };
 
@@ -66,6 +81,16 @@ export default function Page() {
             phrasesSelection={phrasesSelection}
             isPhrases={isPhrases}
             onPhrasesChange={(phrases) => setIsPhrases(phrases)}
+          />
+          <BackSelect
+            {...register("back", {})}
+            albumSelection={albumSelection}
+            isEditor={isEditor}
+            phrasesSelection={phrasesSelection}
+            isPhrases={isPhrases}
+            backSelection={backSelection}
+            isBack={isBack}
+            onBackChange={(back) => setIsBack(back)}
           />
         </form>
       </div>
