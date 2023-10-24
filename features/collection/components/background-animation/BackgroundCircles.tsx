@@ -1,38 +1,39 @@
 import React from "react";
 
-const AnimatedCircle = () => {
+const BackgroundCircles = () => {
   return (
-    <div className="relatvie h-screen m-auto z-0">
+    <div className="fixed inset-0 z-0">
+      {" "}
+      {/* Make it fill the entire screen and be at the back */}
       <style>
         {`@keyframes move {
-    100% {
-        transform: translate3d(0, 0, 1px) rotate(360deg);
-    }
-}
+          100% {
+            transform: translate3d(0, 0, 1px) rotate(360deg);
+          }
+        }
 
-.circle {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    background: #ededed;
-    overflow: hidden;
-}
+        .circle {
+          position: fixed;
+          width: 100vw;
+          height: 100vh;
+          top: 0;
+          left: 0;
+          background: #ededed;
+          overflow: hidden;
+        }
 
-.circle span {
-  width: 39vmin;
-  height: 39vmin;
-  border-radius: 39vmin;
-  backface-visibility: hidden;
-  position: absolute;
-  animation: move;
-  animation-duration: 25;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-
+        .circle span {
+          width: 39vmin;
+          height: 39vmin;
+          border-radius: 39vmin;
+          backface-visibility: hidden;
+          position: absolute;
+          animation: move;
+          animation-duration: 25;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        
 .circle span:nth-child(0) {
     color: #ffd3e3;
     top: 69%;
@@ -126,7 +127,7 @@ const AnimatedCircle = () => {
   box-shadow: -78vmin 0 10.058002827072903vmin currentColor;
 }`}
       </style>
-      <div className="circle">
+      <div className="circle ">
         {Array.from(Array(9).keys()).map((i) => (
           <span key={i} />
         ))}
@@ -135,4 +136,4 @@ const AnimatedCircle = () => {
   );
 };
 
-export default AnimatedCircle;
+export default BackgroundCircles;
