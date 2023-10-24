@@ -49,7 +49,7 @@ const BackSelect = forwardRef<HTMLInputElement, BackSelectProps>(
           </div>
         </div>
 
-        <div className="flex flex-row gap-8 whitespace-nowrap z-10">
+        <div className="flex flex-row gap-8 whitespace-nowrap z-10 pb-4">
           {Object.keys(backSelection).map((back) => (
             <EditorRadioButton
               {...props}

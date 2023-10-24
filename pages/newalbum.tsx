@@ -76,51 +76,49 @@ export default function Page() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm">
-        <div className="flex flex-row justify-between w-full px-4 z-10 font-pretendard">
-          <button onClick={handlePrevious}>이전</button>
-          {step < 3 && (
-            <button onClick={() => handleStepChange(step + 1)}>다음</button>
-          )}
-          {step === 3 && <button onClick={handleSubmit(onSubmit)}>제출</button>}
-        </div>
-        <form>
-          <div className="flex flex-col justify-center items-center space-y-10 my-10 z-10">
-            {step === 1 && (
-              <AlbumSelect
-                {...register("editor")}
-                albumSelection={albumSelection}
-                labelMap={labelMap}
-                isEditor={isEditor}
-                onAlbumChange={(editor) => setIsEditor(editor)}
-              />
-            )}
-            {step === 2 && (
-              <PhrasesSelect
-                {...register("phrases")}
-                albumSelection={albumSelection}
-                isEditor={isEditor}
-                phrasesSelection={phrasesSelection}
-                isPhrases={isPhrases}
-                onPhrasesChange={(phrases) => setIsPhrases(phrases)}
-              />
-            )}
-            {step === 3 && (
-              <BackSelect
-                {...register("back")}
-                albumSelection={albumSelection}
-                isEditor={isEditor}
-                phrasesSelection={phrasesSelection}
-                isPhrases={isPhrases}
-                backSelection={backSelection}
-                isBack={isBack}
-                onBackChange={(back) => setIsBack(back)}
-              />
-            )}
-          </div>
-        </form>
+    <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm">
+      <div className="flex flex-row justify-between w-full px-10 z-10 font-pretendard">
+        <button onClick={handlePrevious}>이전</button>
+        {step < 3 && (
+          <button onClick={() => handleStepChange(step + 1)}>다음</button>
+        )}
+        {step === 3 && <button onClick={handleSubmit(onSubmit)}>제출</button>}
       </div>
+      <form>
+        <div className="flex flex-col justify-center items-center space-y-10 my-10 z-10">
+          {step === 1 && (
+            <AlbumSelect
+              {...register("editor")}
+              albumSelection={albumSelection}
+              labelMap={labelMap}
+              isEditor={isEditor}
+              onAlbumChange={(editor) => setIsEditor(editor)}
+            />
+          )}
+          {step === 2 && (
+            <PhrasesSelect
+              {...register("phrases")}
+              albumSelection={albumSelection}
+              isEditor={isEditor}
+              phrasesSelection={phrasesSelection}
+              isPhrases={isPhrases}
+              onPhrasesChange={(phrases) => setIsPhrases(phrases)}
+            />
+          )}
+          {step === 3 && (
+            <BackSelect
+              {...register("back")}
+              albumSelection={albumSelection}
+              isEditor={isEditor}
+              phrasesSelection={phrasesSelection}
+              isPhrases={isPhrases}
+              backSelection={backSelection}
+              isBack={isBack}
+              onBackChange={(back) => setIsBack(back)}
+            />
+          )}
+        </div>
+      </form>
     </div>
   );
 }

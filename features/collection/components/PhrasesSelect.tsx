@@ -34,12 +34,11 @@ const PhrasesSelect = forwardRef<HTMLInputElement, PhrasesSelectProps>(
             alt="phrases"
             className="absolute top-[23%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 "
           />
-
           <p className="text-[10px] text-[#9e9e9e] text-center font-pretendard font-thin mt-2">
             * 중앙에는 플레이리스트의 커버 이미지가 들어갑니다.
           </p>
         </div>
-        <div className="flex flex-row gap-8 whitespace-nowrap">
+        <div className="flex flex-row gap-8 whitespace-nowrap pb-4">
           {Object.keys(phrasesSelection).map((phrases) => (
             <EditorRadioButton
               {...props}

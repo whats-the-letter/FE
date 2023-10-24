@@ -14,7 +14,8 @@ const BackgroundSnow: React.FC = () => {
       }
     }
     .bg-snow-background {
-      background: radial-gradient(ellipse at center, #cbcbcb 30%, #FFFFFF 100%);
+      background: radial-gradient(ellipse at center,
+        #D0D0D0 0%, #FFFFFF 100%);
           background-size: 100% 200%;
           background-repeat: no-repeat;
           background-attachment: fixed;
@@ -26,19 +27,17 @@ const BackgroundSnow: React.FC = () => {
       background-color: #ffffff;
       border-radius: 50%;
       box-shadow: 0 0 10px #ffffff;
-      animation-iteration-count: infinite;
       animation: snowfall linear infinite;
-      animation-timing-function: linear;
+      
     }
   `}
       </style>
       {[...Array(100)].map((_, index) => (
         <Snowflake
           key={index}
-          speed={Math.random() * 10 + 5}
+          speed={Math.random() * 8 + 4}
           size={Math.random() * 15 + 5}
           left={Math.random() * 100}
-          delay={Math.random() * 10}
           opacity={Math.random()}
         />
       ))}
@@ -52,7 +51,6 @@ interface SnowflakeProps {
   speed: number;
   size: number;
   left: number;
-  delay: number;
   opacity: number;
 }
 
@@ -60,15 +58,14 @@ const Snowflake: React.FC<SnowflakeProps> = ({
   speed,
   size,
   left,
-  delay,
   opacity,
 }) => (
   <div
     className="snowflake"
     style={{
       animationDuration: `${speed}s`,
+      animationIterationCount: "infinite",
       left: `${left}%`,
-      animationDelay: `${delay}s`,
       width: `${size}px`,
       height: `${size}px`,
       opacity: opacity,
