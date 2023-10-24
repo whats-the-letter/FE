@@ -3,8 +3,6 @@ import React from "react";
 const BackgroundCircles = () => {
   return (
     <div className="fixed inset-0 z-0">
-      {" "}
-      {/* Make it fill the entire screen and be at the back */}
       <style>
         {`@keyframes move {
           100% {

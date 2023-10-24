@@ -14,9 +14,7 @@ const BackgroundSnow: React.FC = () => {
       }
     }
     .bg-snow-background {
-          background: radial-gradient(ellipse at center,
-         #ffffff 40%,  #1b2735 100%);
-          
+      background: radial-gradient(ellipse at center, #D0D0D0 0%, #FFFFFF 100%);
           background-size: 100% 200%;
           background-repeat: no-repeat;
           background-attachment: fixed;
