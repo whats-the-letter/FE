@@ -2,7 +2,7 @@ import React from "react";
 
 const BackgroundSnow: React.FC = () => {
   return (
-    <div className="fixed inset-0 z-0 bg-snow-background">
+    <div className="fixed inset-0 bg-snow-background">
       <style>
         {`
     @keyframes snowfall {
@@ -14,7 +14,7 @@ const BackgroundSnow: React.FC = () => {
       }
     }
     .bg-snow-background {
-      background: radial-gradient(ellipse at center, #D0D0D0 0%, #FFFFFF 100%);
+      background: radial-gradient(ellipse at center, #cbcbcb 30%, #FFFFFF 100%);
           background-size: 100% 200%;
           background-repeat: no-repeat;
           background-attachment: fixed;

@@ -2,7 +2,7 @@ import React from "react";
 
 const BackgroundCircles = () => {
   return (
-    <div className="fixed inset-0 z-0">
+    <div>
       <style>
         {`@keyframes move {
           100% {

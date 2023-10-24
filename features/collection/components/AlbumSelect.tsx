@@ -13,7 +13,7 @@ const AlbumSelect = forwardRef<HTMLInputElement, AlbumSelectProps>(
   ({ albumSelection, labelMap, isEditor, onAlbumChange, ...props }, ref) => {
     return (
       <>
-        <div className="flex flex-col justify-center items-center m-auto px-4 space-y-10 my-20">
+        
           <span className="text-lg text-center font-pretendard">
             커버를 선택해주세요
           </span>
@@ -26,7 +26,7 @@ const AlbumSelect = forwardRef<HTMLInputElement, AlbumSelectProps>(
             </p>
           </div>
 
-          <div className="flex flex-row gap-8 whitespace-nowrap">
+          <div className="flex flex-row gap-8 whitespace-nowrap pb-4">
             {Object.keys(albumSelection).map((editor) => (
               <EditorRadioButton
                 ref={ref}
@@ -38,7 +38,7 @@ const AlbumSelect = forwardRef<HTMLInputElement, AlbumSelectProps>(
                 onChange={() => onAlbumChange(editor)}
               />
             ))}
-          </div>
+          
         </div>
       </>
     );
