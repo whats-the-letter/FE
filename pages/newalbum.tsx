@@ -8,6 +8,7 @@ import AlbumSelect from "../features/collection/components/AlbumSelect";
 import BackgroundColorful from "../features/collection/components/background-animation/BackgroundColorful";
 import BackgroundSnow from "../features/collection/components/background-animation/BackgroundSnow";
 import BackgroundCircles from "../features/collection/components/background-animation/BackgroundCircles";
+import LetterWriting from "../features/collection/components/LetterWriting";
 
 const albumSelection = {
   "editor-love": "/assets/editor/editor-love.svg",
@@ -31,6 +32,13 @@ const phrasesSelection = {
   "editor-5": "/assets/editor/editor-5.svg",
 };
 
+const letterSelection = {
+  "editor-love-letter": "/assets/letter/letter-love.svg",
+  "editor-money-letter": "/assets/letter/letter-money.svg",
+  "editor-success-letter": "/assets/letter/letter-success.svg",
+  "editor-health-letter": "/assets/letter/letter-health.svg",
+};
+
 const backSelection = {
   colorful: <BackgroundColorful />,
   snow: <BackgroundSnow />,
@@ -44,6 +52,7 @@ export default function Page() {
       phrases: "editor-1",
       back: "colorful",
       music: "",
+      letter: "",
     },
   });
 
@@ -54,6 +63,7 @@ export default function Page() {
     phrases: "editor-1",
     back: "colorful",
     music: "",
+    letter: "",
   });
 
   const handleStepChange = (newStep) => {
@@ -73,11 +83,13 @@ export default function Page() {
     phrases: string;
     back: string;
     music: string;
+    letter: string;
   }> = (data) => {
     data.editor = selectedOptions.editor;
     data.phrases = selectedOptions.phrases;
     data.back = selectedOptions.back;
     data.music = selectedOptions.music;
+    data.letter = selectedOptions.letter;
     console.log(data);
   };
 
@@ -99,7 +111,7 @@ export default function Page() {
           />
           이전
         </button>
-        {step < 4 && (
+        {step < 5 && (
           <button
             className="flex flex-row items-center justify-between"
             onClick={() => handleStepChange(step + 1)}
@@ -112,7 +124,7 @@ export default function Page() {
             />
           </button>
         )}
-        {step === 4 && <button onClick={handleSubmit(onSubmit)}>제출</button>}
+        {step === 5 && <button onClick={handleSubmit(onSubmit)}>제출</button>}
       </div>
       <form>
         <div className="flex flex-col justify-center items-center space-y-10 my-10 z-10">
@@ -147,6 +159,19 @@ export default function Page() {
               backSelection={backSelection}
               isBack={selectedOptions.back}
               onBackChange={(back) => handleOptionChange("back", back)}
+            />
+          )}
+          {step === 4 && <>음악 선택</>}
+          {step === 5 && (
+            <LetterWriting
+              {...register("letter")}
+              isEditor={selectedOptions.editor}
+              letterSelection={letterSelection}
+              to="현지"
+              from="여경이"
+              onLetterContentChange={(content) =>
+                handleOptionChange("letter", content)
+              }
             />
           )}
         </div>
