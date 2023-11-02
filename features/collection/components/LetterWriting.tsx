@@ -1,5 +1,4 @@
 import React, { forwardRef, useState } from "react";
-import { Controller } from "react-hook-form";
 
 interface LetterWritingProps {
   isEditor: string;
@@ -13,38 +12,51 @@ interface LetterWritingProps {
 const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
   ({ isEditor, to, from, letterSelection, onLetterContentChange }, ref) => {
     const [letterContent, setLetterContent] = useState("");
+    const maxCharacters = 300;
     const handleContentChange = (e) => {
-      const content = e.target.value;
-      if (content.length <= 300) {
-        setLetterContent(content);
-        onLetterContentChange(content);
+      let content = e.target.value;
+      content = content.replace(/\n/g, " ".repeat(70));
+      if (content.length > maxCharacters) {
+        content = content.substring(0, maxCharacters);
       }
+      setLetterContent(content);
+      onLetterContentChange(content);
     };
+
     return (
       <>
         <span className="text-lg text-center font-pretendard z-10">
           편지를 작성해주세요
         </span>
-        <div className="flex flex-col z-10">
-          <div className="text-sm text-left font-pretendard">
+        <div className="flex flex-col justify-center items-center relative z-10">
+          <span className="flex flex-row justify-start w-full text-sm text-right font-pretendard gap-2">
             To. <strong>{to}</strong>
-          </div>
-          <div className="relative">
+          </span>
+          <div className="relative flex justify-center items-center text-center">
             <img src={letterSelection[`${isEditor}-letter`]} alt="letter" />
+            <div className="absolute bottom-8 right-10">
+              <div className="flex justify-center items-center space-x-2">
+                <img src="/assets/icons/bracket_left.svg" alt="bracket-left" />
+                <p className="text-xs text-right font-pretendard ">
+                  {letterContent.length} / 300자
+                </p>
+                <img
+                  src="/assets/icons/bracket_right.svg"
+                  alt="bracket-right"
+                />
+              </div>
+            </div>
             <textarea
               onChange={handleContentChange}
-              placeholder="편지를 작성해주세요"
+              placeholder="편지를 작성해주세요 :) "
               value={letterContent}
-              className="font-pretendard text-[12px] text-center absolute top-0 left-0 w-full h-full
-            resize-none bg-transparent z-10"
+              className=" text-[12px] absolute w-full h-full max-w-[240px] max-h-[220px]
+            resize-none bg-transparent z-0 outline-none"
             />
-            <p className="text-xs text-right font-pretendard ">
-              {letterContent.length}/300
-            </p>
           </div>
-          <div className="text-sm text-right font-pretendard z-10">
+          <span className="flex flex-row justify-end w-full text-sm text-right font-pretendard gap-2">
             From. <strong>{from}</strong>
-          </div>
+          </span>
         </div>
       </>
     );

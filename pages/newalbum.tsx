@@ -167,7 +167,7 @@ export default function Page() {
               {...register("letter")}
               isEditor={selectedOptions.editor}
               letterSelection={letterSelection}
-              to="현지"
+              to="디뉴 아이들"
               from="여경이"
               onLetterContentChange={(content) =>
                 handleOptionChange("letter", content)
