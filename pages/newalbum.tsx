@@ -43,6 +43,7 @@ export default function Page() {
       editor: "editor-love",
       phrases: "editor-1",
       back: "colorful",
+      music: "",
     },
   });
 
@@ -52,6 +53,7 @@ export default function Page() {
     editor: "editor-love",
     phrases: "editor-1",
     back: "colorful",
+    music: "",
   });
 
   const handleStepChange = (newStep) => {
@@ -70,10 +72,12 @@ export default function Page() {
     editor: string;
     phrases: string;
     back: string;
+    music: string;
   }> = (data) => {
     data.editor = selectedOptions.editor;
     data.phrases = selectedOptions.phrases;
     data.back = selectedOptions.back;
+    data.music = selectedOptions.music;
     console.log(data);
   };
 
@@ -95,7 +99,7 @@ export default function Page() {
           />
           이전
         </button>
-        {step < 3 && (
+        {step < 4 && (
           <button
             className="flex flex-row items-center justify-between"
             onClick={() => handleStepChange(step + 1)}
@@ -108,7 +112,7 @@ export default function Page() {
             />
           </button>
         )}
-        {step === 3 && <button onClick={handleSubmit(onSubmit)}>제출</button>}
+        {step === 4 && <button onClick={handleSubmit(onSubmit)}>제출</button>}
       </div>
       <form>
         <div className="flex flex-col justify-center items-center space-y-10 my-10 z-10">
