@@ -1,8 +1,5 @@
 import React, { forwardRef, useState } from "react";
-import {
-  countCharacters,
-  truncateContent,
-} from "../../common/utils/countTexts";
+import { countCharacters, truncateContent } from "../../../utils/countTexts";
 
 interface LetterWritingProps {
   isEditor: string;
@@ -41,7 +38,11 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
             To. <strong>{to}</strong>
           </span>
           <div className="relative flex justify-center items-center text-center">
-            <img src={letterSelection[`${isEditor}-letter`]} alt="letter" className="w-full h-full max-w-[288px] max-h-[288px]"/>
+            <img
+              src={letterSelection[`${isEditor}-letter`]}
+              alt="letter"
+              className="w-full h-full max-w-[288px] max-h-[288px]"
+            />
             <div className="absolute bottom-6 right-7">
               <div className="flex justify-center items-center space-x-2">
                 <img src="/assets/icons/bracket_left.svg" alt="bracket-left" />
