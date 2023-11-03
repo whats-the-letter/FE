@@ -42,7 +42,7 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
           </span>
           <div className="relative flex justify-center items-center text-center">
             <img src={letterSelection[`${isEditor}-letter`]} alt="letter" className="w-full h-full max-w-[288px] max-h-[288px]"/>
-            <div className="absolute bottom-8 right-10">
+            <div className="absolute bottom-6 right-7">
               <div className="flex justify-center items-center space-x-2">
                 <img src="/assets/icons/bracket_left.svg" alt="bracket-left" />
                 <p className="text-xs text-right font-pretendard ">
@@ -58,7 +58,7 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
               onChange={handleContentChange}
               placeholder="편지를 작성해주세요 :) "
               value={letterContent}
-              className=" text-[12px] absolute w-full h-full max-w-[240px] max-h-[220px]
+              className="flex justify-center items-center text-[12px] absolute w-full h-full max-w-[200px] max-h-[200px] font-pretendard
             resize-none bg-transparent z-0 outline-none"
             />
           </div>
