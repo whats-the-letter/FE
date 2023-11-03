@@ -1,6 +1,6 @@
 import React from "react";
 import { InputHTMLAttributes, forwardRef } from "react";
-import { classNames } from "../utils/classNames";
+import { classNames } from "../../utils/classNames";
 
 interface RoundRadioButtonProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;

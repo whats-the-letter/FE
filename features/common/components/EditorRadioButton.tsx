@@ -1,5 +1,5 @@
 import React, { forwardRef, InputHTMLAttributes } from "react";
-import { classNames } from "../utils/classNames";
+import { classNames } from "../../utils/classNames";
 
 interface EditorRadioButtonProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
