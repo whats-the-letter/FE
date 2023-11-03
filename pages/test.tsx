@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import MusicList from "../features/collection/components/MusicList";
+import MusicList from "../features/collection/components/Select/MusicList";
 
 export default function Page() {
   const [selectedMusic, setSelectedMusic] = useState<string>("");

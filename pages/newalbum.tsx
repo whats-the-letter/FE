@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
-import BackSelect from "../features/collection/components/BackSelect";
-import PhrasesSelect from "../features/collection/components/PhrasesSelect";
-import AlbumSelect from "../features/collection/components/AlbumSelect";
-import BackgroundColorful from "../features/collection/components/background-animation/BackgroundColorful";
-import BackgroundSnow from "../features/collection/components/background-animation/BackgroundSnow";
-import BackgroundCircles from "../features/collection/components/background-animation/BackgroundCircles";
-import LetterWriting from "../features/collection/components/LetterWriting";
+import BackSelect from "../features/collection/components/Select/BackSelect";
+import PhrasesSelect from "../features/collection/components/Select/PhrasesSelect";
+import AlbumSelect from "../features/collection/components/Select/AlbumSelect";
+import BackgroundColorful from "../features/collection/components/BackSelect-Animation/BackgroundColorful";
+import BackgroundSnow from "../features/collection/components/BackSelect-Animation/BackgroundSnow";
+import BackgroundCircles from "../features/collection/components/BackSelect-Animation/BackgroundCircles";
+import LetterWriting from "../features/collection/components/Select/LetterWriting";
 
 const albumSelection = {
   "editor-love": "/assets/editor/editor-love.svg",
