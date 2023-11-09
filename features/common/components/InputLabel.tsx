@@ -17,7 +17,7 @@ function Inputlabel({
       <span className=" font-bold">{label}</span>
       {required}
       {children}
-      <p className="text-customRed text-sm pt-0.5">{errorMessage}</p>
+      <p className="text-custom_red text-sm pt-0.5">{errorMessage}</p>
     </div>
   );
 }
