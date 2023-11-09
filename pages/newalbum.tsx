@@ -46,13 +46,19 @@ const backSelection = {
 };
 
 export default function Page() {
-  const { register, handleSubmit } = useForm({
+  const {
+    formState: { errors },
+    register,
+    handleSubmit,
+  } = useForm({
     defaultValues: {
       editor: "editor-love",
       phrases: "editor-1",
       back: "colorful",
       music: "",
       letter: "",
+      to: "",
+      from: "",
     },
   });
 
@@ -64,6 +70,11 @@ export default function Page() {
     back: "colorful",
     music: "",
     letter: "",
+  });
+
+  const [selectedInput, setSelectedInput] = useState({
+    to: "",
+    from: "",
   });
 
   const handleStepChange = (newStep) => {
@@ -84,17 +95,27 @@ export default function Page() {
     back: string;
     music: string;
     letter: string;
+    to: string;
+    from: string;
   }> = (data) => {
     data.editor = selectedOptions.editor;
     data.phrases = selectedOptions.phrases;
     data.back = selectedOptions.back;
     data.music = selectedOptions.music;
     data.letter = selectedOptions.letter;
+    data.to = selectedInput.to;
+    data.from = selectedInput.from;
+
     console.log(data);
   };
 
+  const onError = () => {};
   const handleOptionChange = (optionName: string, optionValue: string) => {
     setSelectedOptions({ ...selectedOptions, [optionName]: optionValue });
+  };
+
+  const handleInputChange = (inputName: string, inputValue: string) => {
+    setSelectedInput({ ...selectedInput, [inputName]: inputValue });
   };
 
   return (
@@ -124,10 +145,12 @@ export default function Page() {
             />
           </button>
         )}
-        {step === 5 && <button onClick={handleSubmit(onSubmit)}>제출</button>}
+        {step === 5 && (
+          <button onClick={handleSubmit(onSubmit, onError)}>제출</button>
+        )}
       </div>
       <form>
-        <div className="flex flex-col justify-center items-center space-y-10 my-10 z-10">
+        <div className="flex flex-col justify-center items-center space-y-8 my-10 z-10">
           {step === 1 && (
             <AlbumSelect
               {...register("editor")}
@@ -167,11 +190,34 @@ export default function Page() {
               {...register("letter")}
               isEditor={selectedOptions.editor}
               letterSelection={letterSelection}
-              to="디뉴 아이들"
-              from="여경이"
               onLetterContentChange={(content) =>
                 handleOptionChange("letter", content)
               }
+              {...register("to", {
+                required: "보내는 사람을 입력해주세요",
+                minLength: {
+                  value: 1,
+                  message: "보내는 사람은 1글자 이상이어야 합니다.",
+                },
+                maxLength: {
+                  value: 10,
+                  message: "보내는 사람은 10글자 이하여야 합니다.",
+                },
+              })}
+              onToChange={(to) => handleInputChange("to", to)}
+              {...register("from", {
+                required: "받는 사람을 입력해주세요",
+                minLength: {
+                  value: 1,
+                  message: "받는 사람은 1글자 이상이어야 합니다.",
+                },
+                maxLength: {
+                  value: 10,
+                  message: "받는 사람은 10글자 이하여야 합니다.",
+                },
+              })}
+              onFromChange={(from) => handleInputChange("from", from)}
+              errors={errors}
             />
           )}
         </div>
