@@ -57,14 +57,11 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
           편지를 작성해주세요
         </span>
         <span className="flex flex-row justify-center w-full text-right font-pretendard">
-          <Inputlabel label="To." required errorMessage={errors.to?.message}>
+          <Inputlabel label="To." required>
             <Input
               ref={ref}
               placeholder="보내는 사람"
               onChange={handleToChange}
-              minLength={1}
-              maxLength={10}
-              required
             />
           </Inputlabel>
         </span>
@@ -92,14 +89,8 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
           />
         </div>
         <div className="flex flex-col itmes-center justify-between w-full text-right font-pretendard">
-          <Inputlabel label="From" required errorMessage={errors.from?.message}>
-            <Input
-              placeholder="받는 사람"
-              onChange={handleFromChange}
-              minLength={1}
-              maxLength={10}
-              required
-            />
+          <Inputlabel label="From" required>
+            <Input placeholder="받는 사람" onChange={handleFromChange} />
           </Inputlabel>
         </div>
       </>

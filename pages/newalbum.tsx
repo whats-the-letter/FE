@@ -193,31 +193,10 @@ export default function Page() {
               onLetterContentChange={(content) =>
                 handleOptionChange("letter", content)
               }
-              {...register("to", {
-                required: "보내는 사람을 입력해주세요",
-                minLength: {
-                  value: 1,
-                  message: "보내는 사람은 1글자 이상이어야 합니다.",
-                },
-                maxLength: {
-                  value: 10,
-                  message: "보내는 사람은 10글자 이하여야 합니다.",
-                },
-              })}
+              {...register("to")}
               onToChange={(to) => handleInputChange("to", to)}
-              {...register("from", {
-                required: "받는 사람을 입력해주세요",
-                minLength: {
-                  value: 1,
-                  message: "받는 사람은 1글자 이상이어야 합니다.",
-                },
-                maxLength: {
-                  value: 10,
-                  message: "받는 사람은 10글자 이하여야 합니다.",
-                },
-              })}
+              {...register("from")}
               onFromChange={(from) => handleInputChange("from", from)}
-              errors={errors}
             />
           )}
         </div>
