@@ -5,7 +5,7 @@ import Inputlabel from "../../../common/components/InputLabel";
 
 interface LetterWritingProps {
   isEditor: string;
-  errors: any;
+
   letterSelection: Record<string, string>;
   onLetterContentChange: (content: string) => void;
   onToChange: (to: string) => void;
@@ -16,7 +16,6 @@ interface LetterWritingProps {
 const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
   (
     {
-      errors,
       isEditor,
       letterSelection,
       onLetterContentChange,

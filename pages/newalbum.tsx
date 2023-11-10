@@ -9,6 +9,7 @@ import BackgroundColorful from "../features/collection/components/BackSelect-Ani
 import BackgroundSnow from "../features/collection/components/BackSelect-Animation/BackgroundSnow";
 import BackgroundCircles from "../features/collection/components/BackSelect-Animation/BackgroundCircles";
 import LetterWriting from "../features/collection/components/Select/LetterWriting";
+import MusicList from "../features/collection/components/Select/MusicList";
 
 const albumSelection = {
   "editor-love": "/assets/editor/editor-love.svg",
@@ -45,6 +46,21 @@ const backSelection = {
   circles: <BackgroundCircles />,
 };
 
+const playListSelection = [
+  {
+    id: 0,
+    name: "크리스마스 캐롤 캐빈",
+    artist: "여경이",
+    youtubeUrlId: "YAsAQgoh52I",
+  },
+  {
+    id: 1,
+    name: "크리스마스 캐롤2 에센셜",
+    artist: "현지",
+    youtubeUrlId: "a_80o2lDYec",
+  },
+];
+
 export default function Page() {
   const {
     formState: { errors },
@@ -61,6 +77,8 @@ export default function Page() {
       from: "",
     },
   });
+
+  // const youtubeVideoId = "YAsAQgoh52I";
 
   const router = useRouter();
   const [step, setStep] = useState(1);
@@ -184,7 +202,16 @@ export default function Page() {
               onBackChange={(back) => handleOptionChange("back", back)}
             />
           )}
-          {step === 4 && <>음악 선택</>}
+          {step === 4 && (
+            <>
+              <MusicList
+                playListSelection={playListSelection}
+                isMusic={selectedOptions.music}
+                onMusicChange={(music) => handleOptionChange("music", music)}
+              />
+            </>
+          )}
+
           {step === 5 && (
             <LetterWriting
               {...register("letter")}

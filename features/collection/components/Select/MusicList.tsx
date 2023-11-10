@@ -1,50 +1,55 @@
-import React, { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-interface MusicListProps {
-  musicList: string[];
-  selectedMusic: string;
-  onMusicPlay: (music: string) => void;
-}
+const MusicList = ({ playListSelection }) => {
+  const [videoData, setVideoData] = useState(null);
 
-const PLAYLIST_ID = "PL5tS7iF1ZPgakzmZ9mGPqTyxX9Ai4XGNd";
+  const fetchVideoData = async (videoId) => {
+    try {
+      const response = await axios.get(
+        `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet`
+      );
 
-const MusicList: React.FC<MusicListProps> = ({
-  musicList,
-  selectedMusic,
-  onMusicPlay,
-}) => {
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-
-  const handleVideoClick = () => {
-    setIsVideoPlaying(true);
-    onMusicPlay(selectedMusic);
+      setVideoData(response.data.items[0]);
+    } catch (error) {
+      console.error("Error fetching video data:", error);
+    }
   };
 
+  useEffect(() => {
+    if (playListSelection.length > 0) {
+      fetchVideoData(playListSelection[0].youtubeUrlId);
+    }
+  }, [playListSelection]);
+
+  if (!videoData) {
+    return <div>Loading...</div>;
+  }
+
+  const videoTitle = videoData.snippet.title;
+  const videoThumbnail = videoData.snippet.thumbnails.high.url;
+
   return (
-    <>
-      <span>추천 받기</span>
-      <div className="flex flex-col justify-center items-center space-y-10 my-10 z-10">
-        {musicList.map((music, index) => (
-          <button key={index} onClick={() => onMusicPlay(music)}>
-            {music}
-          </button>
-        ))}
-      </div>
-      {isVideoPlaying && (
-        <div onClick={handleVideoClick}>
+    <div>
+      {playListSelection.map((item) => (
+        <div key={item.id}>
           <iframe
-            width="200"
-            height="200"
-            className="rounded-full"
-            src={`https://www.youtube.com/embed?listType=playlist&list=${PLAYLIST_ID}&index=${
-              musicList.indexOf(selectedMusic) + 1
-            }`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            width="560"
+            height="315"
+            src={`https://www.youtube.com/embed/${item.youtubeUrlId}`}
+            title={videoTitle}
+            frameBorder="0"
+            allowFullScreen
+          ></iframe>
+          <img
+            src={videoThumbnail}
+            alt={videoTitle}
+            className="w-[40px] h-[40x]"
           />
+          <h2>{videoTitle}</h2>
         </div>
-      )}
-    </>
+      ))}
+    </div>
   );
 };
 
