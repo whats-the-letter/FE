@@ -26,16 +26,13 @@ const MusicList = ({ playListSelection }) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full space-y-4">
+    <div className="flex flex-col w-full h-full space-y-4">
       <span className="text-xl font-pretendard text-center font-bold">
         음악을 선택해 주세요
       </span>
 
       {playListSelection.map((item) => (
-        <div
-          key={item.id}
-          className="flex justify-start items-center w-full h-full gap-10"
-        >
+        <div key={item.id} className="flex items-center w-full h-full gap-10">
           <img src="/assets/icons/unselected_music.svg" alt="music" />
           <iframe
             width="100"
@@ -44,7 +41,7 @@ const MusicList = ({ playListSelection }) => {
             title={item.name}
             allowFullScreen
           ></iframe>
-          <div className="flex flex-col items-start justify-start font-pretendard ">
+          <div className="flex-grow flex flex-col items-start justify-start font-pretendard ">
             <h2>{item.name}</h2>
             <h2 className="text-custom_gray">{item.artist}</h2>
           </div>
