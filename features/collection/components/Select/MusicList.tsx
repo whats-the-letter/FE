@@ -9,7 +9,6 @@ const MusicList = ({ playListSelection }) => {
       const response = await axios.get(
         `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet`
       );
-
       setVideoData(response.data.items[0]);
     } catch (error) {
       console.error("Error fetching video data:", error);
@@ -26,27 +25,34 @@ const MusicList = ({ playListSelection }) => {
     return <div>Loading...</div>;
   }
 
-  const videoTitle = videoData.snippet.title;
-  const videoThumbnail = videoData.snippet.thumbnails.high.url;
-
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center w-full h-full space-y-4">
+      <span className="text-xl font-pretendard text-center font-bold">
+        음악을 선택해 주세요
+      </span>
+
       {playListSelection.map((item) => (
-        <div key={item.id}>
+        <div
+          key={item.id}
+          className="flex justify-start items-center w-full h-full gap-10"
+        >
+          <img src="/assets/icons/unselected_music.svg" alt="music" />
           <iframe
-            width="560"
-            height="315"
+            width="100"
+            height="100"
             src={`https://www.youtube.com/embed/${item.youtubeUrlId}`}
-            title={videoTitle}
-            frameBorder="0"
+            title={item.name}
             allowFullScreen
           ></iframe>
+          <div className="flex flex-col items-start justify-start font-pretendard ">
+            <h2>{item.name}</h2>
+            <h2 className="text-custom_gray">{item.artist}</h2>
+          </div>
           <img
-            src={videoThumbnail}
-            alt={videoTitle}
-            className="w-[40px] h-[40x]"
+            src="/assets/icons/play_button.svg"
+            alt="plus"
+            className="w-8 h-8"
           />
-          <h2>{videoTitle}</h2>
         </div>
       ))}
     </div>

@@ -15,6 +15,7 @@ module.exports = {
         custom_red: "#D85252",
         custom_blue: "#4483F2",
         custom_black: "#555555",
+        custom_gray: "#9E9E9E",
       },
       fontFamily: {
         pretendard: ["Pretendard", "sans-serif"],
