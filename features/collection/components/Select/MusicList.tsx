@@ -44,7 +44,7 @@ const MusicList = ({ playListSelection }) => {
         <span className="text-sm">재물</span>
       </button>
 
-      <div className="music-list relative w-full h-80 overflow-y-scroll">
+      <div className="w-full h-80 overflow-y-scroll">
         {playListSelection.map((item) => (
           <div
             key={item.id}
@@ -71,7 +71,7 @@ const MusicList = ({ playListSelection }) => {
           </div>
         ))}
       </div>
-      <div className="bg-black flex items-center justify-around w-full h-20">
+      <div className="bg-black w-full h-16 flex flex-row justify-between items-center px-2">
         <iframe
           width="80"
           height="40"
@@ -79,7 +79,7 @@ const MusicList = ({ playListSelection }) => {
           title="YouTube video player"
           allowFullScreen
         ></iframe>
-        <div className="flex flex-col justify-start items-start">
+        <div className="flex flex-col justify-start items-start w-40">
           <span className="text-white font-pretendard text-center text-sm">
             {selectedVideo.name}
           </span>
