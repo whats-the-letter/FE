@@ -51,11 +51,19 @@ const MusicList = ({ playListSelection }) => {
             className="flex gap-4 items-center w-full h-[70px] hover:bg-gray-200 cursor-pointer px-2"
             onClick={() => handleMusicBoxClick(item.youtubeUrlId)}
           >
-            <img
-              src="/assets/icons/unselected_music.svg"
-              alt="music"
-              className="w-4"
-            />
+            {selectedVideoId === item.youtubeUrlId ? (
+              <img
+                src="/assets/icons/selected_music.svg"
+                alt="selected-music"
+                className="w-4"
+              />
+            ) : (
+              <img
+                src="/assets/icons/unselected_music.svg"
+                alt="unselected-music"
+                className="w-4"
+              />
+            )}
             <div className="flex flex-grow items-center justify-between">
               <img src={item.thumbnail} alt="thumbnail" className="w-12 h-12" />
               <div className="flex-grow flex flex-col items-start justify-start font-pretendard mx-8">
@@ -63,6 +71,7 @@ const MusicList = ({ playListSelection }) => {
                 <h2 className="text-custom_gray text-sm">{item.artist}</h2>
               </div>
             </div>
+
             <img
               src="/assets/icons/play_button.svg"
               alt="play-button"
@@ -88,7 +97,7 @@ const MusicList = ({ playListSelection }) => {
           </span>
         </div>
         <button className="text-white" onClick={() => setSelectedVideoId(null)}>
-          X
+          <img src="/assets/icons/close.svg" alt="close" className="w-5" />
         </button>
       </div>
     </>
