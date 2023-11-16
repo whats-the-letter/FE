@@ -10,57 +10,13 @@ import BackgroundSnow from "../features/collection/components/BackSelect-Animati
 import BackgroundCircles from "../features/collection/components/BackSelect-Animation/BackgroundCircles";
 import LetterWriting from "../features/collection/components/Select/LetterWriting";
 import MusicList from "../features/collection/components/Select/MusicList";
-
-const albumSelection = {
-  "editor-love": "/assets/editor/editor-love.svg",
-  "editor-money": "/assets/editor/editor-money.svg",
-  "editor-success": "/assets/editor/editor-success.svg",
-  "editor-health": "/assets/editor/editor-health.svg",
-};
-
-const labelMap = {
-  "editor-love": "사랑",
-  "editor-money": "재물",
-  "editor-success": "성공",
-  "editor-health": "건강",
-};
-
-const phrasesSelection = {
-  "editor-1": "/assets/editor/editor-1.svg",
-  "editor-2": "/assets/editor/editor-2.svg",
-  "editor-3": "/assets/editor/editor-3.svg",
-  "editor-4": "/assets/editor/editor-4.svg",
-  "editor-5": "/assets/editor/editor-5.svg",
-};
-
-const letterSelection = {
-  "editor-love-letter": "/assets/letter/letter-love.svg",
-  "editor-money-letter": "/assets/letter/letter-money.svg",
-  "editor-success-letter": "/assets/letter/letter-success.svg",
-  "editor-health-letter": "/assets/letter/letter-health.svg",
-};
+import { albumSelection, labelMap, letterSelection, phrasesSelection, playListSelection } from "../features/utils/data";
 
 const backSelection = {
   colorful: <BackgroundColorful />,
   snow: <BackgroundSnow />,
   circles: <BackgroundCircles />,
 };
-
-const playListSelection = [
-  {
-    id: 0,
-    name: "크리스마스 캐롤 캐빈",
-    artist: "여경이",
-    youtubeUrlId: "YAsAQgoh52I",
-    
-  },
-  {
-    id: 1,
-    name: "크리스마스 캐롤2 에센셜",
-    artist: "현지",
-    youtubeUrlId: "a_80o2lDYec",
-  },
-];
 
 export default function Page() {
   const {
@@ -78,8 +34,6 @@ export default function Page() {
       from: "",
     },
   });
-
-  // const youtubeVideoId = "YAsAQgoh52I";
 
   const router = useRouter();
   const [step, setStep] = useState(1);
@@ -138,8 +92,8 @@ export default function Page() {
   };
 
   return (
-    <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm">
-      <div className="flex flex-row justify-between w-full max-w-sm px-8 py-2 z-10 mt-20 font-pretendard">
+    <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm space-y-4">
+      <div className="flex flex-row justify-between w-full max-w-sm px-8 z-10 font-pretendard">
         <button
           onClick={handlePrevious}
           className="flex flex-row items-center justify-between"
@@ -169,7 +123,7 @@ export default function Page() {
         )}
       </div>
       <form>
-        <div className="flex flex-col justify-center items-center space-y-8 my-10 z-10">
+        <div className="flex flex-col justify-center items-center space-y-8 z-10">
           {step === 1 && (
             <AlbumSelect
               {...register("editor")}
@@ -184,7 +138,8 @@ export default function Page() {
               {...register("phrases")}
               albumSelection={albumSelection}
               isEditor={selectedOptions.editor}
-              phrasesSelection={phrasesSelection}
+              phrasesSelection={phrasesSelection
+              }
               isPhrases={selectedOptions.phrases}
               onPhrasesChange={(phrases) =>
                 handleOptionChange("phrases", phrases)

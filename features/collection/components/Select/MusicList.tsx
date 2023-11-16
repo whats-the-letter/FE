@@ -1,8 +1,9 @@
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
 
 const MusicList = ({ playListSelection }) => {
   const [videoData, setVideoData] = useState(null);
+  const [selectedVideoId, setSelectedVideoId] = useState(null);
 
   const fetchVideoData = async (videoId) => {
     try {
@@ -16,43 +17,81 @@ const MusicList = ({ playListSelection }) => {
   };
 
   useEffect(() => {
-    if (playListSelection.length > 0) {
-      fetchVideoData(playListSelection[0].youtubeUrlId);
+    if (selectedVideoId) {
+      fetchVideoData(selectedVideoId);
+    } else if (playListSelection.length > 0) {
+      setSelectedVideoId(playListSelection[0].youtubeUrlId);
     }
-  }, [playListSelection]);
+  }, [selectedVideoId, playListSelection]);
 
-  if (!videoData) {
-    return <div>Loading...</div>;
+  const handleMusicBoxClick = (videoId) => {
+    setSelectedVideoId(videoId);
+  };
+
+  if (!selectedVideoId || !videoData) {
+    return null;
   }
+  const selectedVideo = playListSelection.find(
+    (item) => item.youtubeUrlId === selectedVideoId
+  );
 
   return (
-    <div className="flex flex-col w-full h-full space-y-4">
-      <span className="text-xl font-pretendard text-center font-bold">
-        음악을 선택해 주세요
+    <>
+      <span className="text-lg text-center font-pretendard z-10">
+        음악을 선택해주세요
       </span>
+      <button className="bg-black text-white w-16 h-8 rounded-full">
+        <span className="text-sm">재물</span>
+      </button>
 
-      {playListSelection.map((item) => (
-        <div key={item.id} className="flex items-center w-full h-full gap-10">
-          <img src="/assets/icons/unselected_music.svg" alt="music" />
-          <iframe
-            width="100"
-            height="100"
-            src={`https://www.youtube.com/embed/${item.youtubeUrlId}`}
-            title={item.name}
-            allowFullScreen
-          ></iframe>
-          <div className="flex-grow flex flex-col items-start justify-start font-pretendard ">
-            <h2>{item.name}</h2>
-            <h2 className="text-custom_gray">{item.artist}</h2>
+      <div className="music-list relative w-full h-80 overflow-y-scroll">
+        {playListSelection.map((item) => (
+          <div
+            key={item.id}
+            className="flex gap-4 items-center w-full h-[70px] hover:bg-gray-200 cursor-pointer px-2"
+            onClick={() => handleMusicBoxClick(item.youtubeUrlId)}
+          >
+            <img
+              src="/assets/icons/unselected_music.svg"
+              alt="music"
+              className="w-4"
+            />
+            <div className="flex flex-grow items-center justify-between">
+              <img src={item.thumbnail} alt="thumbnail" className="w-12 h-12" />
+              <div className="flex-grow flex flex-col items-start justify-start font-pretendard mx-8">
+                <h2 className="text-sm">{item.name}</h2>
+                <h2 className="text-custom_gray text-sm">{item.artist}</h2>
+              </div>
+            </div>
+            <img
+              src="/assets/icons/play_button.svg"
+              alt="play-button"
+              className="w-8 h-8"
+            />
           </div>
-          <img
-            src="/assets/icons/play_button.svg"
-            alt="plus"
-            className="w-8 h-8"
-          />
+        ))}
+      </div>
+      <div className="bg-black flex items-center justify-around w-full h-20">
+        <iframe
+          width="80"
+          height="40"
+          src={`https://www.youtube.com/embed/${selectedVideoId}`}
+          title="YouTube video player"
+          allowFullScreen
+        ></iframe>
+        <div className="flex flex-col justify-start items-start">
+          <span className="text-white font-pretendard text-center text-sm">
+            {selectedVideo.name}
+          </span>
+          <span className="text-white font-pretendard text-center text-xs">
+            {selectedVideo.artist}
+          </span>
         </div>
-      ))}
-    </div>
+        <button className="text-white" onClick={() => setSelectedVideoId(null)}>
+          X
+        </button>
+      </div>
+    </>
   );
 };
 
