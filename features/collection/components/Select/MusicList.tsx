@@ -4,6 +4,7 @@ import axios from "axios";
 const MusicList = ({ playListSelection }) => {
   const [videoData, setVideoData] = useState(null);
   const [selectedVideoId, setSelectedVideoId] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const fetchVideoData = async (videoId) => {
     try {
@@ -26,6 +27,11 @@ const MusicList = ({ playListSelection }) => {
 
   const handleMusicBoxClick = (videoId) => {
     setSelectedVideoId(videoId);
+    setIsPlaying(false);
+  };
+
+  const handlePlayButtonClick = () => {
+    setIsPlaying(true);
   };
 
   if (!selectedVideoId || !videoData) {
@@ -71,23 +77,15 @@ const MusicList = ({ playListSelection }) => {
                 <h2 className="text-custom_gray text-sm">{item.artist}</h2>
               </div>
             </div>
-
-            <img
-              src="/assets/icons/play_button.svg"
-              alt="play-button"
-              className="w-8 h-8"
-            />
           </div>
         ))}
       </div>
       <div className="bg-black w-full h-16 flex flex-row justify-between items-center px-2">
-        <iframe
-          width="80"
-          height="40"
-          src={`https://www.youtube.com/embed/${selectedVideoId}`}
-          title="YouTube video player"
-          allowFullScreen
-        ></iframe>
+        <img
+          src={selectedVideo.thumbnail}
+          alt="thumbnail"
+          className="w-9 mr-4"
+        />
         <div className="flex flex-col justify-start items-start w-40">
           <span className="text-white font-pretendard text-center text-sm">
             {selectedVideo.name}
@@ -96,10 +94,40 @@ const MusicList = ({ playListSelection }) => {
             {selectedVideo.artist}
           </span>
         </div>
-        <button className="text-white" onClick={() => setSelectedVideoId(null)}>
-          <img src="/assets/icons/close.svg" alt="close" className="w-5" />
+
+        <button
+          type="button"
+          className="w-8 h-8 text-white this-button mr-2"
+          onClick={handlePlayButtonClick}
+        >
+          {/* <img
+                src="/assets/icons/play_button.svg"
+                alt="play-button"
+                className="w-8 h-8"
+              /> */}
+          ►
+        </button>
+
+        <button
+          type="button"
+          className="text-white mr-4"
+          onClick={() => setIsPlaying(false)}
+        >
+          {/* <img src="/assets/icons/close.svg" alt="close" className="w-5" /> */}
+          ||
         </button>
       </div>
+
+      {isPlaying && (
+        <iframe
+          className="hidden"
+          width="0"
+          height="0"
+          src={`https://www.youtube.com/embed/${selectedVideoId}?autoplay=1&start=0`}
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        />
+      )}
     </>
   );
 };
