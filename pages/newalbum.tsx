@@ -125,7 +125,7 @@ export default function Page() {
           </button>
         )}
         {step === 5 && (
-          <button onClick={handleSubmit(onSubmit, onError)}>제출</button>
+          <button onClick={handleSubmit(onSubmit, onError)}>완성</button>
         )}
       </div>
       <form>
