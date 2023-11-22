@@ -10,7 +10,13 @@ import BackgroundSnow from "../features/collection/components/BackSelect-Animati
 import BackgroundCircles from "../features/collection/components/BackSelect-Animation/BackgroundCircles";
 import LetterWriting from "../features/collection/components/Select/LetterWriting";
 import MusicList from "../features/collection/components/Select/MusicList";
-import { albumSelection, labelMap, letterSelection, phrasesSelection, playListSelection } from "../features/utils/data";
+import {
+  albumSelection,
+  labelMap,
+  letterSelection,
+  phrasesSelection,
+  playListSelection,
+} from "../features/utils/data";
 
 const backSelection = {
   colorful: <BackgroundColorful />,
@@ -123,7 +129,7 @@ export default function Page() {
         )}
       </div>
       <form>
-        <div className="flex flex-col justify-center items-center space-y-8 z-10">
+        <div className="flex flex-col justify-center items-center gap-5 z-10">
           {step === 1 && (
             <AlbumSelect
               {...register("editor")}
@@ -138,8 +144,7 @@ export default function Page() {
               {...register("phrases")}
               albumSelection={albumSelection}
               isEditor={selectedOptions.editor}
-              phrasesSelection={phrasesSelection
-              }
+              phrasesSelection={phrasesSelection}
               isPhrases={selectedOptions.phrases}
               onPhrasesChange={(phrases) =>
                 handleOptionChange("phrases", phrases)
@@ -159,13 +164,13 @@ export default function Page() {
             />
           )}
           {step === 4 && (
-            <>
-              <MusicList
-                playListSelection={playListSelection}
-                isMusic={selectedOptions.music}
-                onMusicChange={(music) => handleOptionChange("music", music)}
-              />
-            </>
+            <MusicList
+              {...register("music")}
+              playListSelection={playListSelection}
+              onMusicChange={(music) => {
+                handleOptionChange("music", music);
+              }}
+            />
           )}
 
           {step === 5 && (

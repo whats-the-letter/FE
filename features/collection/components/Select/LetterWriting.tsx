@@ -5,7 +5,6 @@ import Inputlabel from "../../../common/components/InputLabel";
 
 interface LetterWritingProps {
   isEditor: string;
-
   letterSelection: Record<string, string>;
   onLetterContentChange: (content: string) => void;
   onToChange: (to: string) => void;
@@ -55,11 +54,11 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
         <span className="text-lg text-center font-pretendard z-10">
           편지를 작성해주세요
         </span>
-        <span className="flex flex-row justify-center w-full text-right font-pretendard">
+        <span className="flex flex-row justify-center w-full text-left font-pretendard">
           <Inputlabel label="To." required>
             <Input
               ref={ref}
-              placeholder="보내는 사람"
+              placeholder="받는 사람을 입력하세요."
               onChange={handleToChange}
             />
           </Inputlabel>
@@ -87,9 +86,9 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
             resize-none bg-transparent z-0 outline-none"
           />
         </div>
-        <div className="flex flex-col itmes-center justify-between w-full text-right font-pretendard">
-          <Inputlabel label="From" required>
-            <Input placeholder="받는 사람" onChange={handleFromChange} />
+        <div className="flex flex-row justify-center w-full text-left font-pretendard">
+          <Inputlabel label="From." required>
+            <Input placeholder="보내는 사람을 입력하세요." onChange={handleFromChange} />
           </Inputlabel>
         </div>
       </>
