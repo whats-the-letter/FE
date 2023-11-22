@@ -9,35 +9,14 @@ import BackgroundColorful from "../features/collection/components/BackSelect-Ani
 import BackgroundSnow from "../features/collection/components/BackSelect-Animation/BackgroundSnow";
 import BackgroundCircles from "../features/collection/components/BackSelect-Animation/BackgroundCircles";
 import LetterWriting from "../features/collection/components/Select/LetterWriting";
-
-const albumSelection = {
-  "editor-love": "/assets/editor/editor-love.svg",
-  "editor-money": "/assets/editor/editor-money.svg",
-  "editor-success": "/assets/editor/editor-success.svg",
-  "editor-health": "/assets/editor/editor-health.svg",
-};
-
-const labelMap = {
-  "editor-love": "사랑",
-  "editor-money": "재물",
-  "editor-success": "성공",
-  "editor-health": "건강",
-};
-
-const phrasesSelection = {
-  "editor-1": "/assets/editor/editor-1.svg",
-  "editor-2": "/assets/editor/editor-2.svg",
-  "editor-3": "/assets/editor/editor-3.svg",
-  "editor-4": "/assets/editor/editor-4.svg",
-  "editor-5": "/assets/editor/editor-5.svg",
-};
-
-const letterSelection = {
-  "editor-love-letter": "/assets/letter/letter-love.svg",
-  "editor-money-letter": "/assets/letter/letter-money.svg",
-  "editor-success-letter": "/assets/letter/letter-success.svg",
-  "editor-health-letter": "/assets/letter/letter-health.svg",
-};
+import MusicList from "../features/collection/components/Select/MusicList";
+import {
+  albumSelection,
+  labelMap,
+  letterSelection,
+  phrasesSelection,
+  playListSelection,
+} from "../features/utils/data";
 
 const backSelection = {
   colorful: <BackgroundColorful />,
@@ -46,13 +25,19 @@ const backSelection = {
 };
 
 export default function Page() {
-  const { register, handleSubmit } = useForm({
+  const {
+    formState: { errors },
+    register,
+    handleSubmit,
+  } = useForm({
     defaultValues: {
       editor: "editor-love",
       phrases: "editor-1",
       back: "colorful",
       music: "",
       letter: "",
+      to: "",
+      from: "",
     },
   });
 
@@ -64,6 +49,11 @@ export default function Page() {
     back: "colorful",
     music: "",
     letter: "",
+  });
+
+  const [selectedInput, setSelectedInput] = useState({
+    to: "",
+    from: "",
   });
 
   const handleStepChange = (newStep) => {
@@ -84,22 +74,32 @@ export default function Page() {
     back: string;
     music: string;
     letter: string;
+    to: string;
+    from: string;
   }> = (data) => {
     data.editor = selectedOptions.editor;
     data.phrases = selectedOptions.phrases;
     data.back = selectedOptions.back;
     data.music = selectedOptions.music;
     data.letter = selectedOptions.letter;
+    data.to = selectedInput.to;
+    data.from = selectedInput.from;
+
     console.log(data);
   };
 
+  const onError = () => {};
   const handleOptionChange = (optionName: string, optionValue: string) => {
     setSelectedOptions({ ...selectedOptions, [optionName]: optionValue });
   };
 
+  const handleInputChange = (inputName: string, inputValue: string) => {
+    setSelectedInput({ ...selectedInput, [inputName]: inputValue });
+  };
+
   return (
-    <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm">
-      <div className="flex flex-row justify-between w-full max-w-sm px-8 py-2 z-10 mt-20 font-pretendard">
+    <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm space-y-4">
+      <div className="flex flex-row justify-between w-full max-w-sm px-8 z-10 font-pretendard">
         <button
           onClick={handlePrevious}
           className="flex flex-row items-center justify-between"
@@ -124,10 +124,12 @@ export default function Page() {
             />
           </button>
         )}
-        {step === 5 && <button onClick={handleSubmit(onSubmit)}>제출</button>}
+        {step === 5 && (
+          <button onClick={handleSubmit(onSubmit, onError)}>완성</button>
+        )}
       </div>
       <form>
-        <div className="flex flex-col justify-center items-center space-y-10 my-10 z-10">
+        <div className="flex flex-col justify-center items-center gap-5 z-10">
           {step === 1 && (
             <AlbumSelect
               {...register("editor")}
@@ -161,17 +163,28 @@ export default function Page() {
               onBackChange={(back) => handleOptionChange("back", back)}
             />
           )}
-          {step === 4 && <>음악 선택</>}
+          {step === 4 && (
+            <MusicList
+              {...register("music")}
+              playListSelection={playListSelection}
+              onMusicChange={(music) => {
+                handleOptionChange("music", music);
+              }}
+            />
+          )}
+
           {step === 5 && (
             <LetterWriting
               {...register("letter")}
               isEditor={selectedOptions.editor}
               letterSelection={letterSelection}
-              to="디뉴 아이들"
-              from="여경이"
               onLetterContentChange={(content) =>
                 handleOptionChange("letter", content)
               }
+              {...register("to")}
+              onToChange={(to) => handleInputChange("to", to)}
+              {...register("from")}
+              onFromChange={(from) => handleInputChange("from", from)}
             />
           )}
         </div>
