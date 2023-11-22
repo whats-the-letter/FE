@@ -86,35 +86,70 @@ const MusicList = ({ playListSelection }) => {
           alt="thumbnail"
           className="w-9 mr-4"
         />
-        <div className="flex flex-col justify-start items-start w-40">
-          <span className="text-white font-pretendard text-center text-sm">
-            {selectedVideo.name}
-          </span>
+        <div className="flex flex-col justify-start items-start w-40 overflow-hidden">
+          <div
+            className={`w-fit marquee ${isPlaying ? "playing" : ""}`}
+            style={{
+              animation: isPlaying ? "marequee 6s linear infinite" : "none",
+              transform: isPlaying ? "translateX(0)" : "none",
+            }}
+          >
+            <span className="text-white font-pretendard text-sm">
+              {selectedVideo.name}
+            </span>
+          </div>
           <span className="text-white font-pretendard text-center text-xs">
             {selectedVideo.artist}
           </span>
         </div>
 
+        <style jsx>{`
+          @keyframes marequee {
+            0% {
+              -webkit-transform: translate3d(0, 0, 0);
+              transform: translate3d(0, 0, 0);
+            }
+            100% {
+              -webkit-transform: translate3d(-100%, 0, 0);
+              transform: translate3d(-100%, 0, 0);
+            }
+          }
+
+          .marequee {
+            overflow: hidden;
+            white-space: nowrap;
+            will-change: transform;
+          }
+
+          .marequee.playing {
+            animation: textloop 5s linear infinite;
+          }
+
+          .mareuqee:not(.playing) {
+            animation-play-state: paused;
+          }
+        `}</style>
         <button
           type="button"
-          className="w-8 h-8 text-white this-button mr-2"
+          className="w-8 h-8 text-white this-button mx-2"
           onClick={handlePlayButtonClick}
         >
-          {/* <img
-                src="/assets/icons/play_button.svg"
-                alt="play-button"
-                className="w-8 h-8"
-              /> */}
-          ►
+          <img
+            src="/assets/icons/play_button.svg"
+            alt="play-button"
+            className="w-3"
+          />
         </button>
-
         <button
           type="button"
           className="text-white mr-4"
           onClick={() => setIsPlaying(false)}
         >
-          {/* <img src="/assets/icons/close.svg" alt="close" className="w-5" /> */}
-          ||
+          <img
+            src="/assets/icons/stop_button.svg"
+            alt="close"
+            className="w-3"
+          />
         </button>
       </div>
 
@@ -123,7 +158,7 @@ const MusicList = ({ playListSelection }) => {
           className="hidden"
           width="0"
           height="0"
-          src={`https://www.youtube.com/embed/${selectedVideoId}?autoplay=1&start=0`}
+          src={`https://www.youtube.com/embed/${selectedVideoId}?autoplay=1&start=0.5`}
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         />

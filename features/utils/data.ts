@@ -64,7 +64,7 @@ export const playListSelection = [
     id: 4,
     name: "크리스마스 재즈",
     artist: "혜림이",
-    youtubeUrlId: "npo7Kgsfvt0",
+    youtubeUrlId: "NJuSStkIZBg",
     thumbnail: "/assets/thumbnail_example.svg",
     category: "carol",
   },
