@@ -17,6 +17,7 @@ import {
   phrasesSelection,
   playListSelection,
 } from "../features/utils/data";
+import CompleteAlbum from "../features/collection/components/CompleteAlbum";
 
 const backSelection = {
   colorful: <BackgroundColorful />,
@@ -40,6 +41,16 @@ export default function Page() {
       from: "",
     },
   });
+
+  const [submittedAlbum, setSubmittedAlbum] = useState<{
+    editor: string;
+    phrases: string;
+    back: string;
+    music: string;
+    letter: string;
+    to: string;
+    from: string;
+  } | null>(null);
 
   const router = useRouter();
   const [step, setStep] = useState(1);
@@ -86,6 +97,7 @@ export default function Page() {
     data.from = selectedInput.from;
 
     console.log(data);
+    setSubmittedAlbum(data);
   };
 
   const onError = () => {};
@@ -125,7 +137,14 @@ export default function Page() {
           </button>
         )}
         {step === 5 && (
-          <button onClick={handleSubmit(onSubmit, onError)}>완성</button>
+          <button
+            onClick={() => {
+              handleStepChange(step + 1);
+              handleSubmit(onSubmit, onError);
+            }}
+          >
+            다음
+          </button>
         )}
       </div>
       <form>
@@ -189,6 +208,7 @@ export default function Page() {
           )}
         </div>
       </form>
+      {step === 6 && <CompleteAlbum submittedAlbum={submittedAlbum} />}
     </div>
   );
 }

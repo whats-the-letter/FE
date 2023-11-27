@@ -27,6 +27,36 @@ export const letterSelection = {
   "editor-health-letter": "/assets/letter/letter-health.svg",
 };
 
+export const infoSvg = {
+  lpBackground: {
+    pink: "/assets/main/preview/preview-pink.svg",
+    blue: "/assets/main/preview/preview-blue.svg",
+    silver: "/assets/main/preview/preview-silver.svg",
+    gold: "/assets/main/preview/preview-gold.svg",
+  },
+
+  lpDesign: {
+    "lp-luck": "/assets/lp/lp-luck.svg",
+    "lp-dragon": "/assets/lp/lp-dragon.svg",
+    "lp-dny": "/assets/lp/lp-dny.svg",
+    "lp-2024": "/assets/lp/lp-2024.svg",
+  },
+};
+
+export const playListButton = {
+  "playlist-pink": "/assets/playlist/playlist-pink.svg",
+  "playlist-blue": "/assets/playlist/playlist-blue.svg",
+  "playlist-silver": "/assets/playlist/playlist-silver.svg",
+  "playlist-gold": "/assets/playlist/playlist-gold.svg",
+};
+
+export const tapButton = {
+  "tap-pink": "/assets/main/tap-pink.svg",
+  "tap-blue": "/assets/main/tap-blue.svg",
+  "tap-silver": "/assets/main/tap-silver.svg",
+  "tap-gold": "/assets/main/tap-gold.svg",
+};
+
 export const playListSelection = [
   {
     id: 0,
