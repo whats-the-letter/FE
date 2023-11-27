@@ -4,36 +4,7 @@ import Input from "../features/common/components/Input";
 import RoundRadioButton from "../features/common/components/RoundRadioButton";
 import { useState } from "react";
 import PreivewInfo from "../features/collection/components/PreviewInfo";
-
-const infoSvg = {
-  lpBackground: {
-    pink: "/assets/main/preview/preview-pink.svg",
-    blue: "/assets/main/preview/preview-blue.svg",
-    silver: "/assets/main/preview/preview-silver.svg",
-    gold: "/assets/main/preview/preview-gold.svg",
-  },
-
-  lpDesign: {
-    "lp-luck": "/assets/lp/lp-luck.svg",
-    "lp-dragon": "/assets/lp/lp-dragon.svg",
-    "lp-dny": "/assets/lp/lp-dny.svg",
-    "lp-2024": "/assets/lp/lp-2024.svg",
-  },
-};
-
-const playListButton = {
-  "playlist-pink": "/assets/playlist/playlist-pink.svg",
-  "playlist-blue": "/assets/playlist/playlist-blue.svg",
-  "playlist-silver": "/assets/playlist/playlist-silver.svg",
-  "playlist-gold": "/assets/playlist/playlist-gold.svg",
-};
-
-const tapButton = {
-  "tap-pink": "/assets/main/tap-pink.svg",
-  "tap-blue": "/assets/main/tap-blue.svg",
-  "tap-silver": "/assets/main/tap-silver.svg",
-  "tap-gold": "/assets/main/tap-gold.svg",
-};
+import { infoSvg, playListButton, tapButton } from "../features/utils/data";
 
 export default function Page() {
   const {

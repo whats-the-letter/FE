@@ -19,3 +19,16 @@ html {
   src: url("/fonts/Pretendard-SemiBold.otf") format("opentype");
   font-style: normal;
 }
+
+@keyframes rotateInfinite {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-infinite {
+  animation: rotateInfinite 7s infinite linear;
+}

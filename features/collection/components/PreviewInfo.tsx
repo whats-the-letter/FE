@@ -26,44 +26,48 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
   onComplete,
 }) => {
   return (
-    <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm space-y-4">
-      <div>
+    <div
+      className="flex w-full h-full items-center justify-center max-w-[375px] max-h-[812px] mx-auto
+     "
+    >
+      <div className="relative max-w-[270px] max-h-[700px] mx-auto">
         <img
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover border-2 border"
           src={infoSvg.lpBackground[submittedData.lpBackground]}
           alt="preview-background"
         />
 
         <img
-          className="absolute top-[34%] left-[7%] animate-spin"
+          className="absolute top-1/3 left-5 w-[230px] h-[230px] rotate-infinite"
           src={infoSvg.lpDesign[submittedData.lpDesign]}
           alt="preview-lpDesign"
         />
         <img
           src={tapButton[`tap-${submittedData.lpBackground}`]}
           alt="tap-button"
-          className="absolute top-[37%] left-[60%] animate-bounce"
+          className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce w-[90px] h-[90px]
+          "
         />
         <img
           src="/assets/lp/lp-pin.svg"
           alt="lp-pin"
-          className="absolute top-[40%] left-[74%]"
+          className="absolute top-[40%] left-[65%] w-[100px] h-[160px]"
         />
         <img
-          className="absolute top-[69%] left-[8%]"
+          className="absolute top-[63%] left-[8%] w-[90px] h-[90px]"
           src={playListButton[`playlist-${submittedData.lpBackground}`]}
           alt="playlist"
         />
       </div>
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex space-x-4">
+      <div className="absolute bottom-7 left-1/2 transform -translate-x-1/2 flex space-x-4">
         <button
-          className="bg-black text-white px-4 py-2 rounded"
+          className="bg-black text-white w-full px-4 py-2 rounded"
           onClick={onPrevious}
         >
           이전
         </button>
         <button
-          className="bg-black text-white px-4 py-2 rounded"
+          className="bg-black text-white w-full px-4 py-2 rounded"
           onClick={onComplete}
           type="submit"
         >
