@@ -2,6 +2,38 @@ import { useForm } from "react-hook-form";
 import Inputlabel from "../features/common/components/InputLabel";
 import Input from "../features/common/components/Input";
 import RoundRadioButton from "../features/common/components/RoundRadioButton";
+import { useState } from "react";
+import PreivewInfo from "../features/collection/components/PreviewInfo";
+
+const infoSvg = {
+  lpBackground: {
+    pink: "/assets/main/preview/preview-pink.svg",
+    blue: "/assets/main/preview/preview-blue.svg",
+    silver: "/assets/main/preview/preview-silver.svg",
+    gold: "/assets/main/preview/preview-gold.svg",
+  },
+
+  lpDesign: {
+    "lp-luck": "/assets/lp/lp-luck.svg",
+    "lp-dragon": "/assets/lp/lp-dragon.svg",
+    "lp-dny": "/assets/lp/lp-dny.svg",
+    "lp-2024": "/assets/lp/lp-2024.svg",
+  },
+};
+
+const playListButton = {
+  "playlist-pink": "/assets/playlist/playlist-pink.svg",
+  "playlist-blue": "/assets/playlist/playlist-blue.svg",
+  "playlist-silver": "/assets/playlist/playlist-silver.svg",
+  "playlist-gold": "/assets/playlist/playlist-gold.svg",
+};
+
+const tapButton = {
+  "tap-pink": "/assets/main/tap-pink.svg",
+  "tap-blue": "/assets/main/tap-blue.svg",
+  "tap-silver": "/assets/main/tap-silver.svg",
+  "tap-gold": "/assets/main/tap-gold.svg",
+};
 
 export default function Page() {
   const {
@@ -21,6 +53,13 @@ export default function Page() {
     },
   });
 
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [submittedData, setSubmittedData] = useState<{
+    nickname: string;
+    lpBackground: string;
+    lpDesign: string;
+  } | null>(null);
+
   const isBackground = watch("lpBackground");
   const isLpDesign = watch("lpDesign");
 
@@ -30,141 +69,174 @@ export default function Page() {
     lpDesign: string;
   }) => {
     console.log(data);
+    setSubmittedData(data);
+    setIsFormSubmitted(true);
   };
 
   const onError = () => {};
+
+  const onPrevious = () => {
+    setSubmittedData(null);
+    setIsFormSubmitted(false);
+  };
+  const onComplete = () => {
+    console.log("Form submitted", submittedData);
+  };
 
   return (
     <>
       <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto space-y-10 max-w-screen-sm">
         <div className="w-full h-full flex flex-col justify-center m-auto">
-          <form onSubmit={handleSubmit(onSubmit, onError)}>
-            <div className=" z-10 m-auto px-8 space-y-10 my-20">
-              <div className="flex flex-col w-full space-y-6 ">
-                {/* 닉네임 입력 */}
-                <Inputlabel
-                  label="닉네임"
-                  required
-                  errorMessage={errors.nickname?.message}
-                >
-                  <Input
-                    {...register("nickname", {
-                      required: "닉네임은 필수 입력입니다.",
-                      minLength: {
-                        value: 2,
-                        message: "닉네임은 2글자 이상이어야 합니다.",
-                      },
-                      maxLength: {
-                        value: 6,
-                        message: "닉네임은 6글자 이하여야 합니다.",
-                      },
-                    })}
-                    type="text"
-                    placeholder="닉네임을 입력해주세요."
-                  ></Input>
-                </Inputlabel>
+          {!isFormSubmitted && (
+            <form onSubmit={handleSubmit(onSubmit, onError)}>
+              <div className=" z-10 m-auto px-8 space-y-10 my-20">
+                <div className="flex flex-col w-full space-y-6 ">
+                  {/* 닉네임 입력 */}
+                  <Inputlabel
+                    label="닉네임"
+                    required
+                    errorMessage={errors.nickname?.message}
+                  >
+                    <Input
+                      {...register("nickname", {
+                        required: "닉네임은 필수 입력입니다.",
+                        minLength: {
+                          value: 2,
+                          message: "닉네임은 2글자 이상이어야 합니다.",
+                        },
+                        maxLength: {
+                          value: 6,
+                          message: "닉네임은 6글자 이하여야 합니다.",
+                        },
+                      })}
+                      type="text"
+                      placeholder="닉네임을 입력해주세요."
+                    ></Input>
+                  </Inputlabel>
 
-                {/* 배경색 선택 */}
-                <Inputlabel
-                  label="배경색 선택"
-                  required
-                  errorMessage={errors.lpBackground?.message}
-                >
-                  <div className="flex flex-row space-x-4">
-                    <RoundRadioButton
-                      {...register("lpBackground")}
-                      label="bg-pink"
-                      isChecked={isBackground === "pink"}
-                      id="bg-pink"
-                      value="pink"
-                      className="bg-custom_pink"
-                      name="lpBackground"
-                    />
-                    <RoundRadioButton
-                      {...register("lpBackground")}
-                      label="bg-blue"
-                      isChecked={isBackground === "blue"}
-                      id="bg-blue"
-                      name="lpBackground"
-                      value="blue"
-                      className="bg-custom_skyblue"
-                    />
-                    <RoundRadioButton
-                      {...register("lpBackground")}
-                      label="bg-silver"
-                      isChecked={isBackground === "silver"}
-                      id="bg-silver"
-                      name="lpBackground"
-                      value="silver"
-                      className="bg-custom_silver"
-                    />
-                    <RoundRadioButton
-                      {...register("lpBackground")}
-                      label="bg-gold"
-                      isChecked={isBackground === "gold"}
-                      id="bg-gold"
-                      name="lpBackground"
-                      value="gold"
-                      className="bg-custom_gold"
-                    />
-                  </div>
-                </Inputlabel>
+                  {/* 배경색 선택 */}
+                  <Inputlabel
+                    label="배경색 선택"
+                    required
+                    errorMessage={errors.lpBackground?.message}
+                  >
+                    <div className="flex flex-row space-x-4">
+                      <RoundRadioButton
+                        {...register("lpBackground")}
+                        label="bg-pink"
+                        isChecked={isBackground === "pink"}
+                        id="bg-pink"
+                        value="pink"
+                        className="bg-custom_pink"
+                        name="lpBackground"
+                      />
+                      <RoundRadioButton
+                        {...register("lpBackground")}
+                        label="bg-blue"
+                        isChecked={isBackground === "blue"}
+                        id="bg-blue"
+                        name="lpBackground"
+                        value="blue"
+                        className="bg-custom_skyblue"
+                      />
+                      <RoundRadioButton
+                        {...register("lpBackground")}
+                        label="bg-silver"
+                        isChecked={isBackground === "silver"}
+                        id="bg-silver"
+                        name="lpBackground"
+                        value="silver"
+                        className="bg-custom_silver"
+                      />
+                      <RoundRadioButton
+                        {...register("lpBackground")}
+                        label="bg-gold"
+                        isChecked={isBackground === "gold"}
+                        id="bg-gold"
+                        name="lpBackground"
+                        value="gold"
+                        className="bg-custom_gold"
+                      />
+                    </div>
+                  </Inputlabel>
 
-                {/* LP 디자인 선택 */}
-                <Inputlabel
-                  label="LP 디자인 선택"
-                  required
-                  errorMessage={errors.lpDesign?.message}
+                  {/* LP 디자인 선택 */}
+                  <Inputlabel
+                    label="LP 디자인 선택"
+                    required
+                    errorMessage={errors.lpDesign?.message}
+                  >
+                    <div className="flex flex-row space-x-4 pb-10">
+                      <RoundRadioButton
+                        {...register("lpDesign")}
+                        label="lp-luck"
+                        isChecked={isLpDesign === "lp-luck"}
+                        id="lp-luck"
+                        name="lpDesign"
+                        value="lp-luck"
+                        className="bg-custom_red"
+                      />
+                      <RoundRadioButton
+                        {...register("lpDesign")}
+                        label="lp-dragon"
+                        isChecked={isLpDesign === "lp-dragon"}
+                        id="lp-dragon"
+                        name="lpDesign"
+                        value="lp-dragon"
+                        className="bg-custom_blue"
+                      />
+                      <RoundRadioButton
+                        {...register("lpDesign")}
+                        label="lp-dny"
+                        isChecked={isLpDesign === "lp-dny"}
+                        id="lp-dny"
+                        name="lpDesign"
+                        value="lp-dny"
+                        className="bg-custom_black"
+                      />
+                      <RoundRadioButton
+                        {...register("lpDesign")}
+                        label="lp-2024"
+                        isChecked={isLpDesign === "lp-2024"}
+                        id="lp-2024"
+                        name="lpDesign"
+                        value="lp-2024"
+                        className="bg-custom_gold"
+                      />
+                    </div>
+                  </Inputlabel>
+                </div>
+
+                <button
+                  // Navigate to PreviewInfo component
+                  type="button"
+                  onClick={() => {
+                    setSubmittedData(
+                      watch() as {
+                        nickname: string;
+                        lpBackground: string;
+                        lpDesign: string;
+                      }
+                    );
+                    setIsFormSubmitted(true);
+                  }}
+                  className="w-full h-10 bg-black text-white rounded"
                 >
-                  <div className="flex flex-row space-x-4 pb-10">
-                    <RoundRadioButton
-                      {...register("lpDesign")}
-                      label="lp-luck"
-                      isChecked={isLpDesign === "lp-luck"}
-                      id="lp-luck"
-                      name="lpDesign"
-                      value="lp-luck"
-                      className="bg-custom_red"
-                    />
-                    <RoundRadioButton
-                      {...register("lpDesign")}
-                      label="lp-dragon"
-                      isChecked={isLpDesign === "lp-dragon"}
-                      id="lp-dragon"
-                      name="lpDesign"
-                      value="lp-dragon"
-                      className="bg-custom_blue"
-                    />
-                    <RoundRadioButton
-                      {...register("lpDesign")}
-                      label="lp-dny"
-                      isChecked={isLpDesign === "lp-dny"}
-                      id="lp-dny"
-                      name="lpDesign"
-                      value="lp-dny"
-                      className="bg-custom_black"
-                    />
-                    <RoundRadioButton
-                      {...register("lpDesign")}
-                      label="lp-2024"
-                      isChecked={isLpDesign === "lp-2024"}
-                      id="lp-2024"
-                      name="lpDesign"
-                      value="lp-2024"
-                      className="bg-custom_gold"
-                    />
-                  </div>
-                </Inputlabel>
+                  미리보기
+                </button>
               </div>
-
-              <button
-                type="submit"
-                className="w-full h-10 bg-black text-white rounded"
-              >
-                미리보기
-              </button>
-            </div>
-          </form>
+            </form>
+          )}
+          {isFormSubmitted && submittedData && (
+            <PreivewInfo
+              infoSvg={infoSvg}
+              tapButton={tapButton}
+              playListButton={playListButton}
+              submittedData={submittedData}
+              onPrevious={onPrevious}
+              onComplete={onComplete}
+            />
+          )}
         </div>
       </div>
     </>
