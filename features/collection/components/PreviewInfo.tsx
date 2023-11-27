@@ -27,12 +27,12 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
 }) => {
   return (
     <div
-      className="flex w-full h-full items-center justify-center max-w-[375px] max-h-[812px] mx-auto
+      className="flex flex-col w-full h-full items-center justify-center m-auto p-4 gap-2
      "
     >
-      <div className="relative max-w-[270px] max-h-[700px] mx-auto">
+      <div className="relative max-w-[270px] max-h-[600px] mx-auto">
         <img
-          className="w-full h-full object-cover border-2 border"
+          className="w-full h-full object-cover "
           src={infoSvg.lpBackground[submittedData.lpBackground]}
           alt="preview-background"
         />
@@ -59,19 +59,22 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
           alt="playlist"
         />
       </div>
-      <div className="absolute bottom-7 left-1/2 transform -translate-x-1/2 flex space-x-4">
+      <div
+        className="flex w-full h-full max-w-sm items-center justify-between mx-auto gap-2
+      "
+      >
         <button
-          className="bg-black text-white w-full px-4 py-2 rounded"
+          className="bg-black text-white w-full p-2 rounded"
           onClick={onPrevious}
         >
           이전
         </button>
         <button
-          className="bg-black text-white w-full px-4 py-2 rounded"
+          className="bg-black text-white w-full p-2 rounded"
           onClick={onComplete}
           type="submit"
         >
-          제출
+          완료
         </button>
       </div>
     </div>
