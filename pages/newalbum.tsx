@@ -42,16 +42,6 @@ export default function Page() {
     },
   });
 
-  const [submittedAlbum, setSubmittedAlbum] = useState<{
-    editor: string;
-    phrases: string;
-    back: string;
-    music: string;
-    letter: string;
-    to: string;
-    from: string;
-  } | null>(null);
-
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [selectedOptions, setSelectedOptions] = useState({
@@ -88,6 +78,8 @@ export default function Page() {
     to: string;
     from: string;
   }> = (data) => {
+    setSubmittedData(data);
+    handleStepChange(step + 1);
     data.editor = selectedOptions.editor;
     data.phrases = selectedOptions.phrases;
     data.back = selectedOptions.back;
@@ -97,7 +89,6 @@ export default function Page() {
     data.from = selectedInput.from;
 
     console.log(data);
-    setSubmittedAlbum(data);
   };
 
   const onError = () => {};
@@ -109,9 +100,11 @@ export default function Page() {
     setSelectedInput({ ...selectedInput, [inputName]: inputValue });
   };
 
+  const [submittedData, setSubmittedData] = useState({});
+
   return (
-    <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm space-y-4">
-      <div className="flex flex-row justify-between w-full max-w-sm px-8 z-10 font-pretendard">
+    <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm space-y-4 font-semibold">
+      <div className="flex flex-row justify-between w-full max-w-sm px-8 z-10 font-pretendard ">
         <button
           onClick={handlePrevious}
           className="flex flex-row items-center justify-between"
@@ -138,12 +131,20 @@ export default function Page() {
         )}
         {step === 5 && (
           <button
-            onClick={() => {
-              handleStepChange(step + 1);
-              handleSubmit(onSubmit, onError);
-            }}
+            type="button"
+            className="flex flex-row items-center justify-between"
+            onClick={() => handleSubmit(onSubmit, onError)()}
           >
-            다음
+            제출
+          </button>
+        )}
+        {step === 6 && (
+          <button
+            type="button"
+            className="flex flex-row items-center justify-between"
+            onClick={() => router.push("/main")}
+          >
+            메인으로
           </button>
         )}
       </div>
@@ -208,7 +209,7 @@ export default function Page() {
           )}
         </div>
       </form>
-      {step === 6 && <CompleteAlbum submittedAlbum={submittedAlbum} />}
+      {step === 6 && <CompleteAlbum submittedAlbum={submittedData} />}
     </div>
   );
 }
