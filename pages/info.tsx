@@ -50,6 +50,7 @@ export default function Page() {
     setSubmittedData(null);
     setIsFormSubmitted(false);
   };
+
   const onComplete = () => {
     console.log("Form submitted", submittedData);
   };
@@ -179,17 +180,9 @@ export default function Page() {
                 </div>
 
                 <button
-                  // Navigate to PreviewInfo component
                   type="button"
                   onClick={() => {
-                    setSubmittedData(
-                      watch() as {
-                        nickname: string;
-                        lpBackground: string;
-                        lpDesign: string;
-                      }
-                    );
-                    setIsFormSubmitted(true);
+                    handleSubmit(onSubmit, onError)();
                   }}
                   className="w-full h-10 bg-black text-white rounded"
                 >
