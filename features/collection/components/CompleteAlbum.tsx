@@ -26,6 +26,21 @@ const backSelection = {
   circles: <BackgroundCircles />,
 };
 
+const completeSvg = {
+  editor: {
+    "editor-love": "/assets/editor/editor-love-complete.svg",
+    "editor-money": "/assets/editor/editor-money-complete.svg",
+    "editor-success": "/assets/editor/editor-success-complete.svg",
+    "editor-health": "/assets/editor/editor-health-complete.svg",
+  },
+  deco: {
+    "editor-love": "/assets/editor/editor-deco-love.svg",
+    "editor-money": "/assets/editor/editor-deco-money.svg",
+    "editor-success": "/assets/editor/editor-deco-success.svg",
+    "editor-health": "/assets/editor/editor-deco-health.svg",
+  },
+};
+
 const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -51,12 +66,18 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
         >
           <div className={`card ${isFlipped ? "flipped" : ""}`}>
             <div className="card-front z-10">
-              <img src={albumSelection[submittedAlbum.editor]} alt="editor" />
+              <img src={completeSvg.editor[submittedAlbum.editor]} />
+              <img
+                src={completeSvg.deco[submittedAlbum.editor]}
+                className="z-20 absolute top-[60%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                alt="deco"
+              />
               <img
                 src={phrasesSelection[submittedAlbum.phrases]}
                 className="absolute top-[25%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                 alt="phrases"
               />
+              
             </div>
             <div className="card-back">
               <img src={letterSelection[`${submittedAlbum.editor}-letter`]} />
