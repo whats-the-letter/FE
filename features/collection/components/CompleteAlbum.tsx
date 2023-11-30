@@ -13,7 +13,13 @@ interface CompletedAlbumProps {
     editor: string;
     phrases: string;
     back: string;
-    music: string;
+    music: {
+      id: number;
+      name: string;
+      artist: string;
+      thumbnail: string;
+      category: string;
+    };
     letter: string;
     to: string;
     from: string;
@@ -61,7 +67,7 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
         </span>
 
         <div
-          className="z-10 relative cursor-pointer perspective-500 h-[280px] w-[280px]"
+          className="z-10 relative cursor-pointer perspective-500 h-[288px] w-[288px]"
           onClick={handleCardClick}
         >
           <div className={`card ${isFlipped ? "flipped" : ""}`}>
@@ -69,15 +75,32 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
               <img src={completeSvg.editor[submittedAlbum.editor]} />
               <img
                 src={completeSvg.deco[submittedAlbum.editor]}
-                className="z-20 absolute top-[60%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                className="z-20 absolute top-[57%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                 alt="deco"
               />
               <img
                 src={phrasesSelection[submittedAlbum.phrases]}
-                className="absolute top-[25%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                className="absolute top-[23%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                 alt="phrases"
               />
-              
+              <div className="w-36 absolute top-[90%] left-[36%] transform -translate-x-1/2 -translate-y-1/2 flex text-[8px]">
+                <img src="/assets/icons/bracket_left.svg"
+                className="mr-0.5" />
+                <span
+                  className="truncate inline-block text-center whitespace-nowrap overflow-hidden text-ellipsis
+                "
+                >
+                  <strong>{submittedAlbum.musicInfo.name} </strong> -
+                  <strong> {submittedAlbum.musicInfo.artist}</strong>
+                </span>
+                <img src="/assets/icons/bracket_right.svg" className="ml-0.5" />
+              </div>
+
+              <img
+                className="absolute top-[61%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[130px] h-[130px] rounded-full"
+                src={submittedAlbum.musicInfo.thumbnail}
+                alt="music-thumbnail"
+              />
             </div>
             <div className="card-back">
               <img src={letterSelection[`${submittedAlbum.editor}-letter`]} />

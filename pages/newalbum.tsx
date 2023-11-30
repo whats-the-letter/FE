@@ -69,6 +69,11 @@ export default function Page() {
     }
   };
 
+  const handleMusicChange = (musicData) => {
+    setSelectedOptions({ ...selectedOptions, music: musicData.music });
+    console.log(musicData);
+  };
+
   const onSubmit: SubmitHandler<{
     editor: string;
     phrases: string;
@@ -77,6 +82,13 @@ export default function Page() {
     letter: string;
     to: string;
     from: string;
+    musicInfo: {
+      id: number;
+      name: string;
+      artist: string;
+      thumbnail: string;
+      category: string;
+    };
   }> = (data) => {
     setSubmittedData(data);
     handleStepChange(step + 1);
@@ -87,6 +99,9 @@ export default function Page() {
     data.letter = selectedOptions.letter;
     data.to = selectedInput.to;
     data.from = selectedInput.from;
+    data.musicInfo = playListSelection.find(
+      (item) => item.youtubeUrlId === selectedOptions.music
+    );
 
     console.log(data);
   };
@@ -178,9 +193,7 @@ export default function Page() {
             <MusicList
               {...register("music")}
               playListSelection={playListSelection}
-              onMusicChange={(music) => {
-                handleOptionChange("music", music);
-              }}
+              onMusicChange={handleMusicChange}
             />
           )}
 
