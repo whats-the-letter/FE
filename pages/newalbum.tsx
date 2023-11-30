@@ -138,15 +138,6 @@ export default function Page() {
             제출
           </button>
         )}
-        {step === 6 && (
-          <button
-            type="button"
-            className="flex flex-row items-center justify-between"
-            onClick={() => router.push("/main")}
-          >
-            메인으로
-          </button>
-        )}
       </div>
       <form>
         <div className="flex flex-col justify-center items-center gap-5 z-10">
