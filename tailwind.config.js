@@ -19,6 +19,8 @@ module.exports = {
       },
       fontFamily: {
         pretendard: ["Pretendard", "sans-serif"],
+
+        
       },
     },
   },

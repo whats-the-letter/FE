@@ -25,7 +25,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           {...props}
           ref={ref}
           className={classNames(
-            "w-full h-10 input-underline placeholder:text-left",
+            "w-full h-10 input-underline placeholder:text-left font-pretendard",
             "focus:outline-none",
             "placeholder:text-gray-300"
           )}
@@ -33,7 +33,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         />
       </div>
       {errorMessage !== "" && (
-        <p className="text-red-500 text-sm">{errorMessage}</p>
+        <p className="text-red-500 text-sm font-pretendard">{errorMessage}</p>
       )}
     </>
   );

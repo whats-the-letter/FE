@@ -60,17 +60,17 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
         />
       </div>
       <div
-        className="flex w-full h-full max-w-sm items-center justify-between mx-auto gap-2
+        className="flex w-full h-full max-w-sm items-center justify-center mx-auto gap-4
       "
       >
         <button
-          className="bg-black text-white w-full p-2 rounded"
+          className="bg-[#E2E2E2] text-black w-full max-w-[140px] p-2 rounded font-pretendard"
           onClick={onPrevious}
         >
           이전
         </button>
         <button
-          className="bg-black text-white w-full p-2 rounded"
+          className="bg-black text-white w-full max-w-[140px] p-2 rounded font-pretendard"
           onClick={onComplete}
           type="submit"
         >

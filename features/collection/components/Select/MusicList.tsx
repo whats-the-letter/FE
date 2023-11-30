@@ -10,7 +10,12 @@ interface MusicListProps {
     thumbnail: string;
     category: string;
   }[];
-  onMusicChange: (music: string) => void;
+  onMusicChange: (musicData: {
+    music: string;
+    artist: string;
+    name: string;
+    thumbnail: string;
+  }) => void;
 }
 
 //eslint-disable-next-line react/display-name
@@ -42,8 +47,16 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
     }, [selectedVideoId, playListSelection]);
 
     const handleMusicBoxClick = (videoId) => {
+      const selectedMusic = playListSelection.find(
+        (item) => item.youtubeUrlId === videoId
+      );
       setSelectedVideoId(videoId);
-      onMusicChange(videoId);
+      onMusicChange({
+        music: videoId,
+        artist: selectedMusic.artist,
+        name: selectedMusic.name,
+        thumbnail: selectedMusic.thumbnail,
+      });
       setIsPlaying(false);
     };
 

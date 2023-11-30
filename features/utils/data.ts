@@ -20,6 +20,8 @@ export const phrasesSelection = {
   "editor-5": "/assets/editor/editor-5.svg",
 };
 
+
+
 export const letterSelection = {
   "editor-love-letter": "/assets/letter/letter-love.svg",
   "editor-money-letter": "/assets/letter/letter-money.svg",
