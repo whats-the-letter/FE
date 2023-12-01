@@ -27,13 +27,21 @@ interface CompletedAlbumProps {
   };
 }
 
-const backSelection = {
+const backSelection: Record<string, React.JSX.Element> = {
   colorful: <BackgroundColorful />,
   snow: <BackgroundSnow />,
   circles: <BackgroundCircles />,
 };
-
-const completeSvg = {
+const completeSvg: {
+  editor: Record<
+    "editor-love" | "editor-money" | "editor-success" | "editor-health",
+    string
+  >;
+  deco: Record<
+    "editor-love" | "editor-money" | "editor-success" | "editor-health",
+    string
+  >;
+} = {
   editor: {
     "editor-love": "/assets/editor/editor-love-complete.svg",
     "editor-money": "/assets/editor/editor-money-complete.svg",

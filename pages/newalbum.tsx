@@ -15,9 +15,9 @@ import {
   labelMap,
   letterSelection,
   phrasesSelection,
-  playListSelection,
 } from "../features/utils/data";
 import CompleteAlbum from "../features/collection/components/CompleteAlbum";
+import { playListSelection } from "../features/utils/musicData";
 
 const backSelection = {
   colorful: <BackgroundColorful />,
@@ -35,7 +35,7 @@ export default function Page() {
       editor: "editor-love",
       phrases: "editor-1",
       back: "colorful",
-      music: "",
+      music: playListSelection[0].youtubeUrlId,
       letter: "",
       to: "",
       from: "",
@@ -48,7 +48,7 @@ export default function Page() {
     editor: "editor-love",
     phrases: "editor-1",
     back: "colorful",
-    music: "",
+    music: playListSelection[0].youtubeUrlId,
     letter: "",
   });
 
@@ -71,7 +71,6 @@ export default function Page() {
 
   const handleMusicChange = (musicData) => {
     setSelectedOptions({ ...selectedOptions, music: musicData.music });
-    console.log(musicData);
   };
 
   const onSubmit: SubmitHandler<{
@@ -84,6 +83,7 @@ export default function Page() {
     from: string;
     musicInfo: {
       id: number;
+      youtubeUrlId: string;
       name: string;
       artist: string;
       thumbnail: string;
@@ -150,7 +150,7 @@ export default function Page() {
             className="flex flex-row items-center justify-between"
             onClick={() => handleSubmit(onSubmit, onError)()}
           >
-            제출
+            완료
           </button>
         )}
       </div>

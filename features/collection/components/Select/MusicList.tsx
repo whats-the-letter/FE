@@ -11,7 +11,7 @@ interface MusicListProps {
     category: string;
   }[];
   onMusicChange: (musicData: {
-    music: string;
+    id: number;
     artist: string;
     name: string;
     thumbnail: string;
