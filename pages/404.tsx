@@ -14,8 +14,8 @@ export default function Custom404() {
           
         </div>
 
-        <Link href="/">
-          <div className="bg-black rounded-md text-center w-72 h-10 p-2  m-auto  items-center text-white text-sm font-pretendard font-semibold">
+        <Link href="/main">
+          <div className="bg-black rounded-md text-center w-64 h-10 p-2  m-auto  items-center text-white text-sm font-pretendard font-semibold">
             <span>메인으로 돌아가기</span>
           </div>
         </Link>
