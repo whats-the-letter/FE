@@ -7,6 +7,7 @@ import {
 import BackgroundColorful from "./BackSelect-Animation/BackgroundColorful";
 import BackgroundSnow from "./BackSelect-Animation/BackgroundSnow";
 import BackgroundCircles from "./BackSelect-Animation/BackgroundCircles";
+import { useModal } from "../../common/components/ShareModal";
 
 interface CompletedAlbumProps {
   submittedAlbum: {
@@ -26,13 +27,21 @@ interface CompletedAlbumProps {
   };
 }
 
-const backSelection = {
+const backSelection: Record<string, React.JSX.Element> = {
   colorful: <BackgroundColorful />,
   snow: <BackgroundSnow />,
   circles: <BackgroundCircles />,
 };
-
-const completeSvg = {
+const completeSvg: {
+  editor: Record<
+    "editor-love" | "editor-money" | "editor-success" | "editor-health",
+    string
+  >;
+  deco: Record<
+    "editor-love" | "editor-money" | "editor-success" | "editor-health",
+    string
+  >;
+} = {
   editor: {
     "editor-love": "/assets/editor/editor-love-complete.svg",
     "editor-money": "/assets/editor/editor-money-complete.svg",
@@ -52,6 +61,17 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
 
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
+  };
+
+  const { open } = useModal({
+    title: "공유하기",
+    description: "* 공유를 하지 않으면 앨범은 영영 닿지 못할 거예요.",
+    showCloseBtn: true,
+  });
+
+  const onClickModal = async () => {
+    const result = await open();
+    if (result) await open();
   };
 
   return (
@@ -84,8 +104,7 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
                 alt="phrases"
               />
               <div className="w-36 absolute top-[90%] left-[36%] transform -translate-x-1/2 -translate-y-1/2 flex text-[8px]">
-                <img src="/assets/icons/bracket_left.svg"
-                className="mr-0.5" />
+                <img src="/assets/icons/bracket_left.svg" className="mr-0.5" />
                 <span
                   className="truncate inline-block text-center whitespace-nowrap overflow-hidden text-ellipsis
                 "
@@ -119,7 +138,10 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
           앨범을 클릭하여 뒷면을 확인하세요!
         </span>
 
-        <button className="bg-black text-white w-full max-w-sm h-9 rounded z-10 m-auto ">
+        <button
+          onClick={onClickModal}
+          className="bg-black text-white w-full max-w-sm h-9 rounded z-10 m-auto "
+        >
           <span className="text-sm">보내기</span>
         </button>
       </div>
