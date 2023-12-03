@@ -1,15 +1,23 @@
+import { useState } from "react";
 import Link from "next/link";
+import Sidebar from "../../features/collection/components/Sidebar";
+
 
 export default function Page() {
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const collection = {
     number: 10,
+  };
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
   };
 
   return (
     <>
       <div className="flex flex-col w-full max-w-sm h-screen items-center justify-center z-10 m-auto p-4 px-10 space-y-10 font-pretendard font-semibold ">
         <div className="flex justify-start items-center w-full">
-          <button type="button">
+          <button type="button" onClick={toggleSidebar}>
             <img src="/assets/icons/menu.svg" alt="menu" className="w-6 h-6" />
           </button>
         </div>
@@ -32,6 +40,7 @@ export default function Page() {
           </button>
         </Link>
       </div>
+      <Sidebar isSidebarOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} />
     </>
   );
 }
