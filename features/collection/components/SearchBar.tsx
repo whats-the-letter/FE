@@ -9,8 +9,23 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   return (
-    <div className="search-bar">
-      <input type="text" placeholder="Search..." onChange={handleInputChange} />
+    <div
+      className="w-full h-8 bg-transparent rounded-full flex items-center justify-between border border-black px-3
+    "
+    >
+      <input
+        type="text"
+        className="w-full h-full bg-transparent text-left text-sm font-pretendard font-normal placeholder:custom_gray placeholder:font-pretendard placeholder:font-normal focus:outline-none
+        "
+        placeholder="가수/제목 검색"
+        onChange={handleInputChange}
+      />
+      <img
+        src="/assets/icons/search.svg"
+        alt="search"
+        className="w-4 h-4 
+      "
+      />
     </div>
   );
 };
