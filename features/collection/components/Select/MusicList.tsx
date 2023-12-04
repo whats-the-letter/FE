@@ -89,38 +89,53 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
         </span>
         <SearchBar onSearch={handleSearch} />
         <div className="w-full h-80 overflow-y-scroll">
-          {filteredPlayList.map((item) => (
-            <div
-              key={item.id}
-              className="flex gap-4 items-center w-full h-[70px] hover:bg-gray-200 cursor-pointer px-2"
-              onClick={() => handleMusicBoxClick(item.youtubeUrlId)}
-            >
-              {selectedVideoId === item.youtubeUrlId ? (
-                <img
-                  src="/assets/icons/selected_music.svg"
-                  alt="selected-music"
-                  className="w-4"
-                />
-              ) : (
-                <img
-                  src="/assets/icons/unselected_music.svg"
-                  alt="unselected-music"
-                  className="w-4"
-                />
-              )}
-              <div className="flex flex-grow items-center justify-between">
-                <img
-                  src={item.thumbnail}
-                  alt="thumbnail"
-                  className="w-12 h-12"
-                />
-                <div className="flex-grow flex flex-col items-start justify-start font-pretendard mx-8">
-                  <h2 className="text-sm">{item.name}</h2>
-                  <h2 className="text-custom_gray text-sm">{item.artist}</h2>
+          {filteredPlayList.length === 0 ? (
+            <div className="flex flex-col items-center justify-start w-full h-full gap-5 px-2">
+              <p className="text-center text-custom_gray font-pretendard font-semibold my-4">
+                찾으시는 노래가 없으신가요?
+                <br />
+                앨범을 완성한 후 새로운 노래를 추천해 주세요!
+              </p>
+              <img
+                src="/assets/icons/empty_music.svg"
+                alt="empty-music"
+                className="w-20 h-20 "
+              />
+            </div>
+          ) : (
+            filteredPlayList.map((item) => (
+              <div
+                key={item.id}
+                className="flex gap-4 items-center w-full h-[70px] hover:bg-gray-200 cursor-pointer px-2"
+                onClick={() => handleMusicBoxClick(item.youtubeUrlId)}
+              >
+                {selectedVideoId === item.youtubeUrlId ? (
+                  <img
+                    src="/assets/icons/selected_music.svg"
+                    alt="selected-music"
+                    className="w-4"
+                  />
+                ) : (
+                  <img
+                    src="/assets/icons/unselected_music.svg"
+                    alt="unselected-music"
+                    className="w-4"
+                  />
+                )}
+                <div className="flex flex-grow items-center justify-between">
+                  <img
+                    src={item.thumbnail}
+                    alt="thumbnail"
+                    className="w-12 h-12"
+                  />
+                  <div className="flex-grow flex flex-col items-start justify-start font-pretendard mx-8">
+                    <h2 className="text-sm">{item.name}</h2>
+                    <h2 className="text-custom_gray text-sm">{item.artist}</h2>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
         {selectedVideo && (
           <div className="bg-black w-full h-16 flex flex-row justify-between items-center px-2">
