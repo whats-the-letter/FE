@@ -91,16 +91,16 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
         <div className="w-full h-80 overflow-y-scroll">
           {filteredPlayList.length === 0 ? (
             <div className="flex flex-col items-center justify-center w-full h-full gap-5 px-2">
-              <p className="text-center text-custom_gray font-pretendard font-semibold my-4">
-                찾으시는 노래가 없으신가요?
-                <br />
-                앨범을 완성한 후 새로운 노래를 추천해 주세요!
-              </p>
               <img
                 src="/assets/icons/empty_music.svg"
                 alt="empty-music"
                 className="w-20 h-20 "
               />
+              <p className="text-center text-custom_gray font-pretendard font-semibold mb-4">
+                찾으시는 노래가 없으신가요?
+                <br />
+                앨범을 완성한 후 새로운 노래를 추천해 주세요!
+              </p>
             </div>
           ) : (
             filteredPlayList.map((item) => (
