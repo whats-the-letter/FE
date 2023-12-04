@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import axios from "axios";
+import SearchBar from "../SearchBar";
 
 interface MusicListProps {
   playListSelection: {
@@ -26,6 +27,16 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
       playListSelection[0].youtubeUrlId
     );
     const [isPlaying, setIsPlaying] = useState(false);
+    const [filteredPlayList, setFilteredPlayList] = useState(playListSelection);
+
+    const handleSearch = (keyword: string) => {
+      const filteredList = playListSelection.filter(
+        (item) =>
+          item.name.toLowerCase().includes(keyword.toLowerCase()) ||
+          item.artist.toLowerCase().includes(keyword.toLowerCase())
+      );
+      setFilteredPlayList(filteredList);
+    };
 
     const fetchVideoData = async (videoId) => {
       try {
@@ -76,43 +87,55 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
         <span className="text-lg text-center font-pretendard z-10">
           음악을 선택해주세요
         </span>
-        <button className="bg-black text-white w-16 h-8 rounded-full">
-          <span className="text-sm">재물</span>
-        </button>
-
+        <SearchBar onSearch={handleSearch} />
         <div className="w-full h-80 overflow-y-scroll">
-          {playListSelection.map((item) => (
-            <div
-              key={item.id}
-              className="flex gap-4 items-center w-full h-[70px] hover:bg-gray-200 cursor-pointer px-2"
-              onClick={() => handleMusicBoxClick(item.youtubeUrlId)}
-            >
-              {selectedVideoId === item.youtubeUrlId ? (
-                <img
-                  src="/assets/icons/selected_music.svg"
-                  alt="selected-music"
-                  className="w-4"
-                />
-              ) : (
-                <img
-                  src="/assets/icons/unselected_music.svg"
-                  alt="unselected-music"
-                  className="w-4"
-                />
-              )}
-              <div className="flex flex-grow items-center justify-between">
-                <img
-                  src={item.thumbnail}
-                  alt="thumbnail"
-                  className="w-12 h-12"
-                />
-                <div className="flex-grow flex flex-col items-start justify-start font-pretendard mx-8">
-                  <h2 className="text-sm">{item.name}</h2>
-                  <h2 className="text-custom_gray text-sm">{item.artist}</h2>
+          {filteredPlayList.length === 0 ? (
+            <div className="flex flex-col items-center justify-center w-full h-full gap-5 px-2">
+              <img
+                src="/assets/icons/empty_music.svg"
+                alt="empty-music"
+                className="w-20 h-20 "
+              />
+              <p className="text-center text-custom_gray font-pretendard font-semibold mb-4">
+                찾으시는 노래가 없으신가요?
+                <br />
+                앨범을 완성한 후 새로운 노래를 추천해 주세요!
+              </p>
+            </div>
+          ) : (
+            filteredPlayList.map((item) => (
+              <div
+                key={item.id}
+                className="flex gap-4 items-center w-full h-[70px] hover:bg-gray-200 cursor-pointer px-2"
+                onClick={() => handleMusicBoxClick(item.youtubeUrlId)}
+              >
+                {selectedVideoId === item.youtubeUrlId ? (
+                  <img
+                    src="/assets/icons/selected_music.svg"
+                    alt="selected-music"
+                    className="w-4"
+                  />
+                ) : (
+                  <img
+                    src="/assets/icons/unselected_music.svg"
+                    alt="unselected-music"
+                    className="w-4"
+                  />
+                )}
+                <div className="flex flex-grow items-center justify-between">
+                  <img
+                    src={item.thumbnail}
+                    alt="thumbnail"
+                    className="w-12 h-12"
+                  />
+                  <div className="flex-grow flex flex-col items-start justify-start font-pretendard mx-8">
+                    <h2 className="text-sm">{item.name}</h2>
+                    <h2 className="text-custom_gray text-sm">{item.artist}</h2>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
         {selectedVideo && (
           <div className="bg-black w-full h-16 flex flex-row justify-between items-center px-2">
