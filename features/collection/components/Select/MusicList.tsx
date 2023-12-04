@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import axios from "axios";
+import SearchBar from "../SearchBar";
 
 interface MusicListProps {
   playListSelection: {
@@ -26,6 +27,16 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
       playListSelection[0].youtubeUrlId
     );
     const [isPlaying, setIsPlaying] = useState(false);
+    const [filteredPlayList, setFilteredPlayList] = useState(playListSelection);
+
+    const handleSearch = (keyword: string) => {
+      const filteredList = playListSelection.filter(
+        (item) =>
+          item.name.toLowerCase().includes(keyword.toLowerCase()) ||
+          item.artist.toLowerCase().includes(keyword.toLowerCase())
+      );
+      setFilteredPlayList(filteredList);
+    };
 
     const fetchVideoData = async (videoId) => {
       try {
@@ -76,12 +87,9 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
         <span className="text-lg text-center font-pretendard z-10">
           음악을 선택해주세요
         </span>
-        <button className="bg-black text-white w-16 h-8 rounded-full">
-          <span className="text-sm">재물</span>
-        </button>
-
+        <SearchBar onSearch={handleSearch} />
         <div className="w-full h-80 overflow-y-scroll">
-          {playListSelection.map((item) => (
+          {filteredPlayList.map((item) => (
             <div
               key={item.id}
               className="flex gap-4 items-center w-full h-[70px] hover:bg-gray-200 cursor-pointer px-2"
