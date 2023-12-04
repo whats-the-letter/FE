@@ -90,7 +90,7 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
         <SearchBar onSearch={handleSearch} />
         <div className="w-full h-80 overflow-y-scroll">
           {filteredPlayList.length === 0 ? (
-            <div className="flex flex-col items-center justify-start w-full h-full gap-5 px-2">
+            <div className="flex flex-col items-center justify-center w-full h-full gap-5 px-2">
               <p className="text-center text-custom_gray font-pretendard font-semibold my-4">
                 찾으시는 노래가 없으신가요?
                 <br />
