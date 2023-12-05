@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { KAKAO_AUTH_URL } from "../apis/auth";
 import LoginPage from "./login";
 
 export default function Home() {
@@ -12,12 +14,16 @@ export default function Home() {
           <span>마음을 전달해보는 건 어떨까요?</span>
         </div>
 
-        <button className="bg-[#FAE100] rounded-md text-center w-full max-w-sm h-10 p-2 px-4 flex items-center">
-          <img src="/assets/icons/kakao.svg" alt="kakao" />
-          <p className="text-center text-[#371D1E] text-base m-auto font-pretendard font-semibold">
-            카카오로 시작하기
-          </p>
-        </button>
+        <Link href={KAKAO_AUTH_URL}>
+          <button className="bg-[#FAE100] 
+          rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center">
+            <img src="/assets/icons/kakao.svg" alt="kakao" />
+
+            <p className="text-center text-[#371D1E] text-base m-auto font-pretendard font-semibold">
+              카카오로 시작하기
+            </p>
+          </button>
+        </Link>
       </div>
     </>
   );
