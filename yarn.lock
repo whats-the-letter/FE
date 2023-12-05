@@ -216,6 +216,18 @@
   dependencies:
     tslib "^2.4.0"
 
+"@tanstack/query-core@5.12.1":
+  version "5.12.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.12.1.tgz#2e04b8ab7a04b2f2cfe77c2b0c9b982477373e06"
+  integrity sha512-WbZztNmKq0t6QjdNmHzezbi/uifYo9j6e2GLJkodsYaYUlzMbAp91RDyeHkIZrm7EfO4wa6Sm5sxJZm5SPlh6w==
+
+"@tanstack/react-query@^5.12.2":
+  version "5.12.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.12.2.tgz#42b39a1ccc2bdf44137921c2395902ed4239d7eb"
+  integrity sha512-BeWZu8zVFH20oRc+S/K9ADPgWjEzP/XQCGBNz5IbApUwPQAdwkQYbXODVL5AyAlWiSxhx+P2xlARPBApj2Yrog==
+  dependencies:
+    "@tanstack/query-core" "5.12.1"
+
 "@toss/use-overlay@^1.3.8":
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/@toss/use-overlay/-/use-overlay-1.3.8.tgz#5a5dd2d042e9d6f1208d1898c46a754ee7397045"
@@ -558,10 +570,10 @@ axe-core@^4.6.2:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.8.0.tgz#038c9e586732c791c0d9cecf7ed6434c4e8d497b"
   integrity sha512-ZtlVZobOeDQhb/y2lMK6mznDw7TJHDNcKx5/bbBkFvArIQ5CVFhSI6hWWQnMx9I8cNmNmZ30wpDyOC2E2nvgbQ==
 
-axios@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.0.tgz#f1e5292f26b2fd5c2e66876adc5b06cdbd7d2102"
-  integrity sha512-EZ1DYihju9pwVB+jg67ogm+Tmqc6JmhamRN6I4Zt8DfZu5lbcQGw3ozH9lFejSJgs/ibaef3A9PMXPLeefFGJg==
+axios@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.2.tgz#de67d42c755b571d3e698df1b6504cde9b0ee9f2"
+  integrity sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -726,6 +738,11 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
+
+cookie@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
+  integrity sha512-+IJOX0OqlHCszo2mBUq+SrEbCj6w7Kpffqx60zYbPTFaO4+yYgRjHwcZNpWvaTylDHaV7PPmBHzSecZiMhtPgw==
 
 copy-anything@^2.0.1:
   version "2.0.6"
@@ -2529,6 +2546,14 @@ queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
+
+react-cookies@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-cookies/-/react-cookies-0.1.1.tgz#2a35807e04f5a13f58ccd1a9fb66574506873c88"
+  integrity sha512-PP75kJ4vtoHuuTdq0TAD3RmlAv7vuDQh9fkC4oDlhntgs9vX1DmREomO0Y1mcQKR9nMZ6/zxoflaMJ3MAmF5KQ==
+  dependencies:
+    cookie "^0.3.1"
+    object-assign "^4.1.1"
 
 react-dom@^18.2.0:
   version "18.2.0"
