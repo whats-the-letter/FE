@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import EditorRadioButton from "../../../common/components/EditorRadioButton";
+import EditorRadioButton from "../../../common/EditorRadioButton";
 
 interface BackSelectProps extends React.InputHTMLAttributes<HTMLInputElement> {
   backSelection: Record<string, JSX.Element>;

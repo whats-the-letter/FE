@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
-import Sidebar from "../../features/collection/components/Sidebar";
-
+import Sidebar from "../../features/components/collection/components/Sidebar";
 
 export default function Page() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);

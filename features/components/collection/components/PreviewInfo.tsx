@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 interface PreivewInfoProps {
@@ -64,18 +65,21 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
       "
       >
         <button
-          className="bg-[#E2E2E2] text-black w-full max-w-[140px] p-2 rounded font-pretendard"
+          className="bg-[#E2E2E2] text-black w-40 max-w-[140px] p-2 rounded font-pretendard"
           onClick={onPrevious}
         >
           이전
         </button>
-        <button
-          className="bg-black text-white w-full max-w-[140px] p-2 rounded font-pretendard"
-          onClick={onComplete}
-          type="submit"
-        >
-          완료
-        </button>
+
+        <Link href="/main">
+          <button
+            className="bg-black text-white w-40 max-w-[140px] p-2 rounded font-pretendard"
+            onClick={onComplete}
+            type="submit"
+          >
+            완료
+          </button>
+        </Link>
       </div>
     </div>
   );

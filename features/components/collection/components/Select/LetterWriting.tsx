@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from "react";
-import { countCharacters, truncateContent } from "../../../utils/countTexts";
-import Input from "../../../common/components/Input";
-import Inputlabel from "../../../common/components/InputLabel";
+import { countCharacters, truncateContent } from "../../../../utils/countTexts";
+import Input from "../../../common/Input";
+import Inputlabel from "../../../common/InputLabel";
 
 interface LetterWritingProps {
   isEditor: string;
@@ -88,7 +88,10 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
         </div>
         <div className="flex flex-row justify-center w-full text-left font-pretendard">
           <Inputlabel label="From." required>
-            <Input placeholder="보내는 사람을 입력하세요." onChange={handleFromChange} />
+            <Input
+              placeholder="보내는 사람을 입력하세요."
+              onChange={handleFromChange}
+            />
           </Inputlabel>
         </div>
       </>
