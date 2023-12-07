@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { KAKAO_AUTH_URL } from "../apis/auth";
-import LoginPage from "./login";
+import { KAKAO_AUTH_URL } from "./api/auth/OAuth";
 
 export default function Home() {
   return (
@@ -15,8 +14,10 @@ export default function Home() {
         </div>
 
         <Link href={KAKAO_AUTH_URL}>
-          <button className="bg-[#FAE100] 
-          rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center">
+          <button
+            className="bg-[#FAE100] 
+          rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
+          >
             <img src="/assets/icons/kakao.svg" alt="kakao" />
 
             <p className="text-center text-[#371D1E] text-base m-auto font-pretendard font-semibold">
