@@ -1,7 +1,18 @@
-import Link from "next/link";
-import { KAKAO_AUTH_URL } from "./api/auth/OAuth";
+import { useSession } from "next-auth/react";
+
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Home() {
+  const router = useRouter();
+  const session = useSession();
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.push("/", undefined, { shallow: true });
+    } else {
+      router.push("/login", undefined, { shallow: true });
+    }
+  });
   return (
     <>
       <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto p-4 px-10 space-y-10 ">
@@ -13,18 +24,16 @@ export default function Home() {
           <span>마음을 전달해보는 건 어떨까요?</span>
         </div>
 
-        <Link href={KAKAO_AUTH_URL}>
-          <button
-            className="bg-[#FAE100] 
+        <button
+          className="bg-[#FAE100] 
           rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
-          >
-            <img src="/assets/icons/kakao.svg" alt="kakao" />
+        >
+          <img src="/assets/icons/kakao.svg" alt="kakao" />
 
-            <p className="text-center text-[#371D1E] text-base m-auto font-pretendard font-semibold">
-              카카오로 시작하기
-            </p>
-          </button>
-        </Link>
+          <p className="text-center text-[#371D1E] text-base m-auto font-pretendard font-semibold">
+            카카오로 시작하기
+          </p>
+        </button>
       </div>
     </>
   );

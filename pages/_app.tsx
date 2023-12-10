@@ -2,8 +2,8 @@ import React from "react";
 import "../public/styles/globals.css";
 import type { AppProps } from "next/app";
 import { OverlayProvider } from "@toss/use-overlay";
-import { Provider } from "react-redux";
-import store from "../store/store";
+import { SessionProvider } from "next-auth/react";
+
 import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -18,11 +18,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta charSet="utf-8"></meta>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Provider store={store}>
+
+      <SessionProvider session={pageProps.session}>
         <OverlayProvider>
           <Component {...pageProps} />
         </OverlayProvider>
-      </Provider>
+      </SessionProvider>
     </>
   );
 }
