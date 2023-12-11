@@ -3,11 +3,11 @@ import {
   albumSelection,
   letterSelection,
   phrasesSelection,
-} from "../../utils/data";
+} from "../../../utils/data";
 import BackgroundColorful from "./BackSelect-Animation/BackgroundColorful";
 import BackgroundSnow from "./BackSelect-Animation/BackgroundSnow";
 import BackgroundCircles from "./BackSelect-Animation/BackgroundCircles";
-import { useModal } from "../../common/components/ShareModal";
+import { useModal } from "../../common/ShareModal";
 
 interface CompletedAlbumProps {
   submittedAlbum: {

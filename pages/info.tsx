@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
-import Inputlabel from "../features/common/components/InputLabel";
-import Input from "../features/common/components/Input";
-import RoundRadioButton from "../features/common/components/RoundRadioButton";
+import Inputlabel from "../features/components/common/InputLabel";
+import Input from "../features/components/common/Input";
+import RoundRadioButton from "../features/components/common/RoundRadioButton";
 import { useState } from "react";
-import PreivewInfo from "../features/collection/components/PreviewInfo";
+import PreivewInfo from "../features/components/collection/components/PreviewInfo";
 import { infoSvg, playListButton, tapButton } from "../features/utils/data";
+import MainPageComponent from "../features/components/collection/components/Select/MainPageComponent";
 
 export default function Page() {
   const {
@@ -202,6 +203,11 @@ export default function Page() {
             />
           )}
         </div>
+      </div>
+      <div>
+        {isFormSubmitted && submittedData && (
+          <MainPageComponent submittedData={submittedData} />
+        )}
       </div>
     </>
   );
