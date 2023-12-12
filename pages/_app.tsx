@@ -5,6 +5,7 @@ import { OverlayProvider } from "@toss/use-overlay";
 import { SessionProvider } from "next-auth/react";
 
 import Head from "next/head";
+import AuthContext from "@/context/AuthContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -19,11 +20,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <SessionProvider session={pageProps.session}>
+      <AuthContext>
         <OverlayProvider>
           <Component {...pageProps} />
         </OverlayProvider>
-      </SessionProvider>
+      </AuthContext>
     </>
   );
 }
