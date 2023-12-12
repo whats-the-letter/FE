@@ -2,22 +2,22 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
-import BackSelect from "../src/components/collection/components/Select/BackSelect";
-import PhrasesSelect from "../src/components/collection/components/Select/PhrasesSelect";
-import AlbumSelect from "../src/components/collection/components/Select/AlbumSelect";
-import BackgroundColorful from "../src/components/collection/components/BackSelect-Animation/BackgroundColorful";
-import BackgroundSnow from "../src/components/collection/components/BackSelect-Animation/BackgroundSnow";
-import BackgroundCircles from "../src/components/collection/components/BackSelect-Animation/BackgroundCircles";
-import LetterWriting from "../src/components/collection/components/Select/LetterWriting";
-import MusicList from "../src/components/collection/components/Select/MusicList";
+import BackSelect from "../features/components/collection/components/Select/BackSelect";
+import PhrasesSelect from "../features/components/collection/components/Select/PhrasesSelect";
+import AlbumSelect from "../features/components/collection/components/Select/AlbumSelect";
+import BackgroundColorful from "../features/components/collection/components/BackSelect-Animation/BackgroundColorful";
+import BackgroundSnow from "../features/components/collection/components/BackSelect-Animation/BackgroundSnow";
+import BackgroundCircles from "../features/components/collection/components/BackSelect-Animation/BackgroundCircles";
+import LetterWriting from "../features/components/collection/components/Select/LetterWriting";
+import MusicList from "../features/components/collection/components/Select/MusicList";
 import {
   albumSelection,
   labelMap,
   letterSelection,
   phrasesSelection,
-} from "../src/utils/data";
-import CompleteAlbum from "../src/components/collection/components/CompleteAlbum";
-import { playListSelection } from "../src/utils/musicData";
+} from "../features/utils/data";
+import CompleteAlbum from "../features/components/collection/components/CompleteAlbum";
+import { playListSelection } from "../features/utils/musicData";
 
 const backSelection = {
   colorful: <BackgroundColorful />,
