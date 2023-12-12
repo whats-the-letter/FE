@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
-import Inputlabel from "../features/components/common/InputLabel";
-import Input from "../features/components/common/Input";
-import RoundRadioButton from "../features/components/common/RoundRadioButton";
+import Inputlabel from "../src/components/common/InputLabel";
+import Input from "../src/components/common/Input";
+import RoundRadioButton from "../src/components/common/RoundRadioButton";
 import { useState } from "react";
-import PreivewInfo from "../features/components/collection/components/PreviewInfo";
-import { infoSvg, playListButton, tapButton } from "../features/utils/data";
-import MainPageComponent from "../features/components/collection/components/Select/MainPageComponent";
+import PreivewInfo from "../src/components/collection/components/PreviewInfo";
+import { infoSvg, playListButton, tapButton } from "../src/utils/data";
+import MainPageComponent from "../src/components/collection/components/Select/MainPageComponent";
 import { useSession } from "next-auth/react";
 
 export default function Page() {

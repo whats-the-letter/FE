@@ -9,11 +9,10 @@ export default function Home() {
   if (status === "authenticated") {
     return (
       <>
-        {" "}
         <p>Signed in as {session.user.email}</p>;
-        <button onClick={() => signOut()}>Sign out</button>
+        <button onClick={() => signOut()}> Sign out</button>
       </>
-    );
+    )
   }
 
   return (
