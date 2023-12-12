@@ -6,6 +6,7 @@ import { useState } from "react";
 import PreivewInfo from "../features/components/collection/components/PreviewInfo";
 import { infoSvg, playListButton, tapButton } from "../features/utils/data";
 import MainPageComponent from "../features/components/collection/components/Select/MainPageComponent";
+import { useSession } from "next-auth/react";
 
 export default function Page() {
   const {
@@ -35,6 +36,7 @@ export default function Page() {
   const isBackground = watch("lpBackground");
   const isLpDesign = watch("lpDesign");
 
+  const { data: session, status } = useSession();
   const onSubmit = (data: {
     nickname: string;
     lpBackground: string;
@@ -65,6 +67,9 @@ export default function Page() {
               <div className=" z-10 m-auto px-8 space-y-10 my-20">
                 <div className="flex flex-col w-full space-y-6 ">
                   {/* 닉네임 입력 */}
+                  <h1>
+                    Welcome, {session?.user.name}님! <br />
+                  </h1>
                   <Inputlabel
                     label="닉네임"
                     required
