@@ -1,4 +1,6 @@
+import axios from "axios";
 import { NextAuthOptions, User } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth/next";
 
 import KakaoProvider from "next-auth/providers/kakao";
@@ -15,12 +17,19 @@ export const authOptions: NextAuthOptions = {
       if (account && user) {
         return {
           accessToken: account.accessToken,
-          accessTokenExpires: Date.now() + 1000 * 60 * 60 * 24 * 30,
+          accessTokenExpires:  account.expires_at,
           refreshToken: account.refreshToken,
           user,
         };
       }
-      return token;
+
+      const nowTime = Math.round(Date.now() / 1000);
+      const shouldRefreshTime =
+        (token.accessTokenExpires as number) - 10 * 60 - nowTime;
+      if (shouldRefreshTime < 0) {
+        return token;
+      }
+      return refreshAccessToken(token);
     },
 
     async session({ session, token }) {
@@ -32,5 +41,47 @@ export const authOptions: NextAuthOptions = {
     },
   },
 };
+
+async function refreshAccessToken(token: JWT) {
+  try {
+    const url = "http://13.125.242.16/auth/renew";
+
+    const params = {
+      grant_type: "refresh_token",
+      refresh_token: token.refreshToken,
+    };
+
+    const headers = {
+      "Content-Type": "application/x-www-form-urlencoded",
+    };
+
+    const res = await axios.post(url, null, {
+      headers,
+      params,
+      auth: {
+        username: process.env.KAKAO_CLIENT_ID!,
+        password: process.env.KAKAO_CLIENT_SECRET!,
+      },
+    });
+
+    const refreshedToken = await res.data;
+
+    if (res.status !== 200) {
+      throw refreshedToken;
+    }
+    return {
+      ...token,
+      accessToken: refreshedToken.access_token,
+      accessTokenExpires:
+        Math.round(Date.now() / 1000) + refreshedToken.expires_in,
+      refreshToken: refreshedToken.refresh_token ?? token.refreshToken,
+    };
+  } catch (error) {
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+    };
+  }
+}
 
 export default NextAuth(authOptions);

@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "../public/styles/globals.css";
 import type { AppProps } from "next/app";
 import { OverlayProvider } from "@toss/use-overlay";
-import { SessionProvider } from "next-auth/react";
 
 import Head from "next/head";
-import AuthContext from "@/context/AuthContext";
+import { SessionProvider } from "next-auth/react";
+import RefreshTokenHandler from "../features/auth/RefreshTokenHandler";
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+  router: { route },
+}: AppProps) {
+  const [sessionRefetchInterval, setSessionRefetchInterval] = useState(10000);
+
   return (
     <>
       <Head>
@@ -20,11 +26,18 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <AuthContext>
-        <OverlayProvider>
-          <Component {...pageProps} />
-        </OverlayProvider>
-      </AuthContext>
+      <SessionProvider
+        session={pageProps.session}
+        refetchInterval={sessionRefetchInterval}
+      >
+        <RefreshTokenHandler
+          setSessionRefetchInterval={setSessionRefetchInterval}
+        >
+          <OverlayProvider>
+            <Component {...pageProps} />
+          </OverlayProvider>
+        </RefreshTokenHandler>
+      </SessionProvider>
     </>
   );
 }
