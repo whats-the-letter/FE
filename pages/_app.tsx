@@ -30,13 +30,12 @@ export default function App({
         session={pageProps.session}
         refetchInterval={sessionRefetchInterval}
       >
+        <OverlayProvider>
+          <Component {...pageProps} />
+        </OverlayProvider>
         <RefreshTokenHandler
           setSessionRefetchInterval={setSessionRefetchInterval}
-        >
-          <OverlayProvider>
-            <Component {...pageProps} />
-          </OverlayProvider>
-        </RefreshTokenHandler>
+        />
       </SessionProvider>
     </>
   );
