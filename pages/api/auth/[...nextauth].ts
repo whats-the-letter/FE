@@ -55,7 +55,7 @@ export const authOptions: NextAuthOptions = {
 
 async function refreshAccessToken(token: JWT) {
   try {
-    const url = "http://13.125.242.16/auth/renew";
+    const url = "";
 
     const params = {
       grant_type: "refresh_token",
