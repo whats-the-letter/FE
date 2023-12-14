@@ -52,7 +52,9 @@ export const authOptions: NextAuthOptions = {
 
 async function refreshAccessToken(token: JWT) {
   try {
+
     const url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/renew`
+
 
     const params = {
       grant_type: "refresh_token",
