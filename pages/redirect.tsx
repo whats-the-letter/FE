@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { signOut, useSession } from "next-auth/react";
+import Loading from "@/components/collection/components/Loading";
 
 const Redirect = () => {
   const router = useRouter();
@@ -41,8 +42,7 @@ const Redirect = () => {
     checkUserMembership();
   }, [router, status, session]);
 
-
-  return <div>Checking user membership...</div>;
+  return <Loading />;
 };
 
 export default Redirect;
