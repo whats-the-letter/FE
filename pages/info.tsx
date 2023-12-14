@@ -68,7 +68,7 @@ export default function Page() {
                 <div className="flex flex-col w-full space-y-6 ">
                   {/* 닉네임 입력 */}
                   <h1>
-                    Welcome, {session?.user.name}님! <br />
+                    Welcome, {session?.user?.email}님! <br />
                   </h1>
                   <Inputlabel
                     label="닉네임"

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { NextAuthOptions, User } from "next-auth";
+import { NextAuthOptions, User, Account, Profile } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth/next";
 
@@ -13,11 +13,14 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    // 로그인 플로우 커스텀
+    // 소셜연동, 비회원인 경우 회원가입, 로그인 기능 필요
+
     async jwt({ token, user, account }) {
       if (account && user) {
         return {
           accessToken: account.accessToken,
-          accessTokenExpires:  account.expires_at,
+          accessTokenExpires: account.expires_at,
           refreshToken: account.refreshToken,
           user,
         };
@@ -40,6 +43,14 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+
+  pages: {
+    signIn: "/login",
+  },
+
+  // callbackUrl이 무시되는 에러를 해결하기 위해 redirect 설정
+  redirect: async (url: any, baseUrl: any) =>
+    url.startsWith(baseUrl) ? Promise.resolve(url) : Promise.resolve(baseUrl),
 };
 
 async function refreshAccessToken(token: JWT) {
@@ -55,9 +66,8 @@ async function refreshAccessToken(token: JWT) {
       "Content-Type": "application/x-www-form-urlencoded",
     };
 
-    const res = await axios.post(url, null, {
+    const res = await axios.post(url, params.toString(), {
       headers,
-      params,
       auth: {
         username: process.env.KAKAO_CLIENT_ID!,
         password: process.env.KAKAO_CLIENT_SECRET!,

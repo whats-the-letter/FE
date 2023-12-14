@@ -1,19 +1,23 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import axios from "axios";
+import { getSession, signIn, signOut, useSession } from "next-auth/react";
 
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 export default function Home() {
+  const router = useRouter();
   const { data: session, status } = useSession();
 
-  if (status === "authenticated") {
-    return (
-      <>
-        <p>Signed in as {session.user.email}</p>;
-        <button onClick={() => signOut()}> Sign out</button>
-      </>
-    )
-  }
+  const handleKakaoLogin = async () => {
+    try {
+      const response = await signIn("kakao", {
+        callbackUrl: `${window.location.origin}/redirect`,
+      });
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -38,7 +42,7 @@ rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
         ) : (
           <>
             <button
-              onClick={() => signIn("kakao")}
+              onClick={() => handleKakaoLogin()}
               className="bg-[#FAE100] 
           rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
             >
@@ -50,13 +54,6 @@ rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
             </button>
           </>
         )}
-
-        <h1>{status}</h1>
-        <p>
-          로그인 정보 확인
-          <br />
-          {JSON.stringify(session, null, 2)}
-        </p>
       </div>
     </>
   );
