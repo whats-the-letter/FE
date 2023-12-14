@@ -13,9 +13,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    // 로그인 플로우 커스텀
-    // 소셜연동, 비회원인 경우 회원가입, 로그인 기능 필요
-
     async jwt({ token, user, account }) {
       if (account && user) {
         return {
