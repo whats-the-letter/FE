@@ -1,21 +1,16 @@
-import axios from "axios";
-import { getSession, signIn, signOut, useSession } from "next-auth/react";
-
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
-  const { data: session, status } = useSession();
 
   const handleKakaoLogin = async () => {
     try {
-      const response = await signIn("kakao", {
+      await signIn("kakao", {
         callbackUrl: `${window.location.origin}/redirect`,
       });
-      
     } catch (error) {
-      console.log(error);
+      console.log("error", error);
     }
   };
 
@@ -29,31 +24,18 @@ export default function Home() {
           <span>이번 푸른 용의 해에는 특별한 방식으로</span>
           <span>마음을 전달해보는 건 어떨까요?</span>
         </div>
-        {session?.user ? (
-          <>
-            <button
-              onClick={() => signOut()}
-              className="bg-[#FAE100]
-rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
-            >
-              <img src="/assets/icons/kakao.svg" alt="kakao" />
-            </button>
-          </>
-        ) : (
-          <>
-            <button
-              onClick={() => handleKakaoLogin()}
-              className="bg-[#FAE100] 
-          rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
-            >
-              <img src="/assets/icons/kakao.svg" alt="kakao" />
 
-              <p className="text-center text-[#371D1E] text-base m-auto font-pretendard font-semibold">
-                카카오로 시작하기
-              </p>
-            </button>
-          </>
-        )}
+        <button
+          onClick={() => handleKakaoLogin()}
+          className="bg-[#FAE100] 
+          rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
+        >
+          <img src="/assets/icons/kakao.svg" alt="kakao" />
+
+          <p className="text-center text-[#371D1E] text-base m-auto font-pretendard font-semibold">
+            카카오로 시작하기
+          </p>
+        </button>
       </div>
     </>
   );
