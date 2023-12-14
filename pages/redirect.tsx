@@ -14,9 +14,12 @@ const Redirect = () => {
         console.log(session?.user?.email);
 
         if (status === "authenticated") {
-          const response = await axios.post("http://13.125.242.16/auth/login", {
-            email: session?.user?.email,
-          });
+          const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`,
+            {
+              email: session?.user?.email,
+            }
+          );
           console.log(response);
           if (response.status === 200) {
             router.replace("/main");
