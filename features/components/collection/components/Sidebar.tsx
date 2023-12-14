@@ -1,3 +1,4 @@
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
@@ -48,8 +49,12 @@ export default function Sidebar({
               ref={sidebarRef}
             >
               <div className="flex flex-row items-center gap-2">
-                <img src="/assets/lp/lp-dny.svg" alt="profile" className="w-7 h-7 mr-2"/>
-              <span className="text-xl my-4 ">닉네임</span>
+                <img
+                  src="/assets/lp/lp-dny.svg"
+                  alt="profile"
+                  className="w-7 h-7 mr-2"
+                />
+                <span className="text-xl my-4 ">닉네임</span>
               </div>
               <Link href="/googleForm">
                 <div className="flex flex-row items-center gap-2">
@@ -58,15 +63,19 @@ export default function Sidebar({
                 </div>
               </Link>
               <Link href="/notion">
-              <div className="flex flex-row items-center gap-2">
-                <img src="/assets/icons/person.svg" alt="Devinfo" />
-                <span>개발자 정보</span>
+                <div className="flex flex-row items-center gap-2">
+                  <img src="/assets/icons/person.svg" alt="Devinfo" />
+                  <span>개발자 정보</span>
                 </div>
               </Link>
-              <button>
-              <div className="flex flex-row items-center gap-2">
-                <img src="/assets/icons/logout.svg" alt="logout" />
-                <span>로그아웃</span>
+              <button
+                onClick={() => {
+                  signOut();
+                }}
+              >
+                <div className="flex flex-row items-center gap-2">
+                  <img src="/assets/icons/logout.svg" alt="logout" />
+                  <span>로그아웃</span>
                 </div>
               </button>
             </div>
