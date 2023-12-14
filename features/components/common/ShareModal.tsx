@@ -1,6 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useOverlay } from "@toss/use-overlay";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 interface ModalProps {
   isOpen: boolean;
@@ -11,6 +17,7 @@ interface ModalProps {
   onConfirm: () => void;
   showCloseBtn?: boolean;
   closeBtnText?: string;
+  children?: React.ReactNode;
 }
 
 export default function Modal({
@@ -22,10 +29,28 @@ export default function Modal({
   onConfirm,
   showCloseBtn,
   closeBtnText,
+  children,
 }: ModalProps) {
   const copyToClipboard = () => {
     const linkToCopy = window.location.href;
     navigator.clipboard.writeText(linkToCopy);
+  };
+
+  if (!window.Kakao.isInitialized()) {
+    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_APP_KEY);
+    console.log(window.Kakao.isInitialized());
+  }
+
+  const KakaoShare = () => {
+    const { Kakao, location } = window;
+    Kakao.Share.createCustomButton({
+      container: "#kakao-link-btn",
+      templateId: 101443,
+      templateArgs: {
+        title: "나만의 LP를 만들어보세요!",
+        description: "나만의 LP를 만들어보세요!",
+      },
+    });
   };
 
   return (
@@ -97,15 +122,20 @@ export default function Modal({
                         URL 복사
                       </button>
                     </div>
-                    <button
-                      type="button"
-                      className="flex justify-center rounded-md bg-[#FEE500] text-black text-xs font-bold p-2 w-full focus:outline-none "
+
+                    <a
+                      id="kakao-link-btn"
+                      href="#"
                       onClick={() => {
-                        onConfirm();
+                        KakaoShare();
                       }}
+                      className="flex justify-center items-center gap-4"
                     >
                       {btnText ?? (
-                        <div className="flex justify-center items-center gap-4">
+                        <div
+                          className="flex justify-center items-center gap-4 bg-[#FEE500] w-72 rounded-md px-4 py-2
+                        "
+                        >
                           <img
                             src="/assets/icons/kakao.svg"
                             alt="kakao"
@@ -116,7 +146,7 @@ export default function Modal({
                           </p>
                         </div>
                       )}
-                    </button>
+                    </a>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

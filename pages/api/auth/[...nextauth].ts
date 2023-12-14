@@ -13,9 +13,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    // 로그인 플로우 커스텀
-    // 소셜연동, 비회원인 경우 회원가입, 로그인 기능 필요
-
     async jwt({ token, user, account }) {
       if (account && user) {
         return {
@@ -55,7 +52,9 @@ export const authOptions: NextAuthOptions = {
 
 async function refreshAccessToken(token: JWT) {
   try {
-    const url = "";
+
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/renew`
+
 
     const params = {
       grant_type: "refresh_token",
