@@ -1,6 +1,20 @@
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 import React from "react";
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  const handleKakaoLogin = async () => {
+    try {
+      await signIn("kakao", {
+        callbackUrl: `${window.location.origin}/login/redirect`,
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto p-4 px-10 space-y-10 font-pretendard">
@@ -12,7 +26,11 @@ export default function LoginPage() {
           <span>로그인 후 다양한 서비스를 이용해보세요!</span>
         </div>
 
-        <button className="bg-[#FAE100] rounded-md text-center w-full max-w-sm h-10 p-2 px-4 flex items-center">
+        <button
+          onClick={() => handleKakaoLogin()}
+          className="bg-[#FAE100] 
+          rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
+        >
           <img src="/assets/icons/kakao.svg" alt="kakao" />
           <p className="text-center text-[#371D1E] text-base m-auto font-pretendard font-semibold">
             카카오로 시작하기

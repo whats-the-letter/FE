@@ -126,7 +126,8 @@ export default function Modal({
                     <a
                       id="kakao-link-btn"
                       href="#"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault();
                         KakaoShare();
                       }}
                       className="flex justify-center items-center gap-4"

@@ -20,8 +20,6 @@ export const phrasesSelection = {
   "editor-5": "/assets/editor/editor-5.svg",
 };
 
-
-
 export const letterSelection = {
   "editor-love-letter": "/assets/letter/letter-love.svg",
   "editor-money-letter": "/assets/letter/letter-money.svg",
@@ -30,18 +28,18 @@ export const letterSelection = {
 };
 
 export const infoSvg = {
-  lpBackground: {
+  mainBackground: {
     pink: "/assets/main/preview/preview-pink.svg",
     blue: "/assets/main/preview/preview-blue.svg",
     silver: "/assets/main/preview/preview-silver.svg",
     gold: "/assets/main/preview/preview-gold.svg",
   },
 
-  lpDesign: {
-    "lp-luck": "/assets/lp/lp-luck.svg",
-    "lp-dragon": "/assets/lp/lp-dragon.svg",
-    "lp-dny": "/assets/lp/lp-dny.svg",
-    "lp-2024": "/assets/lp/lp-2024.svg",
+  mainLp: {
+    "luck": "/assets/lp/luck.svg",
+    "dragon": "/assets/lp/dragon.svg",
+    "dny": "/assets/lp/dny.svg",
+    "new_year": "/assets/lp/new_year.svg",
   },
 };
 
