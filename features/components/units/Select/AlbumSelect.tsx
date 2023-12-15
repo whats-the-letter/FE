@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import EditorRadioButton from "../../../common/EditorRadioButton";
+import EditorRadioButton from "../../common/EditorRadioButton";
 
 interface AlbumSelectProps extends React.InputHTMLAttributes<HTMLInputElement> {
   albumSelection: Record<string, string>;

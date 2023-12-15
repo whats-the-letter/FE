@@ -7,7 +7,7 @@ export default function Home() {
   const handleKakaoLogin = async () => {
     try {
       await signIn("kakao", {
-        callbackUrl: `${window.location.origin}/redirect`,
+        callbackUrl: `${window.location.origin}/login/redirect`,
       });
     } catch (error) {
       console.log("error", error);

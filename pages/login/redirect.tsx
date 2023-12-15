@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { signOut, useSession } from "next-auth/react";
-import Loading from "@/components/collection/components/Loading";
+import Loading from "@/components/units/Loading";
 
 const Redirect = () => {
   const router = useRouter();
