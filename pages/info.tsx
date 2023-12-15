@@ -17,32 +17,32 @@ export default function Page() {
     register,
     handleSubmit,
   } = useForm<{
-    nickname: string;
-    lpBackground: string;
-    lpDesign: string;
+    userName: string;
+    mainBackground: string;
+    mainLp: string;
   }>({
     mode: "onChange",
     defaultValues: {
-      lpBackground: "pink",
-      lpDesign: "lp-luck",
+      mainBackground: "pink",
+      mainLp: "luck",
     },
   });
 
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [submittedData, setSubmittedData] = useState<{
-    nickname: string;
-    lpBackground: string;
-    lpDesign: string;
+    userName: string;
+    mainBackground: string;
+    mainLp: string;
   } | null>(null);
 
-  const isBackground = watch("lpBackground");
-  const isLpDesign = watch("lpDesign");
+  const isBackground = watch("mainBackground");
+  const isLpDesign = watch("mainLp");
 
   const { data: session, status } = useSession();
   const onSubmit = (data: {
-    nickname: string;
-    lpBackground: string;
-    lpDesign: string;
+    userName: string;
+    mainBackground: string;
+    mainLp: string;
   }) => {
     console.log(data);
     setSubmittedData(data);
@@ -75,10 +75,10 @@ export default function Page() {
                   <Inputlabel
                     label="닉네임"
                     required
-                    errorMessage={errors.nickname?.message}
+                    errorMessage={errors.userName?.message}
                   >
                     <Input
-                      {...register("nickname", {
+                      {...register("userName", {
                         required: "닉네임은 필수 입력입니다.",
                         minLength: {
                           value: 2,
@@ -98,43 +98,43 @@ export default function Page() {
                   <Inputlabel
                     label="배경색 선택"
                     required
-                    errorMessage={errors.lpBackground?.message}
+                    errorMessage={errors.mainBackground?.message}
                   >
                     <div className="flex flex-row space-x-4">
                       <RoundRadioButton
-                        {...register("lpBackground")}
+                        {...register("mainBackground")}
                         label="bg-pink"
                         isChecked={isBackground === "pink"}
                         id="bg-pink"
-                        value="pink"
+                        value="PINK"
                         className="bg-custom_pink"
-                        name="lpBackground"
+                        name="mainBackground"
                       />
                       <RoundRadioButton
-                        {...register("lpBackground")}
+                        {...register("mainBackground")}
                         label="bg-blue"
                         isChecked={isBackground === "blue"}
                         id="bg-blue"
-                        name="lpBackground"
-                        value="blue"
+                        name="mainBackground"
+                        value="BLUE"
                         className="bg-custom_skyblue"
                       />
                       <RoundRadioButton
-                        {...register("lpBackground")}
+                        {...register("mainBackground")}
                         label="bg-silver"
                         isChecked={isBackground === "silver"}
                         id="bg-silver"
-                        name="lpBackground"
-                        value="silver"
+                        name="mainBackground"
+                        value="SILVER"
                         className="bg-custom_silver"
                       />
                       <RoundRadioButton
-                        {...register("lpBackground")}
+                        {...register("mainBackground")}
                         label="bg-gold"
                         isChecked={isBackground === "gold"}
                         id="bg-gold"
-                        name="lpBackground"
-                        value="gold"
+                        name="mainBackground"
+                        value="GOLD"
                         className="bg-custom_gold"
                       />
                     </div>
@@ -144,43 +144,43 @@ export default function Page() {
                   <Inputlabel
                     label="LP 디자인 선택"
                     required
-                    errorMessage={errors.lpDesign?.message}
+                    errorMessage={errors.mainLp?.message}
                   >
                     <div className="flex flex-row space-x-4 pb-10">
                       <RoundRadioButton
-                        {...register("lpDesign")}
-                        label="lp-luck"
-                        isChecked={isLpDesign === "lp-luck"}
-                        id="lp-luck"
-                        name="lpDesign"
-                        value="lp-luck"
+                        {...register("mainLp")}
+                        label="luck"
+                        isChecked={isLpDesign === "luck"}
+                        id="luck"
+                        name="mainLp"
+                        value="LUCK"
                         className="bg-custom_red"
                       />
                       <RoundRadioButton
-                        {...register("lpDesign")}
-                        label="lp-dragon"
-                        isChecked={isLpDesign === "lp-dragon"}
-                        id="lp-dragon"
-                        name="lpDesign"
-                        value="lp-dragon"
+                        {...register("mainLp")}
+                        label="dragon"
+                        isChecked={isLpDesign === "dragon"}
+                        id="dragon"
+                        name="mainLp"
+                        value="DRAGON"
                         className="bg-custom_blue"
                       />
                       <RoundRadioButton
-                        {...register("lpDesign")}
-                        label="lp-dny"
-                        isChecked={isLpDesign === "lp-dny"}
-                        id="lp-dny"
-                        name="lpDesign"
-                        value="lp-dny"
+                        {...register("mainLp")}
+                        label="dny"
+                        isChecked={isLpDesign === "dny"}
+                        id="dny"
+                        name="mainLp"
+                        value="DNY"
                         className="bg-custom_black"
                       />
                       <RoundRadioButton
-                        {...register("lpDesign")}
-                        label="lp-2024"
-                        isChecked={isLpDesign === "lp-2024"}
-                        id="lp-2024"
-                        name="lpDesign"
-                        value="lp-2024"
+                        {...register("mainLp")}
+                        label="new_year"
+                        isChecked={isLpDesign === "new_year"}
+                        id="new_year"
+                        name="mainLp"
+                        value="NEW_YEAR"
                         className="bg-custom_gold"
                       />
                     </div>
