@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { AuthInfo } from "../../pages/_app";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import Loading from "@/components/collection/components/Loading";
+import Loading from "@/components/units/Loading";
 
 interface Props {
   children: any;
@@ -29,7 +29,7 @@ const AuthContainer = ({ children, authInfo }: Props) => {
     return children;
   }
 
-  return <Loading/>
+  return <Loading />;
 };
 
 export default AuthContainer;

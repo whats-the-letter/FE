@@ -1,12 +1,14 @@
 import { useForm } from "react-hook-form";
-import Inputlabel from "../features/components/common/InputLabel";
-import Input from "../features/components/common/Input";
-import RoundRadioButton from "../features/components/common/RoundRadioButton";
 import { useState } from "react";
-import PreivewInfo from "../features/components/collection/components/PreviewInfo";
+
 import { infoSvg, playListButton, tapButton } from "../features/utils/data";
-import MainPageComponent from "../features/components/collection/components/Select/MainPageComponent";
+
 import { useSession } from "next-auth/react";
+import Inputlabel from "@/components/common/InputLabel";
+import Input from "@/components/common/Input";
+import RoundRadioButton from "@/components/common/RoundRadioButton";
+import PreivewInfo from "@/components/units/PreviewInfo";
+import MainPageComponent from "@/components/units/Select/MainPageComponent";
 
 export default function Page() {
   const {
@@ -184,7 +186,6 @@ export default function Page() {
                     </div>
                   </Inputlabel>
                 </div>
-
                 <button
                   type="button"
                   onClick={() => {

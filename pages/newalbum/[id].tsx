@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-
-import BackSelect from "../features/components/collection/components/Select/BackSelect";
-import PhrasesSelect from "../features/components/collection/components/Select/PhrasesSelect";
-import AlbumSelect from "../features/components/collection/components/Select/AlbumSelect";
-import BackgroundColorful from "../features/components/collection/components/BackSelect-Animation/BackgroundColorful";
-import BackgroundSnow from "../features/components/collection/components/BackSelect-Animation/BackgroundSnow";
-import BackgroundCircles from "../features/components/collection/components/BackSelect-Animation/BackgroundCircles";
-import LetterWriting from "../features/components/collection/components/Select/LetterWriting";
-import MusicList from "../features/components/collection/components/Select/MusicList";
+import BackgroundColorful from "@/components/units/BackSelect-Animation/BackgroundColorful";
+import BackgroundSnow from "@/components/units/BackSelect-Animation/BackgroundSnow";
+import BackgroundCircles from "@/components/units/BackSelect-Animation/BackgroundCircles";
+import { playListSelection } from "@/utils/musicData";
+import AlbumSelect from "@/components/units/Select/AlbumSelect";
+import PhrasesSelect from "@/components/units/Select/PhrasesSelect";
+import BackSelect from "@/components/units/Select/BackSelect";
+import MusicList from "@/components/units/Select/MusicList";
+import LetterWriting from "@/components/units/Select/LetterWriting";
+import CompleteAlbum from "@/components/units/CompleteAlbum";
 import {
   albumSelection,
   labelMap,
   letterSelection,
   phrasesSelection,
-} from "../features/utils/data";
-import CompleteAlbum from "../features/components/collection/components/CompleteAlbum";
-import { playListSelection } from "../features/utils/musicData";
+} from "@/utils/data";
 
 const backSelection = {
   colorful: <BackgroundColorful />,

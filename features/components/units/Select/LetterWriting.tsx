@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from "react";
-import { countCharacters, truncateContent } from "../../../../utils/countTexts";
-import Input from "../../../common/Input";
-import Inputlabel from "../../../common/InputLabel";
+import { countCharacters, truncateContent } from "../../../utils/countTexts";
+import Input from "../../common/Input";
+import Inputlabel from "../../common/InputLabel";
 
 interface LetterWritingProps {
   isEditor: string;
