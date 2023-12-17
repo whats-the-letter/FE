@@ -8,7 +8,6 @@ import Inputlabel from "@/components/common/InputLabel";
 import Input from "@/components/common/Input";
 import RoundRadioButton from "@/components/common/RoundRadioButton";
 import PreivewInfo from "@/components/units/PreviewInfo";
-import MainPageComponent from "@/components/units/Select/MainPageComponent";
 
 export default function Page() {
   const {
@@ -30,6 +29,7 @@ export default function Page() {
 
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [submittedData, setSubmittedData] = useState<{
+    email: string;
     userName: string;
     mainBackground: string;
     mainLp: string;
@@ -40,6 +40,7 @@ export default function Page() {
 
   const { data: session, status } = useSession();
   const onSubmit = (data: {
+    email: string;
     userName: string;
     mainBackground: string;
     mainLp: string;
@@ -103,38 +104,38 @@ export default function Page() {
                     <div className="flex flex-row space-x-4">
                       <RoundRadioButton
                         {...register("mainBackground")}
-                        label="bg-pink"
+                        label="pink"
                         isChecked={isBackground === "pink"}
-                        id="bg-pink"
-                        value="PINK"
+                        id="pink"
+                        value="pink"
                         className="bg-custom_pink"
                         name="mainBackground"
                       />
                       <RoundRadioButton
                         {...register("mainBackground")}
-                        label="bg-blue"
+                        label="blue"
                         isChecked={isBackground === "blue"}
-                        id="bg-blue"
+                        id="blue"
                         name="mainBackground"
-                        value="BLUE"
+                        value="blue"
                         className="bg-custom_skyblue"
                       />
                       <RoundRadioButton
                         {...register("mainBackground")}
-                        label="bg-silver"
+                        label="silver"
                         isChecked={isBackground === "silver"}
-                        id="bg-silver"
+                        id="silver"
                         name="mainBackground"
-                        value="SILVER"
+                        value="silver"
                         className="bg-custom_silver"
                       />
                       <RoundRadioButton
                         {...register("mainBackground")}
-                        label="bg-gold"
+                        label="gold"
                         isChecked={isBackground === "gold"}
-                        id="bg-gold"
+                        id="gold"
                         name="mainBackground"
-                        value="GOLD"
+                        value="gold"
                         className="bg-custom_gold"
                       />
                     </div>
@@ -153,7 +154,7 @@ export default function Page() {
                         isChecked={isLpDesign === "luck"}
                         id="luck"
                         name="mainLp"
-                        value="LUCK"
+                        value="luck"
                         className="bg-custom_red"
                       />
                       <RoundRadioButton
@@ -162,7 +163,7 @@ export default function Page() {
                         isChecked={isLpDesign === "dragon"}
                         id="dragon"
                         name="mainLp"
-                        value="DRAGON"
+                        value="dragon"
                         className="bg-custom_blue"
                       />
                       <RoundRadioButton
@@ -171,7 +172,7 @@ export default function Page() {
                         isChecked={isLpDesign === "dny"}
                         id="dny"
                         name="mainLp"
-                        value="DNY"
+                        value="dny"
                         className="bg-custom_black"
                       />
                       <RoundRadioButton
@@ -180,7 +181,7 @@ export default function Page() {
                         isChecked={isLpDesign === "new_year"}
                         id="new_year"
                         name="mainLp"
-                        value="NEW_YEAR"
+                        value="new_year"
                         className="bg-custom_gold"
                       />
                     </div>
@@ -209,11 +210,6 @@ export default function Page() {
             />
           )}
         </div>
-      </div>
-      <div>
-        {isFormSubmitted && submittedData && (
-          <MainPageComponent submittedData={submittedData} />
-        )}
       </div>
     </>
   );
