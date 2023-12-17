@@ -33,6 +33,7 @@ const Redirect = () => {
       } catch (error) {
         if (error.response.status === 404) {
           console.log("로그인은 성공했지만, 우리 회원은 아님");
+          router.replace("/info");
         }
       }
     };
