@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../public/styles/globals.css";
 import type { AppProps } from "next/app";
 import { OverlayProvider } from "@toss/use-overlay";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
@@ -27,6 +29,8 @@ interface MyAppProps extends AppProps {
 }
 
 const ALLOWED_ONLY_FOR_MEMBERS = ["/newalbum", "/collection", "/main"];
+
+const queryClient = new QueryClient();
 
 export default function MyApp({
   Component,
@@ -65,16 +69,18 @@ export default function MyApp({
         <meta charSet="utf-8"></meta>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <SessionProvider
-        session={pageProps.session}
-        refetchInterval={sessionRefetchInterval}
-      >
-        <OverlayProvider>{renerAuthorizedComponent()}</OverlayProvider>
-        <RefreshTokenHandler
-          setSessionRefetchInterval={setSessionRefetchInterval}
-        />
-      </SessionProvider>
+      <QueryClientProvider client={queryClient}>
+        <SessionProvider
+          session={pageProps.session}
+          refetchInterval={sessionRefetchInterval}
+        >
+          <OverlayProvider>{renerAuthorizedComponent()}</OverlayProvider>
+          <RefreshTokenHandler
+            setSessionRefetchInterval={setSessionRefetchInterval}
+          />
+        </SessionProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
     </>
   );
 }
