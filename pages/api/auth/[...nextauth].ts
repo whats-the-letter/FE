@@ -14,29 +14,31 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user, account }) {
-      if (account && user) {
-        return {
-          accessToken: account.accessToken,
-          accessTokenExpires: account.expires_at,
-          refreshToken: account.refreshToken,
-          user,
-        };
-      }
+      if (account) {
+        token.accessToken = account.access_token;
+        token.refreshToken = account.refresh_token;
+        token.accessTokenExpires = account.expires_in;
+        token.user = user;
+        token.id = user.id;
 
-      const nowTime = Math.round(Date.now() / 1000);
-      const shouldRefreshTime =
-        (token.accessTokenExpires as number) - 10 * 60 - nowTime;
-      if (shouldRefreshTime < 0) {
-        return token;
+        const nowTime = Math.round(Date.now() / 1000);
+        const shouldRefreshTime =
+          (token.accessTokenExpires as number) - 10 * 60 - nowTime;
+        if (shouldRefreshTime < 0) {
+          return token;
+        }
+        return refreshAccessToken(token);
       }
-      return refreshAccessToken(token);
+      return token;
     },
 
-    async session({ session, token }) {
-      session.user = token.user as User;
+    async session({ session, token, user }) {
       session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken;
       session.accessTokenExpires = token.accessTokenExpires;
-      session.error = token.error;
+      session.user = user;
+      session.user.id = token.id;
+
       return session;
     },
   },
@@ -52,9 +54,7 @@ export const authOptions: NextAuthOptions = {
 
 async function refreshAccessToken(token: JWT) {
   try {
-
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/renew`
-
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/renew`;
 
     const params = {
       grant_type: "refresh_token",
