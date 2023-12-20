@@ -1,6 +1,8 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface PreivewInfoProps {
@@ -31,6 +33,8 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
 }) => {
   const { data: session, status } = useSession();
 
+  const router = useRouter();
+
   const handleComplete = async () => {
     try {
       const formData = new FormData();
@@ -55,18 +59,20 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
           },
         }
       );
-      console.log("response", response);
+
+      console.log("response.data", response.data.userId);
+
       if (response.status === 200) {
-        // Request successful
         console.log("Signup successful!");
-      } else {
-        // Request failed
-        console.error("Signup failed with status:", response.status);
-        console.error("Response data:", response.data);
+        const { userId } = response.data;
+        router.push(`/main/${userId}`);
       }
     } catch (error) {
-      // Handle other errors (e.g., network issues)
-      console.error("Error submitting data:", error);
+      console.log(error);
+      if (error.response.status === 400) {
+        console.log("이미 가입된 이메일입니다.");
+        console.log(error.response.data);
+      }
     }
   };
 
@@ -115,15 +121,13 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
           이전
         </button>
 
-        <Link href="/main">
-          <button
-            className="bg-black text-white w-40 max-w-[140px] p-2 rounded font-pretendard"
-            onClick={handleComplete}
-            type="button"
-          >
-            완료
-          </button>
-        </Link>
+        <button
+          className="bg-black text-white w-40 max-w-[140px] p-2 rounded font-pretendard"
+          onClick={handleComplete}
+          type="button"
+        >
+          완료
+        </button>
       </div>
     </div>
   );
