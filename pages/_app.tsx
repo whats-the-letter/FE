@@ -29,12 +29,17 @@ interface MyAppProps extends AppProps {
 
 const ALLOWED_ONLY_FOR_MEMBERS = ["/newalbum", "/collection", "/main"];
 
+export const queryClient = new QueryClient();
+
+export const QueryClientWrapper = ({ children }: any) => (
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+);
+
 export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
   router: { route },
 }: MyAppProps) {
-  const queryClient = new QueryClient();
   const [sessionRefetchInterval, setSessionRefetchInterval] = useState(10000);
   const memberRequireAuth = ALLOWED_ONLY_FOR_MEMBERS.some((path) =>
     route.startsWith(path)
@@ -72,12 +77,12 @@ export default function MyApp({
         session={pageProps.session}
         refetchInterval={sessionRefetchInterval}
       >
-        <QueryClientProvider client={queryClient}>
+        <QueryClientWrapper>
           <OverlayProvider>{renerAuthorizedComponent()}</OverlayProvider>
           <RefreshTokenHandler
             setSessionRefetchInterval={setSessionRefetchInterval}
           />
-        </QueryClientProvider>
+        </QueryClientWrapper>
       </SessionProvider>
     </>
   );
