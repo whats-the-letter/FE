@@ -3,10 +3,12 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { signOut, useSession } from "next-auth/react";
 import Loading from "@/components/units/Loading";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Redirect = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const checkUserMembership = async () => {
@@ -19,13 +21,12 @@ const Redirect = () => {
               email: session?.user?.email,
             }
           );
-          console.log(response);
+
           if (response.status === 200) {
             const userId = response.data.userInfo.userId;
-            console.log(userId);
+            queryClient.setQueryData(["userId"], userId);
             router.replace(`/main/${userId}`);
           } else {
-            // 기타 응답 코드에 따라 처리
             console.log("기타 응답 코드에 따라 처리");
             signOut();
           }
@@ -39,7 +40,7 @@ const Redirect = () => {
     };
 
     checkUserMembership();
-  }, [router, status, session]);
+  }, [router, status, session, queryClient]);
 
   return <Loading />;
 };
