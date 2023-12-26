@@ -13,13 +13,12 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
-      if (account) {
-        token.accessToken = account.access_token;
-        token.refreshToken = account.refresh_token;
-        token.accessTokenExpires = account.expires_in;
+    async jwt({ token, user, account }: any) {
+      if (account && user) {
+        token.accessToken = account.accessToken;
+        token.accessTokenExpires = account.expires_at;
+        token.refreshToken = account.refreshToken;
         token.user = user;
-        token.id = user.id;
 
         const nowTime = Math.round(Date.now() / 1000);
         const shouldRefreshTime =
@@ -29,16 +28,25 @@ export const authOptions: NextAuthOptions = {
         }
         return refreshAccessToken(token);
       }
+
+      if (account) {
+        return {
+          accessToken: account.accessToken,
+          accessTokenExpires: account.expires_at,
+          refreshToken: account.refreshToken,
+          user,
+        };
+      }
+
       return token;
     },
 
     async session({ session, token, user }) {
+      session.user = token.user as User;
       session.accessToken = token.accessToken;
       session.refreshToken = token.refreshToken;
       session.accessTokenExpires = token.accessTokenExpires;
-      session.user = user;
-      session.user.id = token.id;
-
+      session.error = token.error;
       return session;
     },
   },
@@ -47,7 +55,6 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
 
-  // callbackUrl이 무시되는 에러를 해결하기 위해 redirect 설정
   redirect: async (url: any, baseUrl: any) =>
     url.startsWith(baseUrl) ? Promise.resolve(url) : Promise.resolve(baseUrl),
 };
