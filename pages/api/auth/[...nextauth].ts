@@ -13,8 +13,23 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account }: any) {
       if (account && user) {
+        token.accessToken = account.accessToken;
+        token.accessTokenExpires = account.expires_at;
+        token.refreshToken = account.refreshToken;
+        token.user = user;
+
+        const nowTime = Math.round(Date.now() / 1000);
+        const shouldRefreshTime =
+          (token.accessTokenExpires as number) - 10 * 60 - nowTime;
+        if (shouldRefreshTime < 0) {
+          return token;
+        }
+        return refreshAccessToken(token);
+      }
+
+      if (account) {
         return {
           accessToken: account.accessToken,
           accessTokenExpires: account.expires_at,
@@ -23,18 +38,13 @@ export const authOptions: NextAuthOptions = {
         };
       }
 
-      const nowTime = Math.round(Date.now() / 1000);
-      const shouldRefreshTime =
-        (token.accessTokenExpires as number) - 10 * 60 - nowTime;
-      if (shouldRefreshTime < 0) {
-        return token;
-      }
-      return refreshAccessToken(token);
+      return token;
     },
 
-    async session({ session, token }) {
+    async session({ session, token, user }) {
       session.user = token.user as User;
       session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken;
       session.accessTokenExpires = token.accessTokenExpires;
       session.error = token.error;
       return session;
@@ -45,16 +55,13 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
 
-  // callbackUrl이 무시되는 에러를 해결하기 위해 redirect 설정
   redirect: async (url: any, baseUrl: any) =>
     url.startsWith(baseUrl) ? Promise.resolve(url) : Promise.resolve(baseUrl),
 };
 
 async function refreshAccessToken(token: JWT) {
   try {
-
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/renew`
-
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/renew`;
 
     const params = {
       grant_type: "refresh_token",

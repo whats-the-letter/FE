@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../public/styles/globals.css";
 import type { AppProps } from "next/app";
 import { OverlayProvider } from "@toss/use-overlay";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
@@ -27,6 +28,12 @@ interface MyAppProps extends AppProps {
 }
 
 const ALLOWED_ONLY_FOR_MEMBERS = ["/newalbum", "/collection", "/main"];
+
+export const queryClient = new QueryClient();
+
+export const QueryClientWrapper = ({ children }: any) => (
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+);
 
 export default function MyApp({
   Component,
@@ -70,10 +77,12 @@ export default function MyApp({
         session={pageProps.session}
         refetchInterval={sessionRefetchInterval}
       >
-        <OverlayProvider>{renerAuthorizedComponent()}</OverlayProvider>
-        <RefreshTokenHandler
-          setSessionRefetchInterval={setSessionRefetchInterval}
-        />
+        <QueryClientWrapper>
+          <OverlayProvider>{renerAuthorizedComponent()}</OverlayProvider>
+          <RefreshTokenHandler
+            setSessionRefetchInterval={setSessionRefetchInterval}
+          />
+        </QueryClientWrapper>
       </SessionProvider>
     </>
   );
