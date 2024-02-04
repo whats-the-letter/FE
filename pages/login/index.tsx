@@ -1,16 +1,8 @@
-import { signIn } from "next-auth/react";
-import React from "react";
-
 export default function LoginPage() {
-  const handleKakaoLogin = async () => {
-    try {
-      await signIn("kakao", {
-        callbackUrl: `${window.location.origin}/login/redirect`,
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+  const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
+  const KAKAO_REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
+
+  const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
   return (
     <>
@@ -23,16 +15,15 @@ export default function LoginPage() {
           <span>로그인 후 다양한 서비스를 이용해보세요!</span>
         </div>
 
-        <button
-          onClick={() => handleKakaoLogin()}
-          className="bg-[#FAE100] 
-          rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
+        <a
+          href={kakaoAuthUrl}
+          className="bg-[#FAE100] rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
         >
           <img src="/assets/icons/kakao.svg" alt="kakao" />
           <p className="text-center text-[#371D1E] text-base m-auto font-pretendard font-semibold">
             카카오로 시작하기
           </p>
-        </button>
+        </a>
       </div>
     </>
   );

@@ -2,8 +2,6 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 import { infoSvg, playListButton, tapButton } from "../features/utils/data";
-
-import { useSession } from "next-auth/react";
 import Inputlabel from "@/components/common/InputLabel";
 import Input from "@/components/common/Input";
 import RoundRadioButton from "@/components/common/RoundRadioButton";
@@ -38,7 +36,6 @@ export default function Page() {
   const isBackground = watch("mainBackground");
   const isLpDesign = watch("mainLp");
 
-  const { data: session, status } = useSession();
   const onSubmit = (data: {
     email: string;
     userName: string;
@@ -70,9 +67,6 @@ export default function Page() {
               <div className=" z-10 m-auto px-8 space-y-10 my-20">
                 <div className="flex flex-col w-full space-y-6 ">
                   {/* 닉네임 입력 */}
-                  <h1>
-                    Welcome, {session?.user?.email}님! <br />
-                  </h1>
                   <Inputlabel
                     label="닉네임"
                     required
