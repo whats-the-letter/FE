@@ -1,7 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
+
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -31,15 +29,13 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
   onPrevious,
   onComplete,
 }) => {
-  const { data: session, status } = useSession();
-
   const router = useRouter();
 
   const handleComplete = async () => {
     try {
       const formData = new FormData();
 
-      formData.append("email", session?.user?.email);
+      formData.append("email", submittedData.email);
       formData.append(
         "mainBackground",
         submittedData.mainBackground.toUpperCase()
@@ -51,7 +47,7 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
         console.log(key, value);
       });
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/signup`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/signup`,
         formData,
         {
           headers: {
@@ -59,8 +55,6 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
           },
         }
       );
-
-      console.log("response.data", response.data.userId);
 
       if (response.status === 200) {
         console.log("Signup successful!");
@@ -70,7 +64,6 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
     } catch (error) {
       console.log(error);
       if (error.response.status === 400) {
-        console.log("이미 가입된 이메일입니다.");
         console.log(error.response.data);
       }
     }
