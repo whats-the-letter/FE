@@ -5,29 +5,6 @@ import { OverlayProvider } from "@toss/use-overlay";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Head from "next/head";
-import { SessionProvider } from "next-auth/react";
-import RefreshTokenHandler from "../features/auth/RefreshTokenHandler";
-import { NextComponentType, NextPageContext } from "next";
-import AuthContainer from "@/auth/AuthContainer";
-
-export interface AuthInfo {
-  role?: "user" | "member";
-  loading?: React.ReactNode;
-  redirect?: string;
-}
-
-interface AuthEnabledComponentConfig {
-  auth: AuthInfo;
-}
-
-type NextComponentWithAuth = NextComponentType<NextPageContext, any, {}> &
-  Partial<AuthEnabledComponentConfig>;
-
-interface MyAppProps extends AppProps {
-  Component: NextComponentWithAuth;
-}
-
-const ALLOWED_ONLY_FOR_MEMBERS = ["/newalbum", "/collection", "/main"];
 
 export const queryClient = new QueryClient();
 
@@ -35,32 +12,7 @@ export const QueryClientWrapper = ({ children }: any) => (
   <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 );
 
-export default function MyApp({
-  Component,
-  pageProps: { session, ...pageProps },
-  router: { route },
-}: MyAppProps) {
-  const [sessionRefetchInterval, setSessionRefetchInterval] = useState(10000);
-  const memberRequireAuth = ALLOWED_ONLY_FOR_MEMBERS.some((path) =>
-    route.startsWith(path)
-  );
-
-  const renerAuthorizedComponent = () => {
-    if (memberRequireAuth) {
-      const authInfo: AuthInfo = {
-        role: "member",
-        redirect: Component.auth?.redirect,
-        loading: Component.auth?.loading,
-      };
-      return (
-        <AuthContainer authInfo={authInfo}>
-          <Component {...pageProps} />
-        </AuthContainer>
-      );
-    }
-    return <Component {...pageProps} />;
-  };
-
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
@@ -73,17 +25,11 @@ export default function MyApp({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <SessionProvider
-        session={pageProps.session}
-        refetchInterval={sessionRefetchInterval}
-      >
-        <QueryClientWrapper>
-          <OverlayProvider>{renerAuthorizedComponent()}</OverlayProvider>
-          <RefreshTokenHandler
-            setSessionRefetchInterval={setSessionRefetchInterval}
-          />
-        </QueryClientWrapper>
-      </SessionProvider>
+      <QueryClientProvider client={queryClient}>
+        <OverlayProvider>
+          <Component {...pageProps} />
+        </OverlayProvider>
+      </QueryClientProvider>
     </>
   );
 }
