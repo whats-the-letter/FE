@@ -36,12 +36,12 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
       const formData = new FormData();
 
       formData.append("email", submittedData.email);
+      formData.append("userName", submittedData.userName);
       formData.append(
         "mainBackground",
         submittedData.mainBackground.toUpperCase()
       );
       formData.append("mainLp", submittedData.mainLp.toUpperCase());
-      formData.append("userName", submittedData.userName);
 
       formData.forEach((value, key) => {
         console.log(key, value);
