@@ -1,11 +1,12 @@
-import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { set, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 
 import { infoSvg, playListButton, tapButton } from "../features/utils/data";
 import Inputlabel from "@/components/common/InputLabel";
 import Input from "@/components/common/Input";
 import RoundRadioButton from "@/components/common/RoundRadioButton";
 import PreivewInfo from "@/components/units/PreviewInfo";
+import { useRouter } from "next/router";
 
 export default function Page() {
   const {
@@ -25,6 +26,8 @@ export default function Page() {
     },
   });
 
+  const router = useRouter();
+
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [submittedData, setSubmittedData] = useState<{
     email: string;
@@ -35,6 +38,8 @@ export default function Page() {
 
   const isBackground = watch("mainBackground");
   const isLpDesign = watch("mainLp");
+
+  const kakaoEmail = router.query.email;
 
   const onSubmit = (data: {
     email: string;
@@ -55,7 +60,7 @@ export default function Page() {
   };
 
   const onComplete = () => {
-    console.log("Form submitted", submittedData);
+    console.log("Form submitted- 테스트 ", submittedData);
   };
 
   return (
@@ -198,7 +203,7 @@ export default function Page() {
               infoSvg={infoSvg}
               tapButton={tapButton}
               playListButton={playListButton}
-              submittedData={submittedData}
+              submittedData={{ ...submittedData, email: kakaoEmail as string }}
               onPrevious={onPrevious}
               onComplete={onComplete}
             />
