@@ -11,16 +11,29 @@ export default function RedirectPage() {
     if (code) {
       axios
         .get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login/kakao/code?code=${code}`
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login/kakao/code?code=${code}`,
+
+          {
+            withCredentials: true,
+          }
         )
         .then((res) => {
-          console.log(res);
-
           if (res.status === 200) {
             // 로그인 성공
+            // console.log(res);
+            // let content = res.headers["content-type"];
+            // let accessToken = res.headers.authorization;
+
+            // let token = res.headers["authorization"];
+            // console.log("응답 헤더 - ", content);
+            // console.log("소문자 표기 토큰 - ", accessToken);
+
+            // console.log("대괄호  토큰 - ", token);
+
+            //토큰을 쿠키에 저장
             console.log("로그인 성공");
             console.log("User Info:", res.data.userInfo);
-            router.push(`/main/${res.data.userInfo.userId}`);
+            router.push({});
           }
         })
         .catch((err) => {
@@ -43,9 +56,6 @@ export default function RedirectPage() {
                 email: kakaoEmail,
               },
             });
-          } else {
-            // 기타 오류
-            console.log(err.response);
           }
         });
     }

@@ -59,7 +59,9 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
       if (response.status === 200) {
         console.log("Signup successful!");
         const { userId } = response.data;
-        router.push(`/main/${userId}`);
+        router.push({
+          pathname: `/main/${userId}`,
+        });
       }
     } catch (error) {
       console.log(error);
