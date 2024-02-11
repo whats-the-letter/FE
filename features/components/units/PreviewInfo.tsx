@@ -30,12 +30,13 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
   onComplete,
 }) => {
   const router = useRouter();
+  const email = router.query.email;
 
   const handleComplete = async () => {
     try {
       const formData = new FormData();
 
-      formData.append("email", submittedData.email);
+      formData.append("email", email as string);
       formData.append("userName", submittedData.userName);
       formData.append(
         "mainBackground",
@@ -57,14 +58,20 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
       );
 
       if (response.status === 200) {
-        console.log("Signup successful!");
-        const { userId } = response.data;
-        router.push(`/main/${userId}`);
+        //쿼리에 userId와 토큰을 넣어서 메인페이지로 이동
+        router.push({
+          pathname: `/main/${response.data.userId}`,
+          query: {
+            token: response.data.token,
+            userId: response.data.userId,
+          },
+        });
       }
     } catch (error) {
       console.log(error);
       if (error.response.status === 400) {
         console.log(error.response.data);
+        //이미 가입된 사용자입니다. 노출
       }
     }
   };

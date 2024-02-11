@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -11,16 +11,37 @@ export default function RedirectPage() {
     if (code) {
       axios
         .get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login/kakao/code?code=${code}`
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login/kakao/code?code=${code}`,
+
+          {
+            withCredentials: true,
+          }
         )
         .then((res) => {
-          console.log(res);
-
           if (res.status === 200) {
             // 로그인 성공
+            console.log(res);
+
+            let accessToken = res.headers.authorization;
+            accessToken = accessToken.replace("Bearer ", "");
+            localStorage.setItem("accessToken", accessToken);
+            axios.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${accessToken}`;
             console.log("로그인 성공");
-            console.log("User Info:", res.data.userInfo);
-            router.push(`/main/${res.data.userInfo.userId}`);
+            //userInfo에 이메일 정보도 가져와야함
+
+            const userEmail = res.data.userInfo.email;
+            const userId = res.data.userInfo.userId;
+
+            router.push({
+              pathname: `/main/${userId}`,
+              query: {
+                token: accessToken,
+                userId: userId,
+                email: userEmail,
+              },
+            });
           }
         })
         .catch((err) => {
@@ -43,9 +64,6 @@ export default function RedirectPage() {
                 email: kakaoEmail,
               },
             });
-          } else {
-            // 기타 오류
-            console.log(err.response);
           }
         });
     }
