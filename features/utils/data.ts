@@ -36,13 +36,28 @@ export const infoSvg = {
   },
 
   mainLp: {
-    "luck": "/assets/lp/luck.svg",
-    "dragon": "/assets/lp/dragon.svg",
-    "dny": "/assets/lp/dny.svg",
-    "new_year": "/assets/lp/new_year.svg",
+    luck: "/assets/lp/luck.svg",
+    dragon: "/assets/lp/dragon.svg",
+    dny: "/assets/lp/dny.svg",
+    new_year: "/assets/lp/new_year.svg",
   },
 };
 
+export const mainSvg = {
+  mainBackground: {
+    pink: "/assets/main/main-pink.svg",
+    blue: "/assets/main/main-blue.svg",
+    silver: "/assets/main/main-silver.svg",
+    gold: "/assets/main/main-gold.svg",
+  },
+
+  mainLp: {
+    luck: "/assets/lp/luck.svg",
+    dragon: "/assets/lp/dragon.svg",
+    dny: "/assets/lp/dny.svg",
+    new_year: "/assets/lp/new_year.svg",
+  },
+};
 export const playListButton = {
   "playlist-pink": "/assets/playlist/playlist-pink.svg",
   "playlist-blue": "/assets/playlist/playlist-blue.svg",

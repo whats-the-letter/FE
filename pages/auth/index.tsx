@@ -37,7 +37,6 @@ export default function RedirectPage() {
             router.push({
               pathname: `/main/${userId}`,
               query: {
-                token: accessToken,
                 userId: userId,
                 email: userEmail,
               },

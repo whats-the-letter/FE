@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { infoSvg, playListButton, tapButton } from "@/utils/data";
+import { mainSvg, playListButton, tapButton } from "@/utils/data";
 
 const MainPage: React.FC = () => {
   const router = useRouter();
@@ -53,21 +53,29 @@ const MainPage: React.FC = () => {
             <div className="relative max-w-[270px] max-h-[600px] mx-auto">
               <img
                 className="w-full h-full object-cover "
-                src={infoSvg.mainBackground[userInfo.mainBackground]}
-                alt="preview-background"
+                src={mainSvg.mainBackground[userInfo.mainBackground]}
+                alt="main-background"
               />
 
               <img
                 className="absolute top-1/3 left-5 w-[230px] h-[230px] rotate-infinite"
-                src={infoSvg.mainLp[userInfo.mainLp]}
-                alt="preview-lpDesign"
+                src={mainSvg.mainLp[userInfo.mainLp]}
+                alt="main-lpDesign"
               />
-              <img
-                src={tapButton[`tap-${userInfo.mainBackground}`]}
-                alt="tap-button"
-                className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce w-[90px] h-[90px]
+              <button
+                onClick={() => {
+                  router.push({
+                    pathname: `/collection/${router.query.userId}`,
+                  });
+                }}
+              >
+                <img
+                  src={tapButton[`tap-${userInfo.mainBackground}`]}
+                  alt="tap-button"
+                  className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce w-[90px] h-[90px]
           "
-              />
+                />
+              </button>
               <img
                 src="/assets/lp/lp-pin.svg"
                 alt="lp-pin"
