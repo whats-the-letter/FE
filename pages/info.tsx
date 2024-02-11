@@ -42,13 +42,17 @@ export default function Page() {
   const kakaoEmail = router.query.email;
 
   const onSubmit = (data: {
-    email: string;
     userName: string;
     mainBackground: string;
     mainLp: string;
   }) => {
     console.log(data);
-    setSubmittedData(data);
+    setSubmittedData({
+      email: kakaoEmail as string,
+      userName: data.userName,
+      mainBackground: data.mainBackground,
+      mainLp: data.mainLp,
+    });
     setIsFormSubmitted(true);
   };
 
@@ -203,7 +207,7 @@ export default function Page() {
               infoSvg={infoSvg}
               tapButton={tapButton}
               playListButton={playListButton}
-              submittedData={{ ...submittedData, email: kakaoEmail as string }}
+              submittedData={submittedData}
               onPrevious={onPrevious}
               onComplete={onComplete}
             />

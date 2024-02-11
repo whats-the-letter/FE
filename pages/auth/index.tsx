@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -20,20 +20,28 @@ export default function RedirectPage() {
         .then((res) => {
           if (res.status === 200) {
             // 로그인 성공
-            // console.log(res);
-            // let content = res.headers["content-type"];
-            // let accessToken = res.headers.authorization;
+            console.log(res);
 
-            // let token = res.headers["authorization"];
-            // console.log("응답 헤더 - ", content);
-            // console.log("소문자 표기 토큰 - ", accessToken);
-
-            // console.log("대괄호  토큰 - ", token);
-
-            //토큰을 쿠키에 저장
+            let accessToken = res.headers.authorization;
+            accessToken = accessToken.replace("Bearer ", "");
+            localStorage.setItem("accessToken", accessToken);
+            axios.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${accessToken}`;
             console.log("로그인 성공");
-            console.log("User Info:", res.data.userInfo);
-            router.push({});
+            //userInfo에 이메일 정보도 가져와야함
+
+            const userEmail = res.data.userInfo.email;
+            const userId = res.data.userInfo.userId;
+
+            router.push({
+              pathname: `/main/${userId}`,
+              query: {
+                token: accessToken,
+                userId: userId,
+                email: userEmail,
+              },
+            });
           }
         })
         .catch((err) => {
