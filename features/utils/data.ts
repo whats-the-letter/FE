@@ -36,10 +36,10 @@ export const infoSvg = {
   },
 
   mainLp: {
-    "luck": "/assets/lp/luck.svg",
-    "dragon": "/assets/lp/dragon.svg",
-    "dny": "/assets/lp/dny.svg",
-    "new_year": "/assets/lp/new_year.svg",
+    "headphone": "/assets/lp/headphone.svg",
+    "high": "/assets/lp/high.svg",
+    "low": "/assets/lp/low.svg",
+    "wtl": "/assets/lp/wtl.svg",
   },
 };
 
