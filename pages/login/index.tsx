@@ -1,3 +1,6 @@
+import Image from "next/image";
+import kakao from "/features/assets/icons/kakao.svg";
+
 export default function LoginPage() {
   const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
   const KAKAO_REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
@@ -19,7 +22,7 @@ export default function LoginPage() {
           href={kakaoAuthUrl}
           className="bg-[#FAE100] rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
         >
-          <img src="/assets/icons/kakao.svg" alt="kakao" />
+          <Image src={kakao} alt="kakao" />
           <p className="text-center text-[#371D1E] text-base m-auto font-pretendard font-semibold">
             카카오로 시작하기
           </p>

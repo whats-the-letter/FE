@@ -36,10 +36,17 @@ export const infoSvg = {
   },
 
   mainLp: {
-    "headphone": "/assets/lp/headphone.svg",
-    "high": "/assets/lp/high.svg",
-    "low": "/assets/lp/low.svg",
-    "wtl": "/assets/lp/wtl.svg",
+    headphone: "/assets/lp/headphone.svg",
+    high: "/assets/lp/high.svg",
+    low: "/assets/lp/low.svg",
+    wtl: "/assets/lp/wtl.svg",
+  },
+
+  main: {
+    pink: "/assets/main/bg-pink.svg",
+    blue: "/assets/main/bg-blue.svg",
+    silver: "/assets/main/bg-silver.svg",
+    gold: "/assets/main/bg-gold.svg",
   },
 };
 

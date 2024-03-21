@@ -91,17 +91,6 @@ export default function Page() {
   }> = (data) => {
     setSubmittedData(data);
     handleStepChange(step + 1);
-    data.editor = selectedOptions.editor;
-    data.phrases = selectedOptions.phrases;
-    data.back = selectedOptions.back;
-    data.music = selectedOptions.music;
-    data.letter = selectedOptions.letter;
-    data.to = selectedInput.to;
-    data.from = selectedInput.from;
-    data.musicInfo = playListSelection.find(
-      (item) => item.youtubeUrlId === selectedOptions.music
-    );
-
     console.log(data);
   };
 
