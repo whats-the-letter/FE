@@ -2,6 +2,9 @@ import React, { forwardRef, useState } from "react";
 import { countCharacters, truncateContent } from "../../../utils/countTexts";
 import Input from "../../common/Input";
 import Inputlabel from "../../common/InputLabel";
+import Image from "next/image";
+import bracketLeft from "@/assets/icons/bracket_left.svg";
+import bracketRight from "@/assets/icons/bracket_right.svg";
 
 interface LetterWritingProps {
   isEditor: string;
@@ -71,11 +74,11 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
           />
           <div className="absolute bottom-6 right-7">
             <div className="flex justify-center items-center space-x-2">
-              <img src="/assets/icons/bracket_left.svg" alt="bracket-left" />
+              <Image src={bracketLeft} alt="bracket-left" />
               <p className="text-xs text-right font-pretendard ">
                 {countCharacters(letterContent)} / {maxCharacters}
               </p>
-              <img src="/assets/icons/bracket_right.svg" alt="bracket-right" />
+              <Image src={bracketRight} alt="bracket-right" />
             </div>
           </div>
           <textarea
