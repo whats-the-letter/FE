@@ -21,10 +21,10 @@ export const phrasesSelection = {
 };
 
 export const letterSelection = {
-  "editor-love-letter": "/assets/letter/letter-love.svg",
-  "editor-money-letter": "/assets/letter/letter-money.svg",
-  "editor-success-letter": "/assets/letter/letter-success.svg",
-  "editor-health-letter": "/assets/letter/letter-health.svg",
+  "editor-love-letter": "/assets/letter/love-letter-3d.svg",
+  "editor-money-letter": "/assets/letter/money-letter-3d.svg",
+  "editor-success-letter": "/assets/letter/success-letter-3d.svg",
+  "editor-health-letter": "/assets/letter/health-letter-3d.svg",
 };
 
 export const infoSvg = {

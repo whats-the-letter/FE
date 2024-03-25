@@ -1,5 +1,6 @@
 import Image from "next/image";
 import kakao from "/features/assets/icons/kakao.svg";
+import logo from "/features/assets/icons/logo.svg";
 
 export default function LoginPage() {
   const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
@@ -10,7 +11,7 @@ export default function LoginPage() {
   return (
     <>
       <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto p-4 px-10 space-y-10 font-pretendard">
-        <img src="/assets/main/main-logo.svg" alt="logo" />
+        <Image src={logo} alt="logo" />
         <h1 className="text-xl font-semibold">로그인이 필요한 서비스입니다.</h1>
         <div className="flex flex-col items-center justify-center z-10 py-3 font-normal text-sm text-center space-y-0.5">
           <span>Dear New Year을 찾아주셔서 감사합니다.</span>
