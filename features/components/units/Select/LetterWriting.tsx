@@ -77,8 +77,7 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
               onChange={handleContentChange}
               placeholder="편지를 작성해주세요 :) "
               value={letterContent}
-              className="absolute left-0 top-0
-              inset-0 w-[192px] h-[165px] p-6 text-xs font-pretendard font-normal bg-transparent resize-none z-10"
+              className="text-[11px] absolute inset-0 w-full h-full p-12 resize-none bg-transparent z-10 outline-none"
             />
             <img
               src={letterSelection[`${isEditor}-letter`]}
