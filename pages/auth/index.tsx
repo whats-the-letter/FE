@@ -20,7 +20,6 @@ export default function RedirectPage() {
         )
         .then((res) => {
           if (res.status === 200) {
-            // 로그인 성공
             console.log(res);
 
             let accessToken = res.headers.authorization;
@@ -30,7 +29,8 @@ export default function RedirectPage() {
               "Authorization"
             ] = `Bearer ${accessToken}`;
             console.log("로그인 성공");
-            //userInfo에 이메일 정보도 가져와야함
+            //userInfo에 이메일 정보 필요
+            
 
             const userEmail = res.data.userInfo.email;
             const userId = res.data.userInfo.userId;

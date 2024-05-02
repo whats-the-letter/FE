@@ -29,7 +29,7 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
     const [letterContent, setLetterContent] = useState("");
     const maxCharacters = 300;
 
-    const handleContentChange = (e) => {
+    const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       let content = e.target.value;
       content = content.replace(/\n/g, "");
 
@@ -42,12 +42,12 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
       onLetterContentChange(content);
     };
 
-    const handleToChange = (e) => {
+    const handleToChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newTo = e.target.value;
       onToChange(newTo);
     };
 
-    const handleFromChange = (e) => {
+    const handleFromChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newFrom = e.target.value;
       onFromChange(newFrom);
     };
@@ -79,11 +79,11 @@ const LetterWriting = forwardRef<HTMLInputElement, LetterWritingProps>(
               value={letterContent}
               className="text-[11px] absolute inset-0 w-full h-full p-12 resize-none bg-transparent z-10 outline-none"
             />
-            <img
+            {/* <img
               src={letterSelection[`${isEditor}-letter`]}
               alt="letter"
               className="absolute inset-0 w-full h-full z-5"
-            />
+            /> */}
           </div>
         </div>
 

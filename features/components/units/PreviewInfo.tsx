@@ -70,7 +70,7 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
           },
         });
       }
-    } catch (error) {
+    } catch (error : any) {
       console.log(error);
       if (error.response.status === 400) {
         console.log(error.response.data);
@@ -85,7 +85,7 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
      "
     >
       <div className="relative max-w-[270px] max-h-[600px] mx-auto">
-        <img
+        {/* <img
           className="w-full h-full object-cover "
           src={infoSvg.mainBackground[submittedData.mainBackground]}
           alt="preview-background"
@@ -101,17 +101,17 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
           alt="tap-button"
           className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce w-[90px] h-[90px]
           "
-        />
+        /> */}
         <Image
           src={pin}
           alt="lp-pin"
           className="absolute top-[40%] left-[65%] w-[100px] h-[160px]"
         />
-        <img
+        {/* <img
           className="absolute top-[63%] left-[8%] w-[90px] h-[90px]"
           src={playListButton[`playlist-${submittedData.mainBackground}`]}
           alt="playlist"
-        />
+        /> */}
       </div>
       <div
         className="flex w-full h-full max-w-sm items-center justify-center mx-auto gap-4

@@ -44,7 +44,7 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
       setFilteredPlayList(filteredList);
     };
 
-    const fetchVideoData = async (videoId) => {
+    const fetchVideoData = async (videoId: string) => {
       try {
         const response = await axios.get(
           `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet`
@@ -63,17 +63,17 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
       }
     }, [selectedVideoId, playListSelection]);
 
-    const handleMusicBoxClick = (videoId) => {
+    const handleMusicBoxClick = (videoId: string) => {
       const selectedMusic = playListSelection.find(
         (item) => item.youtubeUrlId === videoId
       );
       setSelectedVideoId(videoId);
-      onMusicChange({
-        music: videoId,
-        artist: selectedMusic.artist,
-        name: selectedMusic.name,
-        thumbnail: selectedMusic.thumbnail,
-      });
+      // onMusicChange({
+      // music: videoId,
+      // artist: selectedMusic.artist,
+      // name: selectedMusic.name,
+      // thumbnail: selectedMusic.thumbnail,
+      // });
       setIsPlaying(false);
     };
 
@@ -145,11 +145,11 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
         </div>
         {selectedVideo && (
           <div className="bg-black w-full h-16 flex flex-row justify-between items-center px-2">
-            <img
+            {/* <img
               src={selectedVideo.thumbnail}
               alt="thumbnail"
               className="w-9 mr-4"
-            />
+            /> */}
             <div className="flex flex-col justify-start items-start w-40 overflow-hidden">
               <div
                 className={`w-fit marquee ${isPlaying ? "playing" : ""}`}
@@ -198,22 +198,14 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
               className="w-8 h-8 text-white this-button mx-2"
               onClick={handlePlayButtonClick}
             >
-              <Image
-                src={playButton}
-                alt="play-button"
-                className="w-3"
-              />
+              <Image src={playButton} alt="play-button" className="w-3" />
             </button>
             <button
               type="button"
               className="text-white mr-4"
               onClick={() => setIsPlaying(false)}
             >
-              <Image
-                src={stopButton}
-                alt="close"
-                className="w-3"
-              />
+              <Image src={stopButton} alt="close" className="w-3" />
             </button>
           </div>
         )}

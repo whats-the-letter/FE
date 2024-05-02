@@ -17,7 +17,7 @@ const NewAlbumSchema = z.object({
 
 export type NewAlbumFormValues = z.infer<typeof NewAlbumSchema>;
 
-const useNewAblumForm = () => {
+const useNewAlbumForm = () => {
   return useForm<NewAlbumFormValues>({
     defaultValues: {
       albumBackground: "",
@@ -35,4 +35,4 @@ const useNewAblumForm = () => {
   });
 };
 
-export default useNewAblumForm;
+export default useNewAlbumForm;

@@ -13,8 +13,11 @@ export default function Sidebar({
   const sidebarRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        sidebarRef.current &&
+        !(sidebarRef.current as HTMLElement).contains(event.target as Node)
+      ) {
         setSidebarOpen(false);
       }
     };

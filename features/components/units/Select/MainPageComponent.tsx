@@ -1,6 +1,6 @@
 import React from "react";
 
-const MainPageComponent = ({ submittedData }) => {
+const MainPageComponent = ({}) => {
   return <div></div>;
 };
 

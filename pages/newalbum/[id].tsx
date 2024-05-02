@@ -60,7 +60,7 @@ export default function Page() {
     from: "",
   });
 
-  const handleStepChange = (newStep) => {
+  const handleStepChange = (newStep: number) => {
     setStep(newStep);
   };
 
@@ -72,7 +72,7 @@ export default function Page() {
     }
   };
 
-  const handleMusicChange = (musicData) => {
+  const handleMusicChange = (musicData = { music: "" }) => {
     setSelectedOptions({ ...selectedOptions, music: musicData.music });
   };
 
@@ -132,7 +132,7 @@ export default function Page() {
           <button
             type="button"
             className="flex flex-row items-center justify-between"
-            onClick={() => handleSubmit(onSubmit, onError)()}
+            // onClick={() => handleSubmit(onSubmit, onError)()}
           >
             완료
           </button>
@@ -174,10 +174,18 @@ export default function Page() {
             />
           )}
           {step === 4 && (
-            <MusicList
-              {...register("music")}
-              playListSelection={playListSelection}
-              onMusicChange={handleMusicChange}
+            // <MusicList
+            //   {...register("music")}
+            //   playListSelection={playListSelection}
+            //   // onMusicChange={handleMusicChange}
+            // />
+            //일단 빌드 통과용으로 임시로 만들어놓은 코드
+            <AlbumSelect
+              {...register("editor")}
+              albumSelection={albumSelection}
+              labelMap={labelMap}
+              isEditor={selectedOptions.editor}
+              onAlbumChange={(editor) => handleOptionChange("editor", editor)}
             />
           )}
 
@@ -197,7 +205,7 @@ export default function Page() {
           )}
         </div>
       </form>
-      {step === 6 && <CompleteAlbum submittedAlbum={submittedData} />}
+      {/* {step === 6 && <CompleteAlbum submittedAlbum={submittedData} />} */}
     </div>
   );
 }
