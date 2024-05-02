@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import {
-  albumSelection,
-  letterSelection,
-  phrasesSelection,
-} from "../../utils/data";
+import { letterSelection, phrasesSelection } from "../../utils/data";
 import { useModal } from "../common/ShareModal";
 import BackgroundColorful from "./BackSelect-Animation/BackgroundColorful";
 import BackgroundSnow from "./BackSelect-Animation/BackgroundSnow";
 import BackgroundCircles from "./BackSelect-Animation/BackgroundCircles";
 import axios from "axios";
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 interface CompletedAlbumProps {
   submittedAlbum: {
@@ -79,8 +75,8 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
 
   const sendAlbumData = async () => {
     try {
-      const session = await getSession();
-      console.log(session);
+      const localSession = localStorage.getItem("session");
+      const session = localSession ? JSON.parse(localSession) : null;
       const accessToken = session?.accessToken;
       console.log("세션 액세스 토큰 잘 불러옴?", accessToken);
 
@@ -127,7 +123,7 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
         >
           <div className={`card ${isFlipped ? "flipped" : ""}`}>
             <div className="card-front z-10">
-              <img src={completeSvg.editor[submittedAlbum.editor]} />
+              {/* <img src={completeSvg.editor[submittedAlbum.editor]} />
               <img
                 src={completeSvg.deco[submittedAlbum.editor]}
                 className="z-20 absolute top-[57%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"
@@ -137,9 +133,9 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
                 src={phrasesSelection[submittedAlbum.phrases]}
                 className="absolute top-[23%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                 alt="phrases"
-              />
+              /> */}
               <div className="w-36 absolute top-[90%] left-[36%] transform -translate-x-1/2 -translate-y-1/2 flex text-[8px]">
-                <img src="/assets/icons/bracket_left.svg" className="mr-0.5" />
+                {/* <img src="/assets/icons/bracket_left.svg" className="mr-0.5" /> */}
                 <span
                   className="truncate inline-block text-center whitespace-nowrap overflow-hidden text-ellipsis
                 "
@@ -150,14 +146,14 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
                 <img src="/assets/icons/bracket_right.svg" className="ml-0.5" />
               </div>
 
-              <img
+              {/* <img
                 className="absolute top-[61%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[130px] h-[130px] rounded-full"
                 src={submittedAlbum.musicInfo.thumbnail}
                 alt="music-thumbnail"
-              />
+              /> */}
             </div>
             <div className="card-back">
-              <img src={letterSelection[`${submittedAlbum.editor}-letter`]} />
+              {/* <img src={letterSelection[`${submittedAlbum.editor}-letter`]} /> */}
               <div className="flex justify-center items-center text-[12px] absolute w-full h-full max-w-[200px] max-h-[200px]">
                 {submittedAlbum.letter}
               </div>

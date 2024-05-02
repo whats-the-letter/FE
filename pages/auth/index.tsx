@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Loading from "@/components/units/Loading";
 
 export default function RedirectPage() {
   const router = useRouter();
@@ -19,7 +20,6 @@ export default function RedirectPage() {
         )
         .then((res) => {
           if (res.status === 200) {
-            // 로그인 성공
             console.log(res);
 
             let accessToken = res.headers.authorization;
@@ -29,7 +29,8 @@ export default function RedirectPage() {
               "Authorization"
             ] = `Bearer ${accessToken}`;
             console.log("로그인 성공");
-            //userInfo에 이메일 정보도 가져와야함
+            //userInfo에 이메일 정보 필요
+            
 
             const userEmail = res.data.userInfo.email;
             const userId = res.data.userInfo.userId;
@@ -69,5 +70,5 @@ export default function RedirectPage() {
     }
   }, [router]);
 
-  return <div>Redirecting...</div>;
+  return <Loading />;
 }
