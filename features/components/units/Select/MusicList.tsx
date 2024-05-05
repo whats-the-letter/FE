@@ -12,7 +12,7 @@ import SearchBar from "@/components/units/SearchBar";
 export interface MusicListProps {
   musicList: MusicProps[];
   onMusicChange: (music: MusicProps[
-    
+
   ]) => void;
 }
 
@@ -26,7 +26,7 @@ export interface MusicProps {
 
 //eslint-disable-next-line react/display-name
 const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
-  ({ onMusicSelect }, ref) => {
+  ({ onMusicChange }, ref) => {
     const [musicData, setMusicData] = useState<MusicProps[]>([]);
     const [selectedMusicId, setSelectedMusicId] = useState<string | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -109,7 +109,7 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
       setSelectedMusicId(musicId);
       setIsPlaying(false);
       if (selectedMusic) {
-        onMusicSelect([selectedMusic]);
+        onMusicChange([selectedMusic]);
       }
     };
 
