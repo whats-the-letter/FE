@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 const NewAlbumSchema = z.object({
   albumBackground: z.string(),
-  albumCover: z.string(),
+  editor: z.string(),
   albumId: z.number(),
   albumPhrases: z.string(),
   fromName: z.string(),
@@ -12,6 +12,7 @@ const NewAlbumSchema = z.object({
   musicArtist: z.string(),
   musicName: z.string(),
   toName: z.string(),
+  tags: z.string(),
   youtubeUrlId: z.string(),
 });
 
@@ -21,7 +22,7 @@ const useNewAlbumForm = () => {
   return useForm<NewAlbumFormValues>({
     defaultValues: {
       albumBackground: "",
-      albumCover: "",
+      editor: "",
       albumId: 0,
       albumPhrases: "",
       fromName: "",
@@ -29,6 +30,7 @@ const useNewAlbumForm = () => {
       musicArtist: "",
       musicName: "",
       toName: "",
+      tags: "",
       youtubeUrlId: "",
     },
     resolver: zodResolver(NewAlbumSchema),

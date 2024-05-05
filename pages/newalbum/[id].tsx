@@ -132,7 +132,7 @@ export default function Page() {
           <button
             type="button"
             className="flex flex-row items-center justify-between"
-            // onClick={() => handleSubmit(onSubmit, onError)()}
+            onClick={() => handleSubmit(onSubmit, onError)()}
           >
             완료
           </button>
@@ -174,18 +174,9 @@ export default function Page() {
             />
           )}
           {step === 4 && (
-            // <MusicList
-            //   {...register("music")}
-            //   playListSelection={playListSelection}
-            //   // onMusicChange={handleMusicChange}
-            // />
-            //일단 빌드 통과용으로 임시로 만들어놓은 코드
-            <AlbumSelect
-              {...register("editor")}
-              albumSelection={albumSelection}
-              labelMap={labelMap}
-              isEditor={selectedOptions.editor}
-              onAlbumChange={(editor) => handleOptionChange("editor", editor)}
+            <MusicList
+              {...register("music")}
+              playListSelection={playListSelection}
             />
           )}
 

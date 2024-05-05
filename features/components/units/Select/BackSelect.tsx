@@ -1,5 +1,8 @@
 import { forwardRef } from "react";
 import EditorRadioButton from "../../common/EditorRadioButton";
+import BackgroundColorful from "../BackSelect-Animation/BackgroundColorful";
+import BackgroundSnow from "../BackSelect-Animation/BackgroundSnow";
+import BackgroundCircles from "../BackSelect-Animation/BackgroundCircles";
 
 interface BackSelectProps extends React.InputHTMLAttributes<HTMLInputElement> {
   backSelection: Record<string, JSX.Element>;
@@ -10,6 +13,7 @@ interface BackSelectProps extends React.InputHTMLAttributes<HTMLInputElement> {
   albumSelection: Record<string, string>;
   phrasesSelection: Record<string, string>;
 }
+
 
 //eslint-disable-next-line react/display-name
 const BackSelect = forwardRef<HTMLInputElement, BackSelectProps>(
@@ -31,8 +35,8 @@ const BackSelect = forwardRef<HTMLInputElement, BackSelectProps>(
         <span className="text-lg text-center font-pretendard z-10">
           배경을 선택해주세요
         </span>
-
-        <div className="relative">
+        
+        <div className="relative z-0">
           {backSelection[isBack]}
 
           <div className="relative">

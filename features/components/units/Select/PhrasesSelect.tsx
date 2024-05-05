@@ -28,7 +28,9 @@ const PhrasesSelect = forwardRef<HTMLInputElement, PhrasesSelectProps>(
           문구를 선택해주세요
         </span>
         <div className="relative">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={albumSelection[isEditor]} alt="album" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={phrasesSelection[isPhrases]}
             alt="phrases"
