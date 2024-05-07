@@ -4,8 +4,8 @@ import EditorRadioButton from "../../common/EditorRadioButton";
 interface PhrasesSelectProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   phrasesSelection: Record<string, string>;
-  isPhrases: string;
-  isEditor: string;
+  albumPhrases: string;
+  albumCover: string;
   onPhrasesChange: (phrases: string) => void;
   albumSelection: Record<string, string>;
 }
@@ -14,8 +14,8 @@ const PhrasesSelect = forwardRef<HTMLInputElement, PhrasesSelectProps>(
   (
     {
       phrasesSelection,
-      isPhrases,
-      isEditor,
+      albumPhrases,
+      albumCover,
       onPhrasesChange,
       albumSelection,
       ...props
@@ -29,12 +29,12 @@ const PhrasesSelect = forwardRef<HTMLInputElement, PhrasesSelectProps>(
         </span>
         <div className="relative">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={albumSelection[isEditor]} alt="album" />
+          <img src={albumSelection[albumCover]} alt="album" />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={phrasesSelection[isPhrases]}
+            src={phrasesSelection[albumPhrases]}
             alt="phrases"
-            className="absolute top-[24%] left-[45%] transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-[24%] left-[43%] transform -translate-x-1/2 -translate-y-1/2"
           />
           <p className="text-[10px] text-[#9e9e9e] text-center font-pretendard font-thin mt-2">
             * 중앙에는 플레이리스트의 커버 이미지가 들어갑니다.
@@ -49,7 +49,7 @@ const PhrasesSelect = forwardRef<HTMLInputElement, PhrasesSelectProps>(
               key={phrases}
               id={phrases}
               label={phrases.split("-")[1]}
-              selected={isPhrases}
+              selected={albumPhrases}
               onChange={() => onPhrasesChange(phrases)}
             />
           ))}
