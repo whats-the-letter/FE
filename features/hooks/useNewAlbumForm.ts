@@ -9,10 +9,9 @@ const NewAlbumSchema = z.object({
   albumPhrases: z.string(),
   fromName: z.string(),
   letter: z.string(),
-  musicArtist: z.string(),
-  musicName: z.string(),
+  musicId: z.string(),
+
   toName: z.string(),
-  youtubeUrlId: z.string(),
 });
 
 export type NewAlbumFormValues = z.infer<typeof NewAlbumSchema>;
@@ -26,10 +25,7 @@ const useNewAlbumForm = () => {
       albumPhrases: "",
       fromName: "",
       letter: "",
-      musicArtist: "",
-      musicName: "",
-      toName: "",
-      youtubeUrlId: "",
+      musicId: "m",
     },
     resolver: zodResolver(NewAlbumSchema),
   });

@@ -2,17 +2,37 @@ import AlbumSelect from "@/components/units/Select/AlbumSelect";
 import createFunnel from "@/components/units/funnel/createFunnel";
 import { FunnelProvider } from "@/contexts/useFunnelContexts";
 import useNewAblumForm, { NewAlbumFormValues } from "@/hooks/useNewAlbumForm";
-import { albumSelection, labelMap } from "@/utils/data";
-import { playListSelection } from "@/utils/musicData";
+import {
+  albumSelection,
+  labelMap,
+  letterSelection,
+  phrasesSelection,
+} from "@/utils/data";
 import Image from "next/image";
 import { useState } from "react";
-import { Controller, FormProvider } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 
 import left from "@/assets/icons/chevron_left.svg";
 import right from "@/assets/icons/chevron_right.svg";
+import PhrasesSelect from "@/components/units/Select/PhrasesSelect";
+import BackSelect from "@/components/units/Select/BackSelect";
+import BackgroundColorful from "@/components/units/BackSelect-Animation/BackgroundColorful";
+import BackgroundSnow from "@/components/units/BackSelect-Animation/BackgroundSnow";
+import BackgroundCircles from "@/components/units/BackSelect-Animation/BackgroundCircles";
+
+import LetterWriting from "@/components/units/Select/LetterWriting";
+import MusicList, { MusicProps } from "@/components/units/Select/MusicList";
+import CompleteAlbum from "@/components/units/CompleteAlbum";
 
 const Page = () => {
-  const { Funnel, Step, useFunnel } = createFunnel(["editor", "phrases"]);
+  const { Funnel, Step, useFunnel } = createFunnel([
+    "albumCover",
+    "phrases",
+    "background",
+    "music",
+    "letter",
+    "complete",
+  ]);
 
   const { step, toPrevStep, toNextStep, hasPrevStep } = useFunnel();
 
@@ -32,20 +52,18 @@ const Page = () => {
   };
 
   const [selectedOptions, setSelectedOptions] = useState({
-    editor: "editor-love",
-    phrases: "editor-1",
-    back: "colorful",
-    music: playListSelection[0].youtubeUrlId,
+    albumCover: "editor-love",
+    albumPhrases: "editor-1",
+    albumBackground: "snow",
+    musicId: "1",
     letter: "",
   });
   const [selectedInput, setSelectedInput] = useState({
     to: "",
     from: "",
   });
+  const [selectedMusic, setSelectedMusic] = useState<MusicProps[]>([]);
 
-  const handleMusicChange = (musicData: { music: string }) => {
-    setSelectedOptions({ ...selectedOptions, music: musicData.music });
-  };
   const handleOptionChange = (optionName: string, optionValue: string) => {
     setSelectedOptions({ ...selectedOptions, [optionName]: optionValue });
   };
@@ -54,11 +72,17 @@ const Page = () => {
     setSelectedInput({ ...selectedInput, [inputName]: inputValue });
   };
 
+  const backSelection = {
+    colorful: <BackgroundColorful />,
+    snow: <BackgroundSnow />,
+    circles: <BackgroundCircles />,
+  };
+
   return (
     <>
       <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm space-y-4 font-semibold">
         <FunnelProvider value={{ toPrevStep, toNextStep }}>
-          <div className="flex flex-row justify-between w-full max-w-sm px-8 z-10 font-pretendard ">
+          <div className="flex flex-row justify-between w-full max-w-sm px-8 z-20 font-pretendard ">
             <button
               onClick={toPrevStep}
               className="flex flex-row items-center justify-between"
@@ -81,16 +105,80 @@ const Page = () => {
           <FormProvider {...newAblumForm}>
             <div className="flex flex-col text-center justify-center items-center w-full max-w-sm px-8 z-10 gap-10 font-pretendard ">
               <Funnel step={step}>
-                <Step name="editor">
-                  {/* <AlbumSelect
-                    {...register("editor")}
+                <Step name="albumCover">
+                  <AlbumSelect
+                    {...register("albumCover")}
                     albumSelection={albumSelection}
                     labelMap={labelMap}
-                    isEditor={selectedOptions.editor}
+                    albumCover={selectedOptions.albumCover}
                     onAlbumChange={(albumCover) =>
                       handleOptionChange("albumCover", albumCover)
                     }
-                  /> */}
+                  />
+                </Step>
+                <Step name="phrases">
+                  <PhrasesSelect
+                    {...register("albumPhrases")}
+                    albumSelection={albumSelection}
+                    albumCover={selectedOptions.albumCover}
+                    phrasesSelection={phrasesSelection}
+                    albumPhrases={selectedOptions.albumPhrases}
+                    onPhrasesChange={(phrases) =>
+                      handleOptionChange("albumPhrases", phrases)
+                    }
+                  />
+                </Step>
+                <Step name="background">
+                  <BackSelect
+                    {...register("albumBackground")}
+                    albumSelection={albumSelection}
+                    albumCover={selectedOptions.albumCover}
+                    phrasesSelection={phrasesSelection}
+                    albumPhrases={selectedOptions.albumPhrases}
+                    backSelection={backSelection}
+                    albumBackground={selectedOptions.albumBackground}
+                    onBackChange={(back) =>
+                      handleOptionChange("albumBackground", back)
+                    }
+                  />
+                </Step>
+                <Step name="music">
+                  <MusicList
+                    musicList={selectedMusic}
+                    onMusicChange={(musicList: MusicProps[]) => {
+                      setSelectedMusic(musicList);
+                      handleOptionChange("musicId", musicList[0].musicId);
+                    }}
+                  />
+                </Step>
+                <Step name="letter">
+                  <LetterWriting
+                    {...register("letter")}
+                    albumCover={selectedOptions.albumCover}
+                    letterSelection={letterSelection}
+                    onLetterContentChange={(content) =>
+                      handleOptionChange("letter", content)
+                    }
+                    {...register("toName")}
+                    onToChange={(to) => handleInputChange("toName", to)}
+                    {...register("fromName")}
+                    onFromChange={(from) => handleInputChange("fromName", from)}
+                  />
+                </Step>
+                <Step name="complete">
+                  <CompleteAlbum
+                    submittedAlbum={{
+                      albumBackground: selectedOptions.albumBackground,
+                      albumCover: selectedOptions.albumCover,
+                      albumId: 0,
+                      albumPhrases: selectedOptions.albumPhrases,
+                      fromName: selectedInput.from,
+                      letter: selectedOptions.letter,
+                      music: selectedOptions.musicId,
+                      toName: selectedInput.to,
+                    }}
+                    selectedMusic={selectedMusic[0]}
+                  />
                 </Step>
               </Funnel>
             </div>

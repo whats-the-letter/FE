@@ -1,29 +1,27 @@
-import React, { useState } from "react";
-import { letterSelection, phrasesSelection } from "../../utils/data";
+import React, { useEffect, useState } from "react";
+import {
+  albumSelection,
+  letterSelection,
+  phrasesSelection,
+} from "../../utils/data";
 import { useModal } from "../common/ShareModal";
 import BackgroundColorful from "./BackSelect-Animation/BackgroundColorful";
 import BackgroundSnow from "./BackSelect-Animation/BackgroundSnow";
 import BackgroundCircles from "./BackSelect-Animation/BackgroundCircles";
 import axios from "axios";
-import { getSession } from "next-auth/react";
+import { MusicProps } from "./Select/MusicList";
+import Image from "next/image";
+import letterBg from "/features/assets/letter/letter-bg.svg";
 
-interface CompletedAlbumProps {
-  submittedAlbum: {
-    editor: string;
-    phrases: string;
-    back: string;
-    musicInfo: {
-      id: number;
-      youtubeUrlId: string;
-      name: string;
-      artist: string;
-      thumbnail: string;
-      category: string;
-    };
-    letter: string;
-    to: string;
-    from: string;
-  };
+export interface AlbumInfo {
+  albumBackground: string;
+  albumCover: string;
+  albumId: number;
+  albumPhrases: string;
+  fromName: string;
+  letter: string;
+  music: string;
+  toName: string;
 }
 
 const backSelection: Record<string, React.JSX.Element> = {
@@ -31,37 +29,16 @@ const backSelection: Record<string, React.JSX.Element> = {
   snow: <BackgroundSnow />,
   circles: <BackgroundCircles />,
 };
-const completeSvg: {
-  editor: Record<
-    "editor-love" | "editor-money" | "editor-success" | "editor-health",
-    string
-  >;
-  deco: Record<
-    "editor-love" | "editor-money" | "editor-success" | "editor-health",
-    string
-  >;
-} = {
-  editor: {
-    "editor-love": "/assets/editor/editor-love-complete.svg",
-    "editor-money": "/assets/editor/editor-money-complete.svg",
-    "editor-success": "/assets/editor/editor-success-complete.svg",
-    "editor-health": "/assets/editor/editor-health-complete.svg",
-  },
-  deco: {
-    "editor-love": "/assets/editor/editor-deco-love.svg",
-    "editor-money": "/assets/editor/editor-deco-money.svg",
-    "editor-success": "/assets/editor/editor-deco-success.svg",
-    "editor-health": "/assets/editor/editor-deco-health.svg",
-  },
-};
 
-const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
+const CompleteAlbum: React.FC<{
+  submittedAlbum: AlbumInfo;
+  selectedMusic: MusicProps;
+}> = ({ submittedAlbum, selectedMusic }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
   };
-
   const { open } = useModal({
     title: "공유하기",
     description: "* 공유를 하지 않으면 앨범은 영영 닿지 못할 거예요.",
@@ -83,17 +60,7 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/album/send`,
         {
-          albumInfo: {
-            albumBackground: submittedAlbum.back,
-            albumCover: submittedAlbum.editor,
-            albumPhrases: submittedAlbum.phrases,
-            fromName: submittedAlbum.from,
-            letter: submittedAlbum.letter,
-            musicId: submittedAlbum.musicInfo.youtubeUrlId,
-            toName: submittedAlbum.to,
-          },
-        },
-        {
+          albumInfo: submittedAlbum,
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -107,14 +74,12 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
 
   return (
     <div>
-      <div className="relative -z-10">{backSelection[submittedAlbum.back]}</div>
+      <div className="relative -z-10">
+        {backSelection[submittedAlbum.albumBackground]}
+      </div>
       <div className="flex flex-col items-center justify-center w-full h-full z-10 max-w-sm max-h-sm m-auto font-pretendard space-y-6">
         <span className="w-full text-lg text-center z-10 mb-8">
           앨범이 완성되었습니다!
-        </span>
-
-        <span className="z-10 w-full text-left ml-10">
-          To. <strong>{submittedAlbum.to}</strong>
         </span>
 
         <div
@@ -123,47 +88,51 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
         >
           <div className={`card ${isFlipped ? "flipped" : ""}`}>
             <div className="card-front z-10">
-              {/* <img src={completeSvg.editor[submittedAlbum.editor]} />
+              <img src={albumSelection[submittedAlbum.albumCover]} />
               <img
-                src={completeSvg.deco[submittedAlbum.editor]}
-                className="z-20 absolute top-[57%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                alt="deco"
-              />
-              <img
-                src={phrasesSelection[submittedAlbum.phrases]}
-                className="absolute top-[23%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                src={phrasesSelection[submittedAlbum.albumPhrases]}
+                className="absolute top-[23%] left-[40%] transform -translate-x-1/2 -translate-y-1/2"
                 alt="phrases"
-              /> */}
-              <div className="w-36 absolute top-[90%] left-[36%] transform -translate-x-1/2 -translate-y-1/2 flex text-[8px]">
-                {/* <img src="/assets/icons/bracket_left.svg" className="mr-0.5" /> */}
-                <span
-                  className="truncate inline-block text-center whitespace-nowrap overflow-hidden text-ellipsis
-                "
-                >
-                  <strong>{submittedAlbum.musicInfo.name} </strong> -
-                  <strong> {submittedAlbum.musicInfo.artist}</strong>
+              />
+              <div className="w-36 absolute top-[91.2%] left-2/3 transform -translate-x-1/2 -translate-y-1/2 flex text-[10px]">
+                <span className="truncate inline-block text-center whitespace-nowrap overflow-hidden text-ellipsis">
+                  <strong>{selectedMusic?.musicName}</strong>-
+                  <strong> {selectedMusic?.musicArtist}</strong>
                 </span>
-                <img src="/assets/icons/bracket_right.svg" className="ml-0.5" />
               </div>
 
-              {/* <img
-                className="absolute top-[61%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[130px] h-[130px] rounded-full"
-                src={submittedAlbum.musicInfo.thumbnail}
+              <img
+                className="absolute top-[61%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[240px] h-[133px]"
+                src={`https://i1.ytimg.com/vi/${selectedMusic?.youtubeUrlId}/maxresdefault.jpg`}
                 alt="music-thumbnail"
-              /> */}
+              />
             </div>
             <div className="card-back">
-              {/* <img src={letterSelection[`${submittedAlbum.editor}-letter`]} /> */}
-              <div className="flex justify-center items-center text-[12px] absolute w-full h-full max-w-[200px] max-h-[200px]">
+              <span className="absolute top-6 left-8 z-10 w-full text-left text-[10px]">
+                To. <strong>{submittedAlbum.toName}</strong>
+              </span>
+              <Image
+                src={letterBg}
+                alt="letterBg"
+                className="absolute inset-0 w-full h-full z-0"
+              />
+              <img
+                src={letterSelection[`${submittedAlbum.albumCover}-letter`]}
+                className="z-30"
+              />
+
+              <div className="flex justify-center items-center text-[10px] absolute w-full h-full max-w-[200px] max-h-[200px] z-20">
                 {submittedAlbum.letter}
               </div>
+              <span
+                className="absolute bottom-5 right-1/4
+              text-right z-10 w-full text-[10px]" 
+              >
+                From. <strong>{submittedAlbum.fromName}</strong>
+              </span>
             </div>
           </div>
         </div>
-
-        <span className="text-right z-10 w-full mr-10">
-          From. <strong>{submittedAlbum.from}</strong>
-        </span>
 
         <span className="text-center text-gray-400 text-sm font-normal z-10 w-full max-w-sm m-auto">
           앨범을 클릭하여 뒷면을 확인하세요!

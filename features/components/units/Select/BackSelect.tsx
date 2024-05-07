@@ -3,9 +3,9 @@ import EditorRadioButton from "../../common/EditorRadioButton";
 
 interface BackSelectProps extends React.InputHTMLAttributes<HTMLInputElement> {
   backSelection: Record<string, JSX.Element>;
-  isEditor: string;
-  isPhrases: string;
-  isBack: string;
+  albumCover: string;
+  albumPhrases: string;
+  albumBackground: string;
   onBackChange: (back: string) => void;
   albumSelection: Record<string, string>;
   phrasesSelection: Record<string, string>;
@@ -16,12 +16,12 @@ const BackSelect = forwardRef<HTMLInputElement, BackSelectProps>(
   (
     {
       backSelection,
-      isEditor,
+      albumCover,
       onBackChange,
       albumSelection,
       phrasesSelection,
-      isPhrases,
-      isBack,
+      albumPhrases,
+      albumBackground,
       ...props
     },
     ref
@@ -32,15 +32,15 @@ const BackSelect = forwardRef<HTMLInputElement, BackSelectProps>(
           배경을 선택해주세요
         </span>
 
-        <div className="relative">
-          {backSelection[isBack]}
+        <div className="relative z-0">
+          {backSelection[albumBackground]}
 
           <div className="relative">
-            <img src={albumSelection[isEditor]} alt="album" />
+            <img src={albumSelection[albumCover]} alt="album" />
             <img
-              src={phrasesSelection[isPhrases]}
+              src={phrasesSelection[albumPhrases]}
               alt="phrases"
-              className="absolute top-[23%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 "
+              className="absolute top-[24%] left-[43%] transform -translate-x-1/2 -translate-y-1/2"
             />
 
             <p className="text-[10px] text-[#9e9e9e] text-center font-pretendard font-thin mt-2">
@@ -58,7 +58,7 @@ const BackSelect = forwardRef<HTMLInputElement, BackSelectProps>(
               key={back}
               id={back}
               label={back}
-              selected={isBack}
+              selected={albumBackground}
               onChange={() => onBackChange(back)}
             />
           ))}
