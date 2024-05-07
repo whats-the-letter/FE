@@ -4,16 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 const NewAlbumSchema = z.object({
   albumBackground: z.string(),
-  editor: z.string(),
+  albumCover: z.string(),
   albumId: z.number(),
   albumPhrases: z.string(),
   fromName: z.string(),
   letter: z.string(),
-  musicArtist: z.string(),
-  musicName: z.string(),
+  musicId: z.string(),
+
   toName: z.string(),
-  tags: z.string(),
-  youtubeUrlId: z.string(),
 });
 
 export type NewAlbumFormValues = z.infer<typeof NewAlbumSchema>;
@@ -22,16 +20,12 @@ const useNewAlbumForm = () => {
   return useForm<NewAlbumFormValues>({
     defaultValues: {
       albumBackground: "",
-      editor: "",
+      albumCover: "",
       albumId: 0,
       albumPhrases: "",
       fromName: "",
       letter: "",
-      musicArtist: "",
-      musicName: "",
-      toName: "",
-      tags: "",
-      youtubeUrlId: "",
+      musicId: "m",
     },
     resolver: zodResolver(NewAlbumSchema),
   });

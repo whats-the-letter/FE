@@ -22,14 +22,16 @@ import BackgroundCircles from "@/components/units/BackSelect-Animation/Backgroun
 
 import LetterWriting from "@/components/units/Select/LetterWriting";
 import MusicList, { MusicProps } from "@/components/units/Select/MusicList";
+import CompleteAlbum from "@/components/units/CompleteAlbum";
 
 const Page = () => {
   const { Funnel, Step, useFunnel } = createFunnel([
-    "editor",
+    "albumCover",
     "phrases",
     "background",
-    "musicList",
+    "music",
     "letter",
+    "complete",
   ]);
 
   const { step, toPrevStep, toNextStep, hasPrevStep } = useFunnel();
@@ -50,16 +52,17 @@ const Page = () => {
   };
 
   const [selectedOptions, setSelectedOptions] = useState({
-    editor: "editor-love",
+    albumCover: "editor-love",
     albumPhrases: "editor-1",
     albumBackground: "snow",
-    music: "",
+    musicId: "1",
     letter: "",
   });
   const [selectedInput, setSelectedInput] = useState({
     to: "",
     from: "",
   });
+  const [selectedMusic, setSelectedMusic] = useState<MusicProps[]>([]);
 
   const handleOptionChange = (optionName: string, optionValue: string) => {
     setSelectedOptions({ ...selectedOptions, [optionName]: optionValue });
@@ -102,14 +105,14 @@ const Page = () => {
           <FormProvider {...newAblumForm}>
             <div className="flex flex-col text-center justify-center items-center w-full max-w-sm px-8 z-10 gap-10 font-pretendard ">
               <Funnel step={step}>
-                <Step name="editor">
+                <Step name="albumCover">
                   <AlbumSelect
-                    {...register("editor")}
+                    {...register("albumCover")}
                     albumSelection={albumSelection}
                     labelMap={labelMap}
-                    isEditor={selectedOptions.editor}
-                    onAlbumChange={(editor) =>
-                      handleOptionChange("editor", editor)
+                    albumCover={selectedOptions.albumCover}
+                    onAlbumChange={(albumCover) =>
+                      handleOptionChange("albumCover", albumCover)
                     }
                   />
                 </Step>
@@ -117,9 +120,9 @@ const Page = () => {
                   <PhrasesSelect
                     {...register("albumPhrases")}
                     albumSelection={albumSelection}
-                    isEditor={selectedOptions.editor}
+                    albumCover={selectedOptions.albumCover}
                     phrasesSelection={phrasesSelection}
-                    isPhrases={selectedOptions.albumPhrases}
+                    albumPhrases={selectedOptions.albumPhrases}
                     onPhrasesChange={(phrases) =>
                       handleOptionChange("albumPhrases", phrases)
                     }
@@ -129,34 +132,29 @@ const Page = () => {
                   <BackSelect
                     {...register("albumBackground")}
                     albumSelection={albumSelection}
-                    isEditor={selectedOptions.editor}
+                    albumCover={selectedOptions.albumCover}
                     phrasesSelection={phrasesSelection}
-                    isPhrases={selectedOptions.albumPhrases}
+                    albumPhrases={selectedOptions.albumPhrases}
                     backSelection={backSelection}
-                    isBack={selectedOptions.albumBackground}
+                    albumBackground={selectedOptions.albumBackground}
                     onBackChange={(back) =>
                       handleOptionChange("albumBackground", back)
                     }
                   />
                 </Step>
-                <Step name="musicList">
+                <Step name="music">
                   <MusicList
-                    musicList={[]}
+                    musicList={selectedMusic}
                     onMusicChange={(musicList: MusicProps[]) => {
-                      handleOptionChange(
-                        "musicArtist",
-                        musicList[0].musicArtist
-                      );
-                      handleOptionChange("musicName", musicList[0].musicName);
+                      setSelectedMusic(musicList);
+                      handleOptionChange("musicId", musicList[0].musicId);
                     }}
-                    {...register("musicName")}
-                    {...register("musicArtist")}
                   />
                 </Step>
                 <Step name="letter">
                   <LetterWriting
                     {...register("letter")}
-                    isEditor={selectedOptions.editor}
+                    albumCover={selectedOptions.albumCover}
                     letterSelection={letterSelection}
                     onLetterContentChange={(content) =>
                       handleOptionChange("letter", content)
@@ -165,6 +163,21 @@ const Page = () => {
                     onToChange={(to) => handleInputChange("toName", to)}
                     {...register("fromName")}
                     onFromChange={(from) => handleInputChange("fromName", from)}
+                  />
+                </Step>
+                <Step name="complete">
+                  <CompleteAlbum
+                    submittedAlbum={{
+                      albumBackground: selectedOptions.albumBackground,
+                      albumCover: selectedOptions.albumCover,
+                      albumId: 0,
+                      albumPhrases: selectedOptions.albumPhrases,
+                      fromName: selectedInput.from,
+                      letter: selectedOptions.letter,
+                      music: selectedOptions.musicId,
+                      toName: selectedInput.to,
+                    }}
+                    selectedMusic={selectedMusic[0]}
                   />
                 </Step>
               </Funnel>
