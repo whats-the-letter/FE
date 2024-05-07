@@ -3,7 +3,6 @@ import Image from "next/image";
 
 import { useRouter } from "next/router";
 import React from "react";
-
 import pin from "features/assets/lp/lp-pin.svg";
 
 interface PreivewInfoProps {
@@ -70,11 +69,12 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
           },
         });
       }
-    } catch (error : any) {
+    } catch (error: any) {
       console.log(error);
       if (error.response.status === 400) {
         console.log(error.response.data);
         //이미 가입된 사용자입니다. 노출
+        alert("이미 가입된 사용자입니다.");
       }
     }
   };
@@ -84,34 +84,37 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
       className="flex flex-col w-full h-full items-center justify-center m-auto p-4 gap-2
      "
     >
-      <div className="relative max-w-[270px] max-h-[600px] mx-auto">
-        {/* <img
-          className="w-full h-full object-cover "
+      <div className="relative max-w-[285px] max-h-[600px] mx-auto">
+        <Image
           src={infoSvg.mainBackground[submittedData.mainBackground]}
           alt="preview-background"
+          className="w-full h-full object-cover"
+          width={285}
+          height={600}
         />
 
-        <img
-          className="absolute top-1/3 left-5 w-[230px] h-[230px] rotate-infinite"
+        <Image
+          className="absolute top-1/3 left-5 rotate-infinite"
           src={infoSvg.mainLp[submittedData.mainLp]}
           alt="preview-lpDesign"
+          width={230}
+          height={230}
         />
-        <img
+
+        <Image
           src={tapButton[`tap-${submittedData.mainBackground}`]}
           alt="tap-button"
           className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce w-[90px] h-[90px]
-          "
-        /> */}
+        "
+          width={90}
+          height={90}
+        />
+
         <Image
           src={pin}
           alt="lp-pin"
           className="absolute top-[40%] left-[65%] w-[100px] h-[160px]"
         />
-        {/* <img
-          className="absolute top-[63%] left-[8%] w-[90px] h-[90px]"
-          src={playListButton[`playlist-${submittedData.mainBackground}`]}
-          alt="playlist"
-        /> */}
       </div>
       <div
         className="flex w-full h-full max-w-sm items-center justify-center mx-auto gap-4
