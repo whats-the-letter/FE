@@ -11,9 +11,7 @@ import SearchBar from "@/components/units/SearchBar";
 
 export interface MusicListProps {
   musicList: MusicProps[];
-  onMusicChange: (music: MusicProps[
-
-  ]) => void;
+  onMusicChange: (music: MusicProps[]) => void;
 }
 
 export interface MusicProps {
@@ -110,6 +108,7 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
       setIsPlaying(false);
       if (selectedMusic) {
         onMusicChange([selectedMusic]);
+        console.log(selectedMusic);
       }
     };
 
@@ -142,6 +141,8 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
     //   setIsPlaying(false);
     // };
 
+    const thumbnailUrl = `https://i1.ytimg.com/vi/${selectedMusicId}/maxresdefault.jpg`;
+
     return (
       <>
         <span className="text-lg text-center font-pretendard z-10">
@@ -169,6 +170,19 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
                 className="flex gap-4 items-center w-full h-[70px] hover:bg-gray-200 cursor-pointer px-2"
                 onClick={() => handleMusicBoxClick(item.youtubeUrlId)}
               >
+                <div className="flex flex-grow items-center justify-between">
+                  <img
+                    src={`https://i1.ytimg.com/vi/${item.youtubeUrlId}/maxresdefault.jpg`}
+                    alt="thumbnail"
+                    className="w-12 h-12"
+                  />
+                  <div className="flex-grow flex flex-col items-start justify-start font-pretendard mx-8">
+                    <h2 className="text-sm">{item.musicName}</h2>
+                    <h2 className="text-custom_gray text-sm">
+                      {item.musicArtist}
+                    </h2>
+                  </div>
+                </div>
                 {selectedMusicId === item.youtubeUrlId ? (
                   <Image src={selected} alt="selected-music" className="w-4" />
                 ) : (
@@ -178,19 +192,6 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
                     className="w-4"
                   />
                 )}
-                <div className="flex flex-grow items-center justify-between">
-                  {/* <img
-                    src={item.thumbnail}
-                    alt="thumbnail"
-                    className="w-12 h-12"
-                  /> */}
-                  <div className="flex-grow flex flex-col items-start justify-start font-pretendard mx-8">
-                    <h2 className="text-sm">{item.musicName}</h2>
-                    <h2 className="text-custom_gray text-sm">
-                      {item.musicArtist}
-                    </h2>
-                  </div>
-                </div>
               </div>
             ))
           )}
@@ -198,12 +199,8 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
 
         {selectedVideos && (
           <div className="bg-black w-full h-16 flex flex-row justify-between items-center px-2">
-            {/* <img
-              src={selectedVideo.thumbnail}
-              alt="thumbnail"
-        className="w-9 mr-4"
-            />
-             */}
+            <img src={thumbnailUrl} alt="thumbnail" className="w-20 mr-4" />
+
             <div className="flex flex-col justify-start items-start w-40 overflow-hidden">
               <div
                 className={`w-fit marquee ${isPlaying ? "playing" : ""}`}
