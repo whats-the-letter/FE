@@ -21,13 +21,13 @@ export declare global {
       readonly NEXT_PUBLIC_KAKAO_AUTH_URL: string;
     }
   }
-  interface Window {
-    Kakao?: {
-      init: (key: string) => void;
-      isInitialized: () => boolean;
-      Share: {
-        sendCustom: (args: ShareToKakaoArg) => void;
-      };
-    };
-  }
+//   interface Window {
+//     Kakao?: {
+//       init: (key: string) => void;
+//       isInitialized: () => boolean;
+//       Share: {
+//         sendCustom: (args: ShareToKakaoArg) => void;
+//       };
+//     };
+//   }
 }
