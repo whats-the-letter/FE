@@ -5,9 +5,16 @@ import { infoSvg, playListButton, tapButton } from "@/utils/data";
 import Image from "next/image";
 import pin from "features/assets/lp/lp-pin.svg";
 
+interface UserInfo {
+  email: string | string[];
+  userName: string;
+  mainBackground: keyof typeof infoSvg.mainBackground;
+  mainLp: keyof typeof infoSvg.mainLp;
+}
+
 const MainPage: React.FC = () => {
   const router = useRouter();
-  const [userInfo, setUserInfo] = useState<any>(null);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -53,7 +60,7 @@ const MainPage: React.FC = () => {
           <h1>{userInfo.email}</h1>
           <div className="flex flex-col w-full h-full items-center justify-center m-auto p-4 gap-2">
             <div className="relative max-w-[270px] max-h-[600px] mx-auto">
-              {/* <img
+              <img
                 className="w-full h-full object-cover "
                 src={infoSvg.main[userInfo.mainBackground]}
                 alt="preview-background"
@@ -69,17 +76,17 @@ const MainPage: React.FC = () => {
                 alt="tap-button"
                 className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce w-[90px] h-[90px]
           "
-              /> */}
+              />
               <Image
                 src={pin}
                 alt="lp-pin"
                 className="absolute top-[40%] left-[65%] w-[100px] h-[160px]"
               />
-              {/* <img
+              <img
                 className="absolute top-[63%] left-[8%] w-[90px] h-[90px]"
                 src={playListButton[`playlist-${userInfo.mainBackground}`]}
                 alt="playlist"
-              /> */}
+              />
             </div>
           </div>
         </div>

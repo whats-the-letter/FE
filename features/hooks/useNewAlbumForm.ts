@@ -2,16 +2,15 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const NewAlbumSchema = z.object({
+export const NewAlbumSchema = z.object({
   albumBackground: z.string(),
   albumCover: z.string(),
   albumId: z.number(),
   albumPhrases: z.string(),
-  fromName: z.string(),
-  letter: z.string(),
+  fromName: z.string().min(1).max(6),
+  toName: z.string().min(1).max(6),
+  letter: z.string().min(1).max(300),
   musicId: z.string(),
-
-  toName: z.string(),
 });
 
 export type NewAlbumFormValues = z.infer<typeof NewAlbumSchema>;
@@ -24,8 +23,9 @@ const useNewAlbumForm = () => {
       albumId: 0,
       albumPhrases: "",
       fromName: "",
+      toName: "",
       letter: "",
-      musicId: "m",
+      musicId: "",
     },
     resolver: zodResolver(NewAlbumSchema),
   });

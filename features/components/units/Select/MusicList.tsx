@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 
 import Image from "next/image";
@@ -40,9 +40,14 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
             throw new Error("음악 목록 가져오기 실패");
           }
 
-          setMusicData(response.data.musicList);
+          const fetchedMusicData = response.data.musicList;
+          if (fetchedMusicData.length > 0) {
+            setMusicData(fetchedMusicData);
+            setSelectedMusicId(fetchedMusicData[0].youtubeUrlId);
+          }
         } catch (error) {
-          return [];
+          setMusicData([]);
+          console.error("음악 목록 가져오기 실패:", error);
         }
       };
       getMusicData();
@@ -60,19 +65,6 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
       );
       setFilteredPlayList(filteredList);
     };
-
-    //   const playMusic = async (musicId: string) => {
-    //     try {
-    //       console.log(musicId);
-    //       const response = await axios.get(
-    //         `https://www.googleapis.com/youtube/v3/videos?id=${musicId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet`
-    //       );
-    //       const selectedMusicData = response.data.items[0];
-    //       setMusicData(selectedMusicData);
-    //     } catch (error) {
-    //       console.error("음악 재생 실패", error);
-    //     }
-    //   };
 
     const playMusic = async (youtubeUrlId: string) => {
       try {
@@ -123,23 +115,6 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
     const selectedVideos = musicData.find(
       (item) => item.youtubeUrlId === selectedMusicId
     );
-
-    //   useEffect(() => {
-    //     if (selectedMusicId) {
-    //       playMusic(selectedMusicId);
-    //     } else if (musicData.length > 0) {
-    //       setSelectedMusicId(musicData[0].youtubeUrlId);
-    //     }
-    //   }, [selectedMusicId, musicData]);
-
-    // const handleMusicBoxClick = (musicId: string) => {
-    //   const selectedMusic = musicData.find(
-    //     (item) => item.youtubeUrlId === musicId
-    //   );
-    //   setSelectedMusicId(musicId);
-    //   //노래 변경
-    //   setIsPlaying(false);
-    // };
 
     const thumbnailUrl = `https://i1.ytimg.com/vi/${selectedMusicId}/maxresdefault.jpg`;
 

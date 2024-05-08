@@ -12,11 +12,12 @@ import axios from "axios";
 import { MusicProps } from "./Select/MusicList";
 import Image from "next/image";
 import letterBg from "/features/assets/letter/letter-bg.svg";
+import { useFormContext } from "react-hook-form";
+import { useRouter } from "next/router";
 
 export interface AlbumInfo {
   albumBackground: string;
   albumCover: string;
-  albumId: number;
   albumPhrases: string;
   fromName: string;
   letter: string;
@@ -26,7 +27,7 @@ export interface AlbumInfo {
 
 const backSelection: Record<string, React.JSX.Element> = {
   colorful: <BackgroundColorful />,
-  snow: <BackgroundSnow />,
+  particles: <BackgroundSnow />,
   circles: <BackgroundCircles />,
 };
 
@@ -34,11 +35,14 @@ const CompleteAlbum: React.FC<{
   submittedAlbum: AlbumInfo;
   selectedMusic: MusicProps;
 }> = ({ submittedAlbum, selectedMusic }) => {
+  const router = useRouter();
+  const { handleSubmit } = useFormContext();
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
   };
+
   const { open } = useModal({
     title: "공유하기",
     description: "* 공유를 하지 않으면 앨범은 영영 닿지 못할 거예요.",
@@ -46,30 +50,76 @@ const CompleteAlbum: React.FC<{
   });
 
   const onClickModal = async () => {
-    const result = await sendAlbumData();
     open();
+  };
+
+  const determinePhrase = (albumPhrases: string) => {
+    switch (albumPhrases) {
+      case "editor-1":
+        return "HBD";
+      case "editor-2":
+        return "HEALTH";
+      case "editor-3":
+        return "LOVE";
+      case "editor-4":
+        return "MONEY";
+      case "editor-5":
+        return "SUCCESS";
+      default:
+        return "PARENTS";
+    }
   };
 
   const sendAlbumData = async () => {
     try {
-      const localSession = localStorage.getItem("session");
-      const session = localSession ? JSON.parse(localSession) : null;
-      const accessToken = session?.accessToken;
-      console.log("세션 액세스 토큰 잘 불러옴?", accessToken);
+      const formData = new FormData();
 
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/album/send`,
-        {
-          albumInfo: submittedAlbum,
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
+      formData.append(
+        "albumBackground",
+        submittedAlbum.albumBackground.toUpperCase()
       );
-      console.log(response.data);
-    } catch (err) {
-      console.log("앨범보내기 실패에러", err);
+      formData.append(
+        "albumCover",
+        submittedAlbum.albumCover.toUpperCase().split("-")[1]
+      );
+      formData.append(
+        "albumPhrases",
+        determinePhrase(submittedAlbum.albumPhrases)
+      );
+      formData.append("fromName", submittedAlbum.fromName);
+      formData.append("letter", submittedAlbum.letter);
+      formData.append("musicId", submittedAlbum.music);
+      formData.append("toName", submittedAlbum.toName);
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
+
+      const accessToken = localStorage.getItem("accessToken");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+
+      if (accessToken) {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/album/send`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        console.log(response.data);
+        router.push(`/newalbum/submit/`);
+      }
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  const onSubmit = async () => {
+    await sendAlbumData();
+    onClickModal();
+    //router.push("/newalbum/submit")
   };
 
   return (
@@ -126,7 +176,7 @@ const CompleteAlbum: React.FC<{
               </div>
               <span
                 className="absolute bottom-5 right-1/4
-              text-right z-10 w-full text-[10px]" 
+              text-right z-10 w-full text-[10px]"
               >
                 From. <strong>{submittedAlbum.fromName}</strong>
               </span>
@@ -139,7 +189,7 @@ const CompleteAlbum: React.FC<{
         </span>
 
         <button
-          onClick={onClickModal}
+          onClick={onSubmit}
           className="bg-black text-white w-full max-w-sm h-9 rounded z-10 m-auto "
         >
           <span className="text-sm">보내기</span>
