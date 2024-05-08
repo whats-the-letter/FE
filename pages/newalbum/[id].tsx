@@ -26,6 +26,8 @@ import CompleteAlbum from "@/components/units/CompleteAlbum";
 import { useMutation } from "@tanstack/react-query";
 import { submitNewAlbumMutation } from "@/queries/newAlbum";
 import { useRouter } from "next/router";
+import BackgroundConfetti from "@/components/units/BackSelect-Animation/BackgroundConfetti";
+import BackgroundBack from "@/components/units/BackSelect-Animation/BackgroundBack";
 
 const Page = () => {
   const router = useRouter();
@@ -80,7 +82,7 @@ const Page = () => {
     albumCover: "editor-love",
     albumPhrases: "editor-1",
     albumBackground: "colorful",
-    musicId: "1",
+    musicId: "",
     letter: "",
   });
   const [selectedInput, setSelectedInput] = useState({
@@ -99,7 +101,7 @@ const Page = () => {
 
   const backSelection = {
     colorful: <BackgroundColorful />,
-    snow: <BackgroundSnow />,
+    particles: <BackgroundBack />,
     circles: <BackgroundCircles />,
   };
 

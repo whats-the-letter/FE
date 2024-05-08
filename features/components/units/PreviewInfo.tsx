@@ -80,34 +80,25 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
   };
 
   return (
-    <div
-      className="flex flex-col w-full h-full items-center justify-center m-auto p-4 gap-2
-     "
-    >
-      <div className="relative max-w-[285px] max-h-[600px] mx-auto">
-        <Image
+    <div className="flex flex-col w-full h-full items-center justify-center z-10  p-2 font-pretendard font-semibold ">
+      <div className="relative max-w-[300px] max-h-[630px] max-auto p-1">
+        <img
           src={infoSvg.mainBackground[submittedData.mainBackground]}
           alt="preview-background"
-          className="w-full h-full object-cover"
-          width={285}
-          height={600}
+          className="w-full h-full object-cover "
         />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <img
+            className="transform -translate-x-1/2 -translate-y-1/2 rotate-infinite mt-10 w-[230px] h-[230px]"
+            src={infoSvg.mainLp[submittedData.mainLp]}
+            alt="preview-lpDesign"
+          />
+        </div>
 
-        <Image
-          className="absolute top-1/3 left-5 rotate-infinite"
-          src={infoSvg.mainLp[submittedData.mainLp]}
-          alt="preview-lpDesign"
-          width={230}
-          height={230}
-        />
-
-        <Image
+        <img
           src={tapButton[`tap-${submittedData.mainBackground}`]}
           alt="tap-button"
-          className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce w-[90px] h-[90px]
-        "
-          width={90}
-          height={90}
+          className="w-[100px] h-[100px] absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce "
         />
 
         <Image
