@@ -5,6 +5,7 @@ import { OverlayProvider } from "@toss/use-overlay";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Head from "next/head";
+import MetaHead from "@/components/units/Metahead";
 
 export const queryClient = new QueryClient();
 
@@ -15,8 +16,9 @@ export const QueryClientWrapper = ({ children }: any) => (
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+      <MetaHead />
       <Head>
-        <title>Dear New Year</title>
+        <title> What&apos;s the Letter? </title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"

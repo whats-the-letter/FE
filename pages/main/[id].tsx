@@ -56,38 +56,35 @@ const MainPage: React.FC = () => {
   return (
     <>
       {userInfo && (
-        <div>
-          <h1>{userInfo.email}</h1>
-          <div className="flex flex-col w-full h-full items-center justify-center m-auto p-4 gap-2">
-            <div className="relative max-w-[270px] max-h-[600px] mx-auto">
+        <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto space-y-10 font-pretendard font-semibold ">
+          <div className="relative">
+            <img
+              className="w-full h-full object-cover "
+              src={infoSvg.main[userInfo.mainBackground]}
+              alt="preview-background"
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
               <img
-                className="w-full h-full object-cover "
-                src={infoSvg.main[userInfo.mainBackground]}
-                alt="preview-background"
-              />
-
-              <img
-                className="absolute top-1/3 left-5 w-[230px] h-[230px] rotate-infinite"
+                className="transform -translate-x-1/2 -translate-y-1/2 rotate-infinite mt-10"
                 src={infoSvg.mainLp[userInfo.mainLp]}
                 alt="preview-lpDesign"
               />
-              <img
-                src={tapButton[`tap-${userInfo.mainBackground}`]}
-                alt="tap-button"
-                className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce w-[90px] h-[90px]
-          "
-              />
-              <Image
-                src={pin}
-                alt="lp-pin"
-                className="absolute top-[40%] left-[65%] w-[100px] h-[160px]"
-              />
-              <img
-                className="absolute top-[63%] left-[8%] w-[90px] h-[90px]"
-                src={playListButton[`playlist-${userInfo.mainBackground}`]}
-                alt="playlist"
-              />
             </div>
+            <img
+              src={tapButton[`tap-${userInfo.mainBackground}`]}
+              alt="tap-button"
+              className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce "
+            />
+            <Image
+              src={pin}
+              alt="lp-pin"
+              className="absolute top-[40%] left-[65%]"
+            />
+            <img
+              className="absolute top-[68%] left-[8%]"
+              src={playListButton[`playlist-${userInfo.mainBackground}`]}
+              alt="playlist"
+            />
           </div>
         </div>
       )}
