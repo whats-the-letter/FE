@@ -14,6 +14,7 @@ import Image from "next/image";
 import letterBg from "/features/assets/letter/letter-bg.svg";
 import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/router";
+import BackgroundBack from "./BackSelect-Animation/BackgroundBack";
 
 export interface AlbumInfo {
   albumBackground: string;
@@ -27,7 +28,7 @@ export interface AlbumInfo {
 
 const backSelection: Record<string, React.JSX.Element> = {
   colorful: <BackgroundColorful />,
-  particles: <BackgroundSnow />,
+  particles: <BackgroundBack />,
   circles: <BackgroundCircles />,
 };
 
