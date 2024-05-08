@@ -32,7 +32,7 @@ const Page = () => {
   const { mutate: submit } = useMutation(
     submitNewAlbumMutation({
       onSuccess(data, variables, context) {
-        toNextStep(); 
+        toNextStep();
         console.log(data);
       },
       onError(error) {
@@ -72,9 +72,7 @@ const Page = () => {
   };
 
   const goNext = () => {
-    if (Step.name === "complete") {
-      // handleSubmit(onSubmit)();
-    }
+    
     toNextStep();
   };
 
