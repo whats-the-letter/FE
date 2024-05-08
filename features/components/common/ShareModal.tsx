@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useOverlay } from "@toss/use-overlay";
 import { Fragment, useEffect } from "react";
 import Image from "next/image";
-import kakaoIcon from "/features/assets/icons/kakao.svg";
+import kakaoIcon from "/features/assets/icons/kakao-icon.svg";
 import exit from "/features/assets/icons/exit_button.svg";
 declare global {
   interface Window {
