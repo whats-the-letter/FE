@@ -5,7 +5,8 @@ import { OverlayProvider } from "@toss/use-overlay";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Head from "next/head";
-import MetaHead from "@/components/units/Metahead";
+import MetaHead from "@/components/units/MetaHead";
+
 
 export const queryClient = new QueryClient();
 
