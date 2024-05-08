@@ -17,7 +17,9 @@ function Inputlabel({
       <span className="font-pretendard font-semibold">{label}</span>
       {required}
       {children}
-      <p className="text-custom_red text-sm pt-0.5 font-pretendard">{errorMessage}</p>
+     
+     { !required && <p className="text-custom_red text-sm pt-0.5 font-pretendard">{errorMessage}</p>}
+      
     </div>
   );
 }
