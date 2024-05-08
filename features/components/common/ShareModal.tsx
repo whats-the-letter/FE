@@ -1,7 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useOverlay } from "@toss/use-overlay";
 import { Fragment, useEffect } from "react";
-
+import Image from "next/image";
+import kakaoIcon from "/features/assets/icons/kakao.svg";
+import exit from "/features/assets/icons/exit_button.svg";
 declare global {
   interface Window {
     Kakao: any;
@@ -91,8 +93,8 @@ export default function Modal({
                       {closeBtnText ? (
                         closeBtnText
                       ) : (
-                        <img
-                          src="/assets/icons/close.svg"
+                        <Image
+                          src={exit}
                           alt="close"
                           className="w-6 h-6"
                         />
@@ -137,8 +139,8 @@ export default function Modal({
                           className="flex justify-center items-center gap-4 bg-[#FEE500] w-72 rounded-md px-4 py-2
                         "
                         >
-                          <img
-                            src="/assets/icons/kakao.svg"
+                          <Image
+                            src={kakaoIcon}
                             alt="kakao"
                             className=""
                           />
