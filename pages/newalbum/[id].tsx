@@ -74,7 +74,6 @@ const Page = () => {
   };
 
   const goNext = () => {
-    
     toNextStep();
   };
 
@@ -107,9 +106,9 @@ const Page = () => {
 
   return (
     <>
-      <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm space-y-4 font-semibold">
+      <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm font-semibold">
         <FunnelProvider value={{ toPrevStep, toNextStep }}>
-          <div className="flex flex-row justify-between w-full max-w-sm px-8 z-20 font-pretendard ">
+          <div className="flex flex-row justify-between w-full max-w-sm px-8 z-20 font-pretendard py-4 ">
             <button
               onClick={goPrev}
               className="flex flex-row items-center justify-between"
@@ -126,11 +125,8 @@ const Page = () => {
               <Image src={right} alt="arrow-left" className="ml-2" />
             </button>
           </div>
-
-          <div className="flex flex-row justify-between w-full max-w-sm px-8 z-10 font-pretendard "></div>
-
           <FormProvider {...newAblumForm}>
-            <div className="flex flex-col text-center justify-center items-center w-full max-w-sm px-8 z-10 gap-10 font-pretendard ">
+            <div className="flex flex-col text-center justify-center items-center w-full max-w-sm px-8 z-10 font-pretendard ">
               <Funnel step={step}>
                 <Step name="albumCover">
                   <AlbumSelect

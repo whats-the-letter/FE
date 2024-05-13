@@ -71,9 +71,11 @@ const MainPage: React.FC = () => {
               />
             </div>
             <img
+            onClick={() => router.push(`/collection/`)}
               src={tapButton[`tap-${userInfo.mainBackground}`]}
               alt="tap-button"
-              className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce "
+              className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce hover:cursor-pointer hover:scale-110"
+              
             />
             <Image
               src={pin}
