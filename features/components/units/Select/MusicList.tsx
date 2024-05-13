@@ -34,7 +34,7 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
       const getMusicData = async () => {
         try {
           const response: AxiosResponse<MusicListProps> =
-            await axios.get("/api/music/list");
+            await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/music/list`);
 
           if (response.status !== 200) {
             throw new Error("음악 목록 가져오기 실패");
