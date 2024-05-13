@@ -93,64 +93,53 @@ export default function Modal({
                       {closeBtnText ? (
                         closeBtnText
                       ) : (
-                        <Image
-                          src={exit}
-                          alt="close"
-                          className="w-6 h-6"
-                        />
+                        <Image src={exit} alt="close" className="w-6 h-6" />
                       )}
                     </button>
                   )}
 
-                  <div className="flex flex-col justify-center items-center gap-5">
+                  <div className="flex flex-col justify-center items-center w-full">
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-semibold  text-black leading-6  text-center"
+                      className="text-lg font-semibold  text-black leading-6  text-center mb-2"
                     >
                       {title}
                     </Dialog.Title>
-                    <p className="text-xs text-center text-[#9E9E9E] ">
+                    <p className="text-xs text-center text-[#9E9E9E] mb-6">
                       {description}
                     </p>
-                    <div className="flex justify-between items-center border border-black rounded-md w-full">
-                      <p className="text-sm m-auto px-2  text-[#9E9E9E] py-2 truncate">
-                        {window.location.href}
-                      </p>
+                    
+                      <a
+                        id="kakao-link-btn"
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          KakaoShare();
+                        }}
+                        className="w-full flex justify-center items-center gap-3 bg-[#FEE500] rounded-md p-3 mb-3"
+                      >
+                        {btnText ?? (
+                          <div className="w-full flex justify-center items-center ">
+                            <Image
+                              src={kakaoIcon}
+                              alt="kakao"
+                              className="w-4 mr-2"
+                            />
+                            <p className="text-xs text-[#371D1E] text-center font-semibold ">
+                              카카오톡으로 공유
+                            </p>
+                          </div>
+                        )}
+                      </a>
                       <button
                         type="button"
-                        className="bg-black text-white text-xs font-bold focus:outline-none whitespace-nowrap px-2 py-3 rounded-r"
+                        className="w-full rounded-md bg-[#eaeaea] text-[#7a7a7a] text-xs font-bold focus:outline-none whitespace-nowrap p-3"
                         onClick={copyToClipboard}
                       >
-                        URL 복사
+                        링크 복사
                       </button>
                     </div>
-
-                    <a
-                      id="kakao-link-btn"
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        KakaoShare();
-                      }}
-                      className="flex justify-center items-center gap-4"
-                    >
-                      {btnText ?? (
-                        <div
-                          className="flex justify-center items-center gap-4 bg-[#FEE500] w-72 rounded-md px-4 py-2
-                        "
-                        >
-                          <Image
-                            src={kakaoIcon}
-                            alt="kakao"
-                            className=""
-                          />
-                          <p className="text-[#371D1E] m-auto text-base text-center font-semibold ">
-                            카카오톡으로 공유
-                          </p>
-                        </div>
-                      )}
-                    </a>
-                  </div>
+                  
                 </Dialog.Panel>
               </Transition.Child>
             </div>
