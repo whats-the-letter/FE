@@ -1,6 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
-
 import Image from "next/image";
 import emptyMusic from "@/assets/icons/empty_music.svg";
 import selected from "@/assets/icons/selected_music.svg";
@@ -22,19 +21,21 @@ export interface MusicProps {
   youtubeUrlId: string;
 }
 
-//eslint-disable-next-line react/display-name
+//eslint-disable-next-line
 const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
   ({ onMusicChange }, ref) => {
     const [musicData, setMusicData] = useState<MusicProps[]>([]);
     const [selectedMusicId, setSelectedMusicId] = useState<string | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [filteredPlayList, setFilteredPlayList] = useState<MusicProps[]>([]);
+    const [searchResultList, setSearchResultList] = useState<MusicProps[]>([]);
+    const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
     useEffect(() => {
       const getMusicData = async () => {
         try {
-          const response: AxiosResponse<MusicListProps> =
-            await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/music/list`);
+          const response: AxiosResponse<MusicListProps> = await axios.get(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/music/list`
+          );
 
           if (response.status !== 200) {
             throw new Error("음악 목록 가져오기 실패");
@@ -44,18 +45,15 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
           if (fetchedMusicData.length > 0) {
             setMusicData(fetchedMusicData);
             setSelectedMusicId(fetchedMusicData[0].youtubeUrlId);
+            setSearchResultList(fetchedMusicData);
+            console.log("음악 목록 가져오기 성공:", fetchedMusicData);
           }
         } catch (error) {
-          setMusicData([]);
           console.error("음악 목록 가져오기 실패:", error);
         }
       };
       getMusicData();
     }, []);
-
-    useEffect(() => {
-      setFilteredPlayList(musicData);
-    }, [musicData]);
 
     const handleSearch = (keyword: string) => {
       const filteredList = musicData.filter(
@@ -63,7 +61,18 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
           item.musicName.toLowerCase().includes(keyword.toLowerCase()) ||
           item.musicArtist.toLowerCase().includes(keyword.toLowerCase())
       );
-      setFilteredPlayList(filteredList);
+      setSearchResultList(filteredList);
+    };
+    const handleFilterChange = (filter: string) => {
+      setSelectedFilter(filter);
+      if (filter === "all") {
+        setSearchResultList(musicData);
+      } else {
+        const filteredList = musicData.filter((item) =>
+          item.tags.includes(filter.toUpperCase())
+        );
+        setSearchResultList(filteredList);
+      }
     };
 
     const playMusic = async (youtubeUrlId: string) => {
@@ -100,7 +109,6 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
       setIsPlaying(false);
       if (selectedMusic) {
         onMusicChange([selectedMusic]);
-        console.log(selectedMusic);
       }
     };
 
@@ -124,8 +132,23 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
           음악을 선택해주세요
         </span>
         <SearchBar onSearch={handleSearch} />
+        <div className="w-full overflow-x-scroll flex gap-2 my-4">
+          {["all", "love", "cheers", "birthday", "others"].map((filter) => (
+            <button
+              key={filter}
+              onClick={() => handleFilterChange(filter)}
+              className={`py-2 px-4 rounded-full ${
+                selectedFilter === filter
+                  ? "bg-black text-white"
+                  : "border border-black text-black"
+              }`}
+            >
+              {filter === "all" ? "all" : filter}
+            </button>
+          ))}
+        </div>
         <div className="w-full h-80 overflow-y-scroll">
-          {filteredPlayList.length === 0 ? (
+          {searchResultList.length === 0 ? (
             <div className="flex flex-col items-center justify-center w-full h-full gap-5 px-2">
               <Image
                 src={emptyMusic}
@@ -139,7 +162,7 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
               </p>
             </div>
           ) : (
-            filteredPlayList.map((item) => (
+            searchResultList.map((item) => (
               <div
                 key={item.musicId}
                 className="flex gap-4 items-center w-full h-[70px] hover:bg-gray-200 cursor-pointer px-2"
