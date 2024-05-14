@@ -2,9 +2,19 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Loading from "@/components/units/Loading";
+import useGetToken from "@/hooks/useGetToken";
+import useUserInfoStore from "@/store/useUserInfoStore";
 
 export default function RedirectPage() {
   const router = useRouter();
+  const { token, setToken, refreshAccessToken } = useGetToken();
+  const setUserInfo = useUserInfoStore((state) => state.setUserInfo);
+
+  useEffect(() => {
+    if (token && token.expiresAt && new Date().getTime() > token.expiresAt) {
+      refreshAccessToken();
+    }
+  }, [token, refreshAccessToken]);
 
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get("code");
@@ -13,7 +23,6 @@ export default function RedirectPage() {
       axios
         .get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login/kakao/code?code=${code}`,
-
           {
             withCredentials: true,
           }
@@ -24,51 +33,31 @@ export default function RedirectPage() {
 
             let accessToken = res.headers.authorization;
             accessToken = accessToken.replace("Bearer ", "");
+            let expiresAt = new Date().getTime() + 3000 * 1000;
+            setToken({
+              accessToken,
+              refreshToken: res.data.refreshToken,
+              expiresAt: expiresAt,
+            });
             localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("expiresAt", expiresAt.toString());
             axios.defaults.headers.common[
               "Authorization"
             ] = `Bearer ${accessToken}`;
             console.log("로그인 성공");
-            //userInfo에 이메일 정보 필요
-            
 
-            const userEmail = res.data.userInfo.email;
-            const userId = res.data.userInfo.userId;
+            const userInfo = res.data.userInfo;
+            setUserInfo(userInfo);
 
-            router.push({
-              pathname: `/main/${userId}`,
-              query: {
-                token: accessToken,
-                userId: userId,
-                email: userEmail,
-              },
-            });
+            router.push(`/main/${userInfo.userId}`);
           }
         })
         .catch((err) => {
-          if (err.response && err.response.status === 400) {
-            // 유효하지 않은 코드
-            console.log(err.response);
-          } else if (err.response && err.response.status === 404) {
-            // 회원가입 필요
-            console.log(err.response);
-
-            console.log(err.response.data.userInfo.email);
-            const kakaoEmail = err.response.data.userInfo.email
-              ? err.response.data.userInfo.email
-              : "";
-
-            // 404 인 경우 우리 서비스 회원가입 페이지 이동
-            router.push({
-              pathname: "/info",
-              query: {
-                email: kakaoEmail,
-              },
-            });
-          }
+          // 에러 처리 로직
+          console.error("로그인 실패", err);
         });
     }
-  }, [router]);
+  }, [router, setToken, setUserInfo]);
 
   return <Loading />;
 }
