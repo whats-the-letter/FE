@@ -4,20 +4,15 @@ import { useRouter } from "next/router";
 import { infoSvg, playListButton, tapButton } from "@/utils/data";
 import Image from "next/image";
 import pin from "features/assets/lp/lp-pin.svg";
-
-interface UserInfo {
-  email: string | string[];
-  userName: string;
-  mainBackground: keyof typeof infoSvg.mainBackground;
-  mainLp: keyof typeof infoSvg.mainLp;
-}
+import useGetToken from "@/hooks/useGetToken";
+import useUserInfoStore from "@/store/useUserInfoStore";
 
 const MainPage: React.FC = () => {
   const router = useRouter();
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const { token } = useGetToken();
+  const { userInfo, setUserInfo } = useUserInfoStore();
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
     const userId = router.query.userId;
     const email = router.query.email;
 
@@ -34,24 +29,19 @@ const MainPage: React.FC = () => {
             const userData = res.data;
 
             setUserInfo({
-              email: email,
+              ...userInfo,
+              email: email as string,
               userName: userData.userInfo.userName,
               mainBackground: userData.userInfo.mainBackground.toLowerCase(),
               mainLp: userData.userInfo.mainLp.toLowerCase(),
             });
-            console.log(token);
-            console.log(userId);
-            console.log(userData);
-
-            console.log(userData.userInfo.mainBackground);
-            console.log(userData.userInfo.mainBackground.toLowerCase());
           }
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [router.query.userId, router.query.email]);
+  }, [router.query.userId, router.query.email, token]);
 
   return (
     <>
@@ -71,11 +61,10 @@ const MainPage: React.FC = () => {
               />
             </div>
             <img
-            onClick={() => router.push(`/collection/`)}
+              onClick={() => router.push(`/collection/`)}
               src={tapButton[`tap-${userInfo.mainBackground}`]}
               alt="tap-button"
               className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce hover:cursor-pointer hover:scale-110"
-              
             />
             <Image
               src={pin}
