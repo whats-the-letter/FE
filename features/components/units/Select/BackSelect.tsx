@@ -30,7 +30,7 @@ const BackSelect = forwardRef<HTMLInputElement, BackSelectProps>(
       <>
         <div className="relative z-0">{backSelection[albumBackground]}</div>
 
-        <div className="space-y-10">
+        <div className="space-y-10 z-20">
           <span className="text-lg text-center font-pretendard z-0">
             배경을 선택해주세요
           </span>
