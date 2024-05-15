@@ -59,32 +59,28 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
         //쿼리에 userId와 토큰을 넣어서 메인페이지로 이동
         setUserInfo({
           ...userInfo,
-          email: email as string,
+          email: response.data.userInfo.email as string,
           userId: response.data.userInfo.userId,
           userName: response.data.userInfo.userName,
-          mainBackground: response.data.userInfo.mainBackground,
-          mainLp: response.data.userInfo.mainLp,
+          mainBackground: response.data.userInfo.mainBackground.toLowerCase(),
+          mainLp: response.data.userInfo.mainLp.toLowerCase(),
         });
 
+        console.log(userInfo);
+
         router.push({
-          pathname: `/main/${userInfo.userId}`,
-          query: {
-            userId: userInfo.userId,
-          },
+          pathname: `/main/${response.data.userInfo.userId}`,
+          // query: {
+          //   userId: response.data.userInfo.userId,
+          // },
         });
       }
     } catch (error: any) {
       console.log(error);
       if (error.response.status === 400) {
         console.log(error.response.data);
-        //이미 가입된 사용자입니다. 노출
+        //이미 가입된 사용자입니다. 임시노출
         alert("이미 가입된 사용자입니다.");
-        // router.push({
-        //   pathname: `/main/${userInfo.userId}`,
-        //   query: {
-        //     userId: userInfo.userId,
-        //   },
-        // });
       }
     }
   };

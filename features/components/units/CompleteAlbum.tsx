@@ -119,22 +119,21 @@ const CompleteAlbum: React.FC<{
 
   const onSubmit = async () => {
     const albumId = await sendAlbumData();
-    if (albumId) {
-      onClickModal();
-      setAlbumInfo({
-        albumBackground: submittedAlbum.albumBackground,
-        albumCover: submittedAlbum.albumCover,
-        albumPhrases: determinePhrase(submittedAlbum.albumPhrases),
-        fromName: submittedAlbum.fromName,
-        letter: submittedAlbum.letter,
-        music: submittedAlbum.music,
-        toName: submittedAlbum.toName,
-        albumId: albumId,
-      });
 
-      const newUrl = `${window.location.origin}/newalbum/${albumId}`;
-      window.history.pushState({ path: newUrl }, "", newUrl);
-    }
+    onClickModal();
+    setAlbumInfo({
+      albumBackground: submittedAlbum.albumBackground,
+      albumCover: submittedAlbum.albumCover,
+      albumPhrases: determinePhrase(submittedAlbum.albumPhrases),
+      fromName: submittedAlbum.fromName,
+      letter: submittedAlbum.letter,
+      music: submittedAlbum.music,
+      toName: submittedAlbum.toName,
+      albumId: albumId,
+    });
+
+    const newUrl = `${window.location.origin}/newalbum/${albumId}`;
+    window.history.pushState({ path: newUrl }, "", newUrl);
   };
 
   return (
