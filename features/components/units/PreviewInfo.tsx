@@ -67,8 +67,6 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
         setUserInfo({
           ...userInfo,
           email: email as string,
-          mainBackground: submittedData.mainBackground as string,
-          mainLp: submittedData.mainLp as string,
           userId: response.data.userId,
           userName: response.data.userName,
         });
