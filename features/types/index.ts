@@ -4,6 +4,6 @@ export type UserInfo = {
   userId: string;
   userName: string;
   email: string;
-  mainBackground: keyof typeof infoSvg.mainBackground;
-  mainLp: keyof typeof infoSvg.mainLp;
+  mainBackground:string;
+  mainLp: string;
 };
