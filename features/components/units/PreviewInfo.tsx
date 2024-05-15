@@ -63,8 +63,8 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
         setUserInfo({
           ...userInfo,
           email: email as string,
-          userId: response.data.userId,
-          userName: response.data.userName,
+          userId: response.data.userInfo.userId,
+          userName: response.data.userInfo.userName,
         });
 
         router.push({
