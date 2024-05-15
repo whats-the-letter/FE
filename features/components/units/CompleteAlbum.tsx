@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import BackgroundBack from "./BackSelect-Animation/BackgroundBack";
 import useAlbumInfoStore from "@/store/useAlbumStore";
 
+
 export interface AlbumInfo {
   albumBackground: string;
   albumCover: string;
@@ -46,12 +47,17 @@ const CompleteAlbum: React.FC<{
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
   };
-
   const { open } = useModal({
     title: "공유하기",
     description: "* 공유를 하지 않으면 앨범은 영영 닿지 못할 거예요.",
     showCloseBtn: true,
   });
+
+  const { token, refreshAccessToken } = useGetToken();
+
+  const handleCardClick = () => {
+    setIsFlipped(!isFlipped);
+  };
 
   const onClickModal = async () => {
     open();
@@ -77,7 +83,6 @@ const CompleteAlbum: React.FC<{
   const sendAlbumData = async () => {
     try {
       const formData = new FormData();
-
       formData.append(
         "albumBackground",
         submittedAlbum.albumBackground.toUpperCase()
@@ -98,7 +103,21 @@ const CompleteAlbum: React.FC<{
         console.log(key, value);
       });
 
-      const accessToken = localStorage.getItem("accessToken");
+      const refreshAccessToken = async () => {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/refresh`,
+          {
+            refreshToken: token.refreshToken,
+          }
+        );
+
+        const newToken = response.data;
+        localStorage.setItem("token", JSON.stringify(newToken));
+        token.accessToken = newToken.accessToken;
+        token.expiresAt = newToken.expiresAt;
+      };
+
+      const accessToken = token.accessToken;
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
       if (accessToken) {
@@ -123,7 +142,7 @@ const CompleteAlbum: React.FC<{
     }
   };
 
-  const onSubmit = async () => {
+ const onSubmit = async () => {
     const albumId = await sendAlbumData();
     if (albumId) {
       onClickModal();

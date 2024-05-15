@@ -2,7 +2,7 @@ import axios from "axios";
 import Image from "next/image";
 
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import pin from "features/assets/lp/lp-pin.svg";
 import useUserInfoStore from "@/store/useUserInfoStore";
 import useGetToken from "@/hooks/useGetToken";
@@ -33,21 +33,21 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
   onPrevious,
   onComplete,
 }) => {
+  const { setUserInfo, userInfo } = useUserInfoStore();
   const router = useRouter();
+
   const email = router.query.email;
   const { userInfo, setUserInfo } = useUserInfoStore();
+
 
   const handleComplete = async () => {
     try {
       const formData = new FormData();
 
-      formData.append("email", email as string);
-      formData.append("userName", submittedData.userName);
-      formData.append(
-        "mainBackground",
-        submittedData.mainBackground.toUpperCase()
-      );
-      formData.append("mainLp", submittedData.mainLp.toUpperCase());
+      formData.append("email", userInfo.email as string);
+      formData.append("userName", userInfo.userName);
+      formData.append("mainBackground", userInfo.mainBackground.toUpperCase());
+      formData.append("mainLp", userInfo.mainLp.toUpperCase());
 
       formData.forEach((value, key) => {
         console.log(key, value);

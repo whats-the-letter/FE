@@ -28,29 +28,26 @@ const BackSelect = forwardRef<HTMLInputElement, BackSelectProps>(
   ) => {
     return (
       <>
-        <div className="space-y-10">
-          <span className="text-lg text-center font-pretendard z-10">
+        <div className="relative z-0">{backSelection[albumBackground]}</div>
+
+        <div className="space-y-10 z-20">
+          <span className="text-lg text-center font-pretendard z-0">
             배경을 선택해주세요
           </span>
+          <div className="relative">
+            <img src={albumSelection[albumCover]} alt="album" />
+            <img
+              src={phrasesSelection[albumPhrases]}
+              alt="phrases"
+              className="absolute top-[24%] left-[43%] transform -translate-x-1/2 -translate-y-1/2"
+            />
 
-          <div className="relative z-0">
-            {backSelection[albumBackground]}
-
-            <div className="relative">
-              <img src={albumSelection[albumCover]} alt="album" />
-              <img
-                src={phrasesSelection[albumPhrases]}
-                alt="phrases"
-                className="absolute top-[24%] left-[43%] transform -translate-x-1/2 -translate-y-1/2"
-              />
-
-              <p className="text-[10px] text-[#9e9e9e] text-center font-pretendard font-thin mt-2">
-                * 중앙에는 플레이리스트의 커버 이미지가 들어갑니다.
-              </p>
-            </div>
+            <p className="text-[10px] text-[#9e9e9e] text-center font-pretendard font-thin mt-2">
+              * 중앙에는 플레이리스트의 커버 이미지가 들어갑니다.
+            </p>
           </div>
 
-          <div className="flex flex-row justify-center items-center gap-8 whitespace-nowrap z-10 pb-4">
+          <div className="w-full flex flex-row justify-center items-center gap-8 whitespace-nowrap z-20 pb-4">
             {Object.keys(backSelection).map((back) => (
               <EditorRadioButton
                 {...props}

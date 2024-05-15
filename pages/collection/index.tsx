@@ -4,6 +4,7 @@ import Sidebar from "../../features/components/units/Sidebar";
 import Image from "next/image";
 import menu from "../../features/assets/icons/menu.svg";
 import axios from "axios";
+import useGetToken from "@/hooks/useGetToken";
 
 export interface CollectionProps {
   albumInfoList: AlbumInfoList[];
@@ -28,30 +29,43 @@ export interface AlbumInfoList {
 const Collection: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [albums, setAlbums] = useState<AlbumInfoList[]>([]);
+  const { token, refreshAccessToken } = useGetToken();
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-
-    if (token) {
+    if (token.accessToken) {
       axios
         .get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/album/collection`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token.accessToken}`,
           },
         })
         .then((res) => {
-          console.log(res.data);
           setAlbums(res.data.albumInfoList);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(async (err) => {
+          if (err.response.status === 401) {
+            await refreshAccessToken(); // 토큰이 만료된 경우 새로고침
+            // 새로고침된 토큰으로 다시 시도
+            axios
+              .get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/album/collection`, {
+                headers: {
+                  Authorization: `Bearer ${token.accessToken}`,
+                },
+              })
+              .then((res) => {
+                setAlbums(res.data.albumInfoList);
+              })
+              .catch((error) => console.log(error));
+          } else {
+            console.log(err);
+          }
         });
     }
-  }, []);
+  }, [token.accessToken, refreshAccessToken]);
 
   return (
     <>
@@ -73,13 +87,7 @@ const Collection: React.FC = () => {
               key={album.albumId}
               className="flex flex-col items-center justify-center w-full h-full bg-gray-200 rounded-md"
             >
-              {/*https 이미지 에셋 오류 
-               <Image
-                src={album.albumCover}
-                width={100}
-                height={100}
-                alt="album-cover"
-              /> */}
+              {/*https 이미지 에셋 오류 처리 필요 */}
               <span>{album.albumPhrases}</span>
             </div>
           ))}
