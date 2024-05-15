@@ -1,12 +1,25 @@
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import kakao from "/features/assets/icons/kakao-icon.svg";
 import logo from "/features/assets/icons/logo.svg";
 
 const Login = () => {
+  const router = useRouter();
   const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
   const KAKAO_REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
 
   const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+
+  useEffect(() => {
+    
+    const userInfo = localStorage.getItem("userInfo");
+    
+    if (userInfo) {
+      const { userId } = JSON.parse(userInfo);
+      router.push(`/main/${userId}`);
+    }
+  }, [router]);
 
   return (
     <>
@@ -14,8 +27,7 @@ const Login = () => {
         <Image src={logo} alt="logo" />
         <h1 className="text-xl font-semibold">로그인이 필요한 서비스입니다.</h1>
         <div className="flex flex-col items-center justify-center z-10 py-3 font-semibold text-[14px] text-center space-y-0.5 text-primary_placeholder">
-          <span>
-            What&apos;s the Letter를 찾아주셔서 감사합니다.</span>
+          <span>What&apos;s the Letter를 찾아주셔서 감사합니다.</span>
           <span>서비스 이용을 위해서는 로그인이 필요합니다.</span>
           <span>로그인 후 다양한 서비스를 이용해보세요!</span>
         </div>
@@ -35,4 +47,3 @@ const Login = () => {
 };
 
 export default Login;
-
