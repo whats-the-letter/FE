@@ -130,6 +130,9 @@ const CompleteAlbum: React.FC<{
       music: submittedAlbum.music,
       toName: submittedAlbum.toName,
       albumId: albumId,
+      musicArtist: selectedMusic.musicArtist,
+      musicName: selectedMusic.musicName,
+      youtubeUrlId: selectedMusic.youtubeUrlId,
     });
 
     const newUrl = `${window.location.origin}/newalbum/${albumId}`;

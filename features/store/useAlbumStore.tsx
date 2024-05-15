@@ -1,5 +1,21 @@
-import { AlbumInfo } from "@/components/units/CompleteAlbum";
+
 import { create } from "zustand";
+
+ interface AlbumStoreInfo {
+  albumBackground: string;
+  albumCover: string;
+  albumPhrases: string;
+  fromName: string;
+  letter: string;
+  music: string;
+  musicArtist: string;
+  musicName: string;
+  youtubeUrlId: string;
+  albumId: string;
+  toName: string;
+ }
+
+
 
 export type AlbumStoreProps = {
   albumInfo: {
@@ -15,7 +31,7 @@ export type AlbumStoreProps = {
     albumId: string;
     toName: string;
   };
-  setAlbumInfo: (albumInfo: AlbumInfo) => void;
+  setAlbumInfo: (albumInfo: AlbumStoreInfo) => void;
 };
 
 const useAlbumInfoStore = create<AlbumStoreProps>((set) => ({
@@ -29,7 +45,7 @@ const useAlbumInfoStore = create<AlbumStoreProps>((set) => ({
     albumId: "",
     musicArtist: "",
     musicName: "",
-    youtubeUrlId:"",
+    youtubeUrlId: "",
     toName: "",
   },
   setAlbumInfo: (albumInfo) => set({ albumInfo }),

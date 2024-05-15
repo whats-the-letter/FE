@@ -41,7 +41,7 @@ const ViewAlbum = () => {
       case "SUCCESS":
         return "editor-5";
       default:
-        return;
+        return "";
     }
   };
 
@@ -56,7 +56,7 @@ const ViewAlbum = () => {
       case "HEALTH":
         return "editor-health";
       default:
-        return;
+        return "";
     }
   };
 
