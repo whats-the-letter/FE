@@ -15,6 +15,7 @@ import letterBg from "/features/assets/letter/letter-bg.svg";
 import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/router";
 import BackgroundBack from "./BackSelect-Animation/BackgroundBack";
+import useAlbumInfoStore from "@/store/useAlbumStore";
 
 export interface AlbumInfo {
   albumBackground: string;
@@ -24,6 +25,7 @@ export interface AlbumInfo {
   letter: string;
   music: string;
   toName: string;
+  albumId: string;
 }
 
 const backSelection: Record<string, React.JSX.Element> = {
@@ -39,6 +41,7 @@ const CompleteAlbum: React.FC<{
   const router = useRouter();
   const { handleSubmit } = useFormContext();
   const [isFlipped, setIsFlipped] = useState(false);
+  const setAlbumInfo = useAlbumInfoStore((state) => state.setAlbumInfo);
 
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
@@ -108,9 +111,12 @@ const CompleteAlbum: React.FC<{
             },
           }
         );
-
-        console.log(response.data);
-        router.push(`/newalbum/submit/`);
+        console.log(response.data.albumInfo);
+        console.log(response.data?.albumInfo.albumId);
+        const albumId = response.data?.albumInfo.albumId;
+        if (albumId) {
+          return albumId;
+        }
       }
     } catch (error) {
       console.error(error);
@@ -118,9 +124,23 @@ const CompleteAlbum: React.FC<{
   };
 
   const onSubmit = async () => {
-    await sendAlbumData();
-    onClickModal();
-    //router.push("/newalbum/submit")
+    const albumId = await sendAlbumData();
+    if (albumId) {
+      onClickModal();
+      setAlbumInfo({
+        albumBackground: submittedAlbum.albumBackground,
+        albumCover: submittedAlbum.albumCover,
+        albumPhrases: determinePhrase(submittedAlbum.albumPhrases),
+        fromName: submittedAlbum.fromName,
+        letter: submittedAlbum.letter,
+        music: submittedAlbum.music,
+        toName: submittedAlbum.toName,
+        albumId: albumId,
+      });
+
+      const newUrl = `${window.location.origin}/newalbum/${albumId}`;
+      window.history.pushState({ path: newUrl }, "", newUrl);
+    }
   };
 
   return (
