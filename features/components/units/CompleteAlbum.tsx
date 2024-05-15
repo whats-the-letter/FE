@@ -15,7 +15,8 @@ import letterBg from "/features/assets/letter/letter-bg.svg";
 import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/router";
 import BackgroundBack from "./BackSelect-Animation/BackgroundBack";
-import useGetToken from "@/hooks/useGetToken";
+import useAlbumInfoStore from "@/store/useAlbumStore";
+
 
 export interface AlbumInfo {
   albumBackground: string;
@@ -25,6 +26,7 @@ export interface AlbumInfo {
   letter: string;
   music: string;
   toName: string;
+  albumId: string;
 }
 
 const backSelection: Record<string, React.JSX.Element> = {
@@ -40,6 +42,11 @@ const CompleteAlbum: React.FC<{
   const router = useRouter();
   const { handleSubmit } = useFormContext();
   const [isFlipped, setIsFlipped] = useState(false);
+  const setAlbumInfo = useAlbumInfoStore((state) => state.setAlbumInfo);
+
+  const handleCardClick = () => {
+    setIsFlipped(!isFlipped);
+  };
   const { open } = useModal({
     title: "공유하기",
     description: "* 공유를 하지 않으면 앨범은 영영 닿지 못할 거예요.",
@@ -123,28 +130,36 @@ const CompleteAlbum: React.FC<{
             },
           }
         );
-
-        console.log(response.data);
-        if (response.status === 200) {
-          console.log("앨범 전송 성공");
+        console.log(response.data.albumInfo);
+        console.log(response.data?.albumInfo.albumId);
+        const albumId = response.data?.albumInfo.albumId;
+        if (albumId) {
+          return albumId;
         }
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
-      console.log(error);
-      if (error.response.status === 401) {
-        console.log("401에러");
-        await refreshAccessToken();
-        sendAlbumData();
-      }
     }
   };
 
-  const onSubmit = async () => {
-    await sendAlbumData();
-    onClickModal();
+ const onSubmit = async () => {
+    const albumId = await sendAlbumData();
+    if (albumId) {
+      onClickModal();
+      setAlbumInfo({
+        albumBackground: submittedAlbum.albumBackground,
+        albumCover: submittedAlbum.albumCover,
+        albumPhrases: determinePhrase(submittedAlbum.albumPhrases),
+        fromName: submittedAlbum.fromName,
+        letter: submittedAlbum.letter,
+        music: submittedAlbum.music,
+        toName: submittedAlbum.toName,
+        albumId: albumId,
+      });
 
-    //router.push("/newalbum/submit")
+      const newUrl = `${window.location.origin}/newalbum/${albumId}`;
+      window.history.pushState({ path: newUrl }, "", newUrl);
+    }
   };
 
   return (

@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import pin from "features/assets/lp/lp-pin.svg";
-import useGetToken from "@/hooks/useGetToken";
 import useUserInfoStore from "@/store/useUserInfoStore";
+import useGetToken from "@/hooks/useGetToken";
 
 interface PreivewInfoProps {
   submittedData: {
@@ -36,22 +36,9 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
   const { setUserInfo, userInfo } = useUserInfoStore();
   const router = useRouter();
 
-  const { token, setToken, refreshAccessToken } = useGetToken();
+  const email = router.query.email;
+  const { userInfo, setUserInfo } = useUserInfoStore();
 
-  useEffect(() => {
-    if (token.accessToken) {
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${token.accessToken}`;
-    }
-    setUserInfo({
-      ...userInfo,
-      email: submittedData.email,
-      userName: submittedData.userName,
-      mainBackground: submittedData.mainBackground,
-      mainLp: submittedData.mainLp,
-    });
-  }, [token, submittedData]);
 
   const handleComplete = async () => {
     try {
@@ -75,20 +62,19 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
         }
       );
 
-      if (response.status === 200) {
-        setToken({
-          accessToken: response.data.token,
-          refreshToken: "",
-          expiresAt: Date.now() + 1,
+      if (response.status === 201 ) {
+        //쿼리에 userId와 토큰을 넣어서 메인페이지로 이동
+        setUserInfo({
+          ...userInfo,
+          email: email as string,
+          userId: response.data.userId,
+          userName: response.data.userName,
         });
-        localStorage.setItem("accessToken", response.data.token);
-        localStorage.setItem("refreshToken", "");
-        localStorage.setItem("expiresAt", (Date.now() + 1).toString());
+
         router.push({
-          pathname: `/main/${response.data.userId}`,
+          pathname: `/main/${userInfo.userId}`,
           query: {
-            token: response.data.token,
-            userId: response.data.userId,
+            userId: userInfo.userId,
           },
         });
       }
@@ -97,6 +83,12 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
       if (error.response.status === 400) {
         console.log(error.response.data);
         alert("이미 가입된 사용자입니다.");
+        // router.push({
+        //   pathname: `/main/${userInfo.userId}`,
+        //   query: {
+        //     userId: userInfo.userId,
+        //   },
+        // });
       }
     }
   };
