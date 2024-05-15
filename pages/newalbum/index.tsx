@@ -196,6 +196,7 @@ const Page = () => {
                       letter: selectedOptions.letter,
                       music: selectedOptions.musicId,
                       toName: selectedInput.toName,
+                      albumId: "",
                     }}
                     selectedMusic={selectedMusic[0]}
                   />
