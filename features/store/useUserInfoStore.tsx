@@ -11,8 +11,8 @@ const useUserInfoStore = create<UserInfoStoreProps>((set) => ({
     userId: "",
     userName: "",
     email: "",
-    mainBackground: "pink",
-    mainLp: "wtl",
+    mainBackground: "",
+    mainLp: "",
   },
   setUserInfo: (userInfo) => set({ userInfo }),
 }));
