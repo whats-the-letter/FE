@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import pin from "features/assets/lp/lp-pin.svg";
 import useUserInfoStore from "@/store/useUserInfoStore";
-import useGetToken from "@/hooks/useGetToken";
 
 interface PreivewInfoProps {
   submittedData: {
@@ -35,10 +34,7 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
 }) => {
   const { setUserInfo, userInfo } = useUserInfoStore();
   const router = useRouter();
-
   const email = router.query.email;
-  const { userInfo, setUserInfo } = useUserInfoStore();
-
 
   const handleComplete = async () => {
     try {
@@ -62,7 +58,7 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
         }
       );
 
-      if (response.status === 201 ) {
+      if (response.status === 201) {
         //쿼리에 userId와 토큰을 넣어서 메인페이지로 이동
         setUserInfo({
           ...userInfo,

@@ -7,6 +7,10 @@ import pin from "features/assets/lp/lp-pin.svg";
 import useGetToken from "@/hooks/useGetToken";
 import useUserInfoStore from "@/store/useUserInfoStore";
 
+function isValidKey(key: string, object: object): key is keyof typeof object {
+  return key in object;
+}
+
 const MainPage: React.FC = () => {
   const router = useRouter();
   const { token } = useGetToken();
@@ -43,6 +47,17 @@ const MainPage: React.FC = () => {
     }
   }, [router.query.userId, router.query.email, token]);
 
+  let mainBackgroundImage;
+  let mainLpImage;
+  if (
+    userInfo &&
+    isValidKey(userInfo.mainBackground, infoSvg.main) &&
+    isValidKey(userInfo.mainLp, infoSvg.mainLp)
+  ) {
+    mainBackgroundImage = infoSvg.main[userInfo.mainBackground];
+    mainLpImage = infoSvg.mainLp[userInfo.mainLp];
+  }
+
   return (
     <>
       {userInfo && (
@@ -50,13 +65,13 @@ const MainPage: React.FC = () => {
           <div className="relative">
             <img
               className="w-full h-full object-cover "
-              src={infoSvg.main[userInfo.mainBackground]}
+              src={mainBackgroundImage}
               alt="preview-background"
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <img
                 className="transform -translate-x-1/2 -translate-y-1/2 rotate-infinite mt-10"
-                src={infoSvg.mainLp[userInfo.mainLp]}
+                src={mainLpImage}
                 alt="preview-lpDesign"
               />
             </div>

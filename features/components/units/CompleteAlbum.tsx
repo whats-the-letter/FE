@@ -16,7 +16,7 @@ import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/router";
 import BackgroundBack from "./BackSelect-Animation/BackgroundBack";
 import useAlbumInfoStore from "@/store/useAlbumStore";
-
+import useGetToken from "@/hooks/useGetToken";
 
 export interface AlbumInfo {
   albumBackground: string;
@@ -44,9 +44,6 @@ const CompleteAlbum: React.FC<{
   const [isFlipped, setIsFlipped] = useState(false);
   const setAlbumInfo = useAlbumInfoStore((state) => state.setAlbumInfo);
 
-  const handleCardClick = () => {
-    setIsFlipped(!isFlipped);
-  };
   const { open } = useModal({
     title: "공유하기",
     description: "* 공유를 하지 않으면 앨범은 영영 닿지 못할 거예요.",
@@ -142,7 +139,7 @@ const CompleteAlbum: React.FC<{
     }
   };
 
- const onSubmit = async () => {
+  const onSubmit = async () => {
     const albumId = await sendAlbumData();
     if (albumId) {
       onClickModal();
