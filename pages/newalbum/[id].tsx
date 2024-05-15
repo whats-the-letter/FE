@@ -27,7 +27,7 @@ const ViewAlbum = () => {
 
   useEffect(() => {
     fetchAlbumData();
-  }, [albumId]); // albumId가 변경될 때마다 함수 실행
+  }, []); // albumId가 변경될 때마다 함수 실행
 
   if (!albumData) {
     return <div>Loading...</div>;
