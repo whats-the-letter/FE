@@ -28,20 +28,35 @@ const ViewAlbum = () => {
     setIsFlipped(!isFlipped);
   };
 
-  const determinePhrase = (albumPhrases: string) => {
+  const changePhrase = (albumPhrases: string) => {
     switch (albumPhrases) {
-      case "editor-1":
-        return "HBD";
-      case "editor-2":
-        return "HEALTH";
-      case "editor-3":
-        return "LOVE";
-      case "editor-4":
-        return "MONEY";
-      case "editor-5":
-        return "SUCCESS";
+      case "HBD":
+        return "editor-1";
+      case "HEALTH":
+        return "editor-2";
+      case "LOVE":
+        return "editor-3";
+      case "MONEY":
+        return "editor-4";
+      case "SUCCESS":
+        return "editor-5";
       default:
-        return "PARENTS";
+        return;
+    }
+  };
+
+  const changeCover = (albumCover: string) => {
+    switch (albumCover) {
+      case "LOVE":
+        return "editor-love";
+      case "MONEY":
+        return "editor-money";
+      case "SUCCESS":
+        return "editor-success";
+      case "HEALTH":
+        return "editor-health";
+      default:
+        return;
     }
   };
 
@@ -107,14 +122,12 @@ const ViewAlbum = () => {
                 <div className={`card ${isFlipped ? "flipped" : ""}`}>
                   <div className="card-front z-10">
                     <img
-                      src={albumSelection[albumInfo.albumCover.toLowerCase()]}
+                      src={albumSelection[changeCover(albumInfo.albumCover)]}
                       alt="albumCover"
                     />
                     <img
                       src={
-                        phrasesSelection[
-                          determinePhrase(albumInfo.albumPhrases)
-                        ]
+                        phrasesSelection[changePhrase(albumInfo.albumPhrases)]
                       }
                       className="absolute top-[23%] left-[40%] transform -translate-x-1/2 -translate-y-1/2"
                       alt="phrases"

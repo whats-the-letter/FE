@@ -9,6 +9,9 @@ export type AlbumStoreProps = {
     fromName: string;
     letter: string;
     music: string;
+    musicArtist: string;
+    musicName: string;
+    youtubeUrlId: string;
     albumId: string;
     toName: string;
   };
@@ -24,6 +27,9 @@ const useAlbumInfoStore = create<AlbumStoreProps>((set) => ({
     letter: "",
     music: "",
     albumId: "",
+    musicArtist: "",
+    musicName: "",
+    youtubeUrlId:"",
     toName: "",
   },
   setAlbumInfo: (albumInfo) => set({ albumInfo }),
