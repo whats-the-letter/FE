@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState, useTransition } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { infoSvg, playListButton, tapButton } from "@/utils/data";
@@ -11,6 +11,7 @@ import Loading from "@/components/units/Loading";
 const MainPage: React.FC = () => {
   const router = useRouter();
   const { userInfo, setUserInfo } = useUserInfoStore();
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     const loadUserInfo = localStorage.getItem("userInfo");
@@ -39,12 +40,14 @@ const MainPage: React.FC = () => {
             console.log(res.data);
             const { email, userName, mainBackground, mainLp } =
               res.data.userInfo;
-            setUserInfo({
-              ...userInfo,
-              email,
-              userName,
-              mainBackground: mainBackground.toLowerCase(),
-              mainLp: mainLp.toLowerCase(),
+            startTransition(() => {
+              setUserInfo({
+                ...userInfo,
+                email,
+                userName,
+                mainBackground: mainBackground.toLowerCase(),
+                mainLp: mainLp.toLowerCase(),
+              });
             });
           }
         })
@@ -57,7 +60,7 @@ const MainPage: React.FC = () => {
   return (
     <Suspense fallback={<Loading />}>
       {userInfo && (
-        <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto space-y-10 font-pretendard font-semibold ">
+        <div className="flex flex-col w-full h-screen p-2 items-center justify-center z-10 m-auto space-y-10 font-pretendard font-semibold ">
           <div className="relative">
             <img
               className="w-full h-full object-cover "
