@@ -155,7 +155,7 @@ const ViewAlbum = () => {
                       className="absolute inset-0 w-full h-full z-0"
                     />
                     <img
-                      src={letterSelection[`${albumInfo.albumCover}-letter`]}
+                      src={letterSelection[`${changeCover(albumInfo.albumCover)}-letter`]}
                       className="z-30"
                     />
 
