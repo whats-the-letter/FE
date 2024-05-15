@@ -146,7 +146,7 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
             ))}
           </div>
           <SearchBar onSearch={handleSearch} />
-          <div className="w-full overflow-y-scroll py-8 flex flex-col justify-start">
+          <div className="w-full h-[300px] overflow-y-scroll py-8 flex flex-col justify-start">
             {searchResultList.length === 0 ? (
               <div className="flex flex-col items-center justify-center w-full h-full gap-5 px-2">
                 <Image
