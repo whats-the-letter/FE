@@ -33,6 +33,18 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
   const router = useRouter();
   const email = router.query.email;
   const { userInfo, setUserInfo } = useUserInfoStore();
+
+  useEffect(() => {
+    const loadUserInfo = localStorage.getItem("userInfo");
+    if (loadUserInfo) {
+      setUserInfo(JSON.parse(loadUserInfo));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("userInfo", JSON.stringify(userInfo));
+  }, [userInfo]);
+
   const handleComplete = async () => {
     try {
       const formData = new FormData();
@@ -65,8 +77,6 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
           mainBackground: response.data.userInfo.mainBackground.toLowerCase(),
           mainLp: response.data.userInfo.mainLp.toLowerCase(),
         });
-
-        console.log(userInfo);
 
         router.push({
           pathname: `/main/${response.data.userInfo.userId}`,
