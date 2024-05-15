@@ -4,23 +4,15 @@ import { useRouter } from "next/router";
 import { infoSvg, playListButton, tapButton } from "@/utils/data";
 import Image from "next/image";
 import pin from "features/assets/lp/lp-pin.svg";
-import useGetToken from "@/hooks/useGetToken";
+
 import useUserInfoStore from "@/store/useUserInfoStore";
 import Loading from "@/components/units/Loading";
-
-interface UserInfo {
-  email: string | string[];
-  userName: string;
-  mainBackground: keyof typeof infoSvg.mainBackground;
-  mainLp: keyof typeof infoSvg.mainLp;
-}
 
 const MainPage: React.FC = () => {
   const router = useRouter();
   const { userInfo, setUserInfo } = useUserInfoStore();
 
   useEffect(() => {
-    // 로컬 스토리지에서 userInfo를 로드합니다.
     const loadUserInfo = localStorage.getItem("userInfo");
     if (loadUserInfo) {
       setUserInfo(JSON.parse(loadUserInfo));
@@ -28,7 +20,6 @@ const MainPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // userInfo 상태가 변경될 때마다 로컬 스토리지에 저장합니다.
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
   }, [userInfo]);
 
@@ -64,7 +55,7 @@ const MainPage: React.FC = () => {
   }, [userInfo.userId]);
 
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       {userInfo && (
         <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto space-y-10 font-pretendard font-semibold ">
           <div className="relative">
@@ -105,7 +96,7 @@ const MainPage: React.FC = () => {
           </div>
         </div>
       )}
-    </>
+    </Suspense>
   );
 };
 
