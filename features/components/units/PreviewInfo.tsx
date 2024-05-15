@@ -62,7 +62,8 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
           email: email as string,
           userId: response.data.userInfo.userId,
           userName: response.data.userInfo.userName,
-
+          mainBackground: response.data.userInfo.mainBackground,
+          mainLp: response.data.userInfo.mainLp,
         });
 
         router.push({
