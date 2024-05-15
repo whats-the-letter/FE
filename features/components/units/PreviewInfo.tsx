@@ -19,11 +19,9 @@ interface PreivewInfoProps {
   };
   playListButton: Record<string, string>;
   tapButton: Record<string, string>;
-
   onPrevious: () => void;
   onComplete: () => void;
 }
-
 const PreivewInfo: React.FC<PreivewInfoProps> = ({
   submittedData,
   playListButton,
@@ -32,19 +30,19 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
   onPrevious,
   onComplete,
 }) => {
-  const { setUserInfo, userInfo } = useUserInfoStore();
   const router = useRouter();
   const email = router.query.email;
-
+  const { userInfo, setUserInfo } = useUserInfoStore();
   const handleComplete = async () => {
     try {
       const formData = new FormData();
-
-      formData.append("email", userInfo.email as string);
-      formData.append("userName", userInfo.userName);
-      formData.append("mainBackground", userInfo.mainBackground.toUpperCase());
-      formData.append("mainLp", userInfo.mainLp.toUpperCase());
-
+      formData.append("email", email as string);
+      formData.append("userName", submittedData.userName);
+      formData.append(
+        "mainBackground",
+        submittedData.mainBackground.toUpperCase()
+      );
+      formData.append("mainLp", submittedData.mainLp.toUpperCase());
       formData.forEach((value, key) => {
         console.log(key, value);
       });
@@ -57,14 +55,13 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
           },
         }
       );
-
       if (response.status === 201) {
         //쿼리에 userId와 토큰을 넣어서 메인페이지로 이동
         setUserInfo({
           ...userInfo,
           email: email as string,
-          userId: response.data.userInfo.userId,
-          userName: response.data.userInfo.userName,
+          userId: response.data.userId,
+          userName: response.data.userName,
         });
 
         router.push({
@@ -78,6 +75,7 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
       console.log(error);
       if (error.response.status === 400) {
         console.log(error.response.data);
+        //이미 가입된 사용자입니다. 노출
         alert("이미 가입된 사용자입니다.");
         // router.push({
         //   pathname: `/main/${userInfo.userId}`,
