@@ -73,16 +73,15 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
 
         router.push({
           pathname: `/main/${userInfo.userId}`,
-          // query: {
-          //   userId: userInfo.userId,
-          // },
+          query: {
+            userId: userInfo.userId,
+          },
         });
       }
     } catch (error: any) {
       console.log(error);
       if (error.response.status === 400) {
         console.log(error.response.data);
-        //이미 가입된 사용자입니다. 노출
         alert("이미 가입된 사용자입니다.");
         // router.push({
         //   pathname: `/main/${userInfo.userId}`,
