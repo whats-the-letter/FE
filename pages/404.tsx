@@ -4,7 +4,6 @@ import oops from "@/assets/icons/oops.svg";
 import useUserInfoStore from "@/store/useUserInfoStore";
 
 export default function Custom404() {
-  const userId = useUserInfoStore((state) => state.userInfo?.userId);
   return (
     <>
       <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto p-4 px-10 space-y-10 font-pretendard font-semibold ">
@@ -16,7 +15,7 @@ export default function Custom404() {
           <span>입력하신 페이지의 주소가 정확한지 확인해주세요.</span>
         </div>
 
-        <Link href={`/main/${userId}`}>
+        <Link href={`/`}>
           <div className="bg-black rounded-md text-center w-64 h-10 p-2  m-auto  items-center text-white text-sm font-pretendard font-semibold">
             <span>메인으로 돌아가기</span>
           </div>
