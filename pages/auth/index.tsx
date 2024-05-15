@@ -45,7 +45,6 @@ export default function RedirectPage() {
               "Authorization"
             ] = `Bearer ${accessToken}`;
             console.log("로그인 성공");
-
             const userInfo = res.data.userInfo;
             setUserInfo(userInfo);
 

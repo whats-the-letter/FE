@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 import pin from "features/assets/lp/lp-pin.svg";
+import useUserInfoStore from "@/store/useUserInfoStore";
+import useGetToken from "@/hooks/useGetToken";
 
 interface PreivewInfoProps {
   submittedData: {
@@ -33,6 +35,7 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
 }) => {
   const router = useRouter();
   const email = router.query.email;
+  const { userInfo, setUserInfo } = useUserInfoStore();
 
   const handleComplete = async () => {
     try {
@@ -61,12 +64,20 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
 
       if (response.status === 200) {
         //쿼리에 userId와 토큰을 넣어서 메인페이지로 이동
+        setUserInfo({
+          ...userInfo,
+          email: email as string,
+          mainBackground: submittedData.mainBackground as string,
+          mainLp: submittedData.mainLp as string,
+          userId: response.data.userId,
+          userName: response.data.userName,
+        });
+
         router.push({
-          pathname: `/main/${response.data.userId}`,
-          query: {
-            token: response.data.token,
-            userId: response.data.userId,
-          },
+          pathname: `/main/${userInfo.userId}`,
+          // query: {
+          //   userId: userInfo.userId,
+          // },
         });
       }
     } catch (error: any) {
@@ -75,6 +86,12 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
         console.log(error.response.data);
         //이미 가입된 사용자입니다. 노출
         alert("이미 가입된 사용자입니다.");
+        // router.push({
+        //   pathname: `/main/${userInfo.userId}`,
+        //   query: {
+        //     userId: userInfo.userId,
+        //   },
+        // });
       }
     }
   };
