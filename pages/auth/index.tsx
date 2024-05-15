@@ -57,11 +57,10 @@ export default function RedirectPage() {
           if (err.response && err.response.status === 404) {
             // 사용자가 우리 서비스의 회원이 아닐 때 404 에러 처리
             console.log("회원가입 필요", err.response);
-
+            console.log("회원가입 필요", err.response.data.userInfo);
             router.push({
               pathname: `/info`,
-
-              query: { email: err.response.data.email },
+              query: { email: err.response.data.userInfo.email },
             });
           }
         });
