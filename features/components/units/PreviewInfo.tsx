@@ -62,7 +62,7 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
         }
       );
 
-      if (response.status === 200) {
+      if (response.status === 201 ) {
         //쿼리에 userId와 토큰을 넣어서 메인페이지로 이동
         setUserInfo({
           ...userInfo,
