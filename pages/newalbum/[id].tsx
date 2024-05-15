@@ -81,12 +81,12 @@ const Page = () => {
     albumCover: "editor-love",
     albumPhrases: "editor-1",
     albumBackground: "colorful",
-    musicId: "",
-    letter: "",
+    musicId:"6636537c17cd137af23bf813",
+    letter: "내용을 입력해 주세요.",
   });
   const [selectedInput, setSelectedInput] = useState({
-    toName: "",
-    fromName: "",
+    toName: "받는 사람을 입력해주세요.",
+    fromName: "보내는 사람을 입력해주세요.",
   });
   const [selectedMusic, setSelectedMusic] = useState<MusicProps[]>([]);
 
