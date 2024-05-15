@@ -44,22 +44,17 @@ const CompleteAlbum: React.FC<{
   const [isFlipped, setIsFlipped] = useState(false);
   const setAlbumInfo = useAlbumInfoStore((state) => state.setAlbumInfo);
 
+  const handleCardClick = () => {
+    setIsFlipped(!isFlipped);
+  };
   const { open } = useModal({
     title: "공유하기",
     description: "* 공유를 하지 않으면 앨범은 영영 닿지 못할 거예요.",
     showCloseBtn: true,
   });
-
-  const { token, refreshAccessToken } = useGetToken();
-
-  const handleCardClick = () => {
-    setIsFlipped(!isFlipped);
-  };
-
   const onClickModal = async () => {
     open();
   };
-
   const determinePhrase = (albumPhrases: string) => {
     switch (albumPhrases) {
       case "editor-1":
@@ -76,7 +71,6 @@ const CompleteAlbum: React.FC<{
         return "PARENTS";
     }
   };
-
   const sendAlbumData = async () => {
     try {
       const formData = new FormData();
@@ -99,24 +93,8 @@ const CompleteAlbum: React.FC<{
       formData.forEach((value, key) => {
         console.log(key, value);
       });
-
-      const refreshAccessToken = async () => {
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/refresh`,
-          {
-            refreshToken: token.refreshToken,
-          }
-        );
-
-        const newToken = response.data;
-        localStorage.setItem("token", JSON.stringify(newToken));
-        token.accessToken = newToken.accessToken;
-        token.expiresAt = newToken.expiresAt;
-      };
-
-      const accessToken = token.accessToken;
+      const accessToken = localStorage.getItem("accessToken");
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-
       if (accessToken) {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/album/send`,
