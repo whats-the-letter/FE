@@ -29,7 +29,7 @@ export default function RedirectPage() {
         )
         .then((res) => {
           if (res.status === 200) {
-            console.log(res);
+            // console.log(res);
 
             let accessToken = res.headers.authorization;
             accessToken = accessToken.replace("Bearer ", "");
@@ -44,7 +44,7 @@ export default function RedirectPage() {
             axios.defaults.headers.common[
               "Authorization"
             ] = `Bearer ${accessToken}`;
-            console.log("로그인 성공");
+            // console.log("로그인 성공");
             const userInfo = res.data.userInfo;
             setUserInfo(userInfo);
 
@@ -52,11 +52,11 @@ export default function RedirectPage() {
           }
         })
         .catch((err) => {
-          console.error("로그인 실패", err);
+          // console.error("로그인 실패", err);
           if (err.response && err.response.status === 404) {
             // 사용자가 우리 서비스의 회원이 아닐 때 404 에러 처리
-            console.log("회원가입 필요", err.response);
-            console.log("회원가입 필요", err.response.data.userInfo);
+            // console.log("회원가입 필요", err.response);
+            // console.log("회원가입 필요", err.response.data.userInfo);
             router.push({
               pathname: `/info`,
               query: { email: err.response.data.userInfo.email },

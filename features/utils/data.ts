@@ -31,7 +31,7 @@ export const infoSvg = {
   mainBackground: {
     pink: "/assets/main/preview/preview-pink.svg",
     blue: "/assets/main/preview/preview-blue.svg",
-    silver: "/assets/main/preview/preview-silver.svg",
+    white: "/assets/main/preview/preview-white.svg",
     gold: "/assets/main/preview/preview-gold.svg",
   },
 
@@ -45,7 +45,7 @@ export const infoSvg = {
   main: {
     pink: "/assets/main/bg-pink.svg",
     blue: "/assets/main/bg-blue.svg",
-    silver: "/assets/main/bg-silver.svg",
+    white: "/assets/main/bg-white.svg",
     gold: "/assets/main/bg-gold.svg",
   },
 };
@@ -53,13 +53,13 @@ export const infoSvg = {
 export const playListButton: Record<string, string> = {
   "playlist-pink": "/assets/playlist/playlist-pink.svg",
   "playlist-blue": "/assets/playlist/playlist-blue.svg",
-  "playlist-silver": "/assets/playlist/playlist-silver.svg",
+  "playlist-white": "/assets/playlist/playlist-white.svg",
   "playlist-gold": "/assets/playlist/playlist-gold.svg",
 };
 
 export const tapButton: Record<string, string> = {
   "tap-pink": "/assets/main/tap-pink.svg",
   "tap-blue": "/assets/main/tap-blue.svg",
-  "tap-silver": "/assets/main/tap-silver.svg",
+  "tap-white": "/assets/main/tap-white.svg",
   "tap-gold": "/assets/main/tap-gold.svg",
 };

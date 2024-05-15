@@ -131,11 +131,11 @@ export default function Page() {
                       />
                       <RoundRadioButton
                         {...register("mainBackground")}
-                        label="silver"
-                        isChecked={isBackground === "silver"}
-                        id="silver"
+                        label="white"
+                        isChecked={isBackground === "white"}
+                        id="white"
                         name="mainBackground"
-                        value="silver"
+                        value="white"
                         className="bg-custom_silver"
                       />
                       <RoundRadioButton
