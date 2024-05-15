@@ -2,8 +2,10 @@ import axios from "axios";
 import Image from "next/image";
 
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import pin from "features/assets/lp/lp-pin.svg";
+import useGetToken from "@/hooks/useGetToken";
+import useUserInfoStore from "@/store/useUserInfoStore";
 
 interface PreivewInfoProps {
   submittedData: {
@@ -31,20 +33,34 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
   onPrevious,
   onComplete,
 }) => {
+  const { setUserInfo, userInfo } = useUserInfoStore();
   const router = useRouter();
-  const email = router.query.email;
+
+  const { token, setToken, refreshAccessToken } = useGetToken();
+
+  useEffect(() => {
+    if (token.accessToken) {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${token.accessToken}`;
+    }
+    setUserInfo({
+      ...userInfo,
+      email: submittedData.email,
+      userName: submittedData.userName,
+      mainBackground: submittedData.mainBackground,
+      mainLp: submittedData.mainLp,
+    });
+  }, [token, submittedData]);
 
   const handleComplete = async () => {
     try {
       const formData = new FormData();
 
-      formData.append("email", email as string);
-      formData.append("userName", submittedData.userName);
-      formData.append(
-        "mainBackground",
-        submittedData.mainBackground.toUpperCase()
-      );
-      formData.append("mainLp", submittedData.mainLp.toUpperCase());
+      formData.append("email", userInfo.email as string);
+      formData.append("userName", userInfo.userName);
+      formData.append("mainBackground", userInfo.mainBackground.toUpperCase());
+      formData.append("mainLp", userInfo.mainLp.toUpperCase());
 
       formData.forEach((value, key) => {
         console.log(key, value);
@@ -60,7 +76,14 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
       );
 
       if (response.status === 200) {
-        //쿼리에 userId와 토큰을 넣어서 메인페이지로 이동
+        setToken({
+          accessToken: response.data.token,
+          refreshToken: "",
+          expiresAt: Date.now() + 1,
+        });
+        localStorage.setItem("accessToken", response.data.token);
+        localStorage.setItem("refreshToken", "");
+        localStorage.setItem("expiresAt", (Date.now() + 1).toString());
         router.push({
           pathname: `/main/${response.data.userId}`,
           query: {
@@ -73,7 +96,6 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
       console.log(error);
       if (error.response.status === 400) {
         console.log(error.response.data);
-        //이미 가입된 사용자입니다. 노출
         alert("이미 가입된 사용자입니다.");
       }
     }
