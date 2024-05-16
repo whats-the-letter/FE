@@ -12,6 +12,7 @@ import {
 } from "@/utils/data";
 import Image from "next/image";
 import letterBg from "/features/assets/letter/letter-bg.svg";
+import { useRouter } from "next/router";
 
 const backSelection: Record<string, React.JSX.Element> = {
   colorful: <BackgroundColorful />,
@@ -20,6 +21,8 @@ const backSelection: Record<string, React.JSX.Element> = {
 };
 
 const ViewAlbum = () => {
+  const router = useRouter();
+
   const { userInfo } = useUserInfoStore();
   const { albumInfo, setAlbumInfo } = useAlbumInfoStore();
   const [isFlipped, setIsFlipped] = useState(false);
@@ -59,6 +62,14 @@ const ViewAlbum = () => {
         return "";
     }
   };
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+
+    if (!userInfo) {
+      router.push(`/login`);
+    }
+  }, [router]);
 
   useEffect(() => {
     // 로컬 스토리지에서 앨범 정보를 불러오는 로직
@@ -155,7 +166,11 @@ const ViewAlbum = () => {
                       className="absolute inset-0 w-full h-full z-0"
                     />
                     <img
-                      src={letterSelection[`${changeCover(albumInfo.albumCover)}-letter`]}
+                      src={
+                        letterSelection[
+                          `${changeCover(albumInfo.albumCover)}-letter`
+                        ]
+                      }
                       className="z-30"
                     />
 
