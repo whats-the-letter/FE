@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Loading from "@/components/units/Loading";
 import useGetToken from "@/hooks/useGetToken";
 import useUserInfoStore from "@/store/useUserInfoStore";
+import useAlbumInfoStore from "@/store/useAlbumInfoStore";
 
 export default function RedirectPage() {
   const router = useRouter();
@@ -29,34 +30,34 @@ export default function RedirectPage() {
         )
         .then((res) => {
           if (res.status === 200) {
-            // console.log(res);
-
             let accessToken = res.headers.authorization;
             accessToken = accessToken.replace("Bearer ", "");
-            let expiresAt = new Date().getTime() + 3000 * 1000;
+            let expiresAt = new Date().getTime() + 3000 * 1000; // 토큰 만료 시간
             setToken({
               accessToken,
               refreshToken: res.data.refreshToken,
               expiresAt: expiresAt,
             });
             localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("expiresAt", expiresAt.toString());
             axios.defaults.headers.common[
               "Authorization"
             ] = `Bearer ${accessToken}`;
-            // console.log("로그인 성공");
+
             const userInfo = res.data.userInfo;
+            localStorage.setItem("userInfo", JSON.stringify(userInfo)); // userInfo를 localStorage에 저장
             setUserInfo(userInfo);
 
-            router.push(`/main/${userInfo.userId}`);
+            const redirectPath =
+              localStorage.getItem("redirectAfterLogin") ||
+              `/main/${userInfo.userId}`;
+            localStorage.removeItem("redirectAfterLogin"); // 저장된 리디렉션 경로 삭제
+            router.push(redirectPath);
           }
         })
         .catch((err) => {
-          // console.error("로그인 실패", err);
           if (err.response && err.response.status === 404) {
-            // 사용자가 우리 서비스의 회원이 아닐 때 404 에러 처리
-            // console.log("회원가입 필요", err.response);
-            // console.log("회원가입 필요", err.response.data.userInfo);
             router.push({
               pathname: `/info`,
               query: { email: err.response.data.userInfo.email },

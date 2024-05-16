@@ -23,7 +23,7 @@ const backSelection: Record<string, React.JSX.Element> = {
 const ViewAlbum = () => {
   const router = useRouter();
 
-  const { userInfo } = useUserInfoStore();
+  const { userInfo, setUserInfo } = useUserInfoStore();
   const { albumInfo, setAlbumInfo } = useAlbumInfoStore();
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -64,23 +64,23 @@ const ViewAlbum = () => {
   };
 
   useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo");
-
-    if (!userInfo) {
+    const storedUserInfo = localStorage.getItem("userInfo");
+    if (!storedUserInfo) {
+      localStorage.setItem("redirectAfterLogin", window.location.pathname);      
       router.push(`/login`);
+    } else {
+
+      setUserInfo(JSON.parse(storedUserInfo));
     }
-  }, [router]);
+  }, [router, setUserInfo]);
 
   useEffect(() => {
-    // 로컬 스토리지에서 앨범 정보를 불러오는 로직
     const loadAlbumInfoFromLocalStorage = () => {
       const loadAlbumInfo = localStorage.getItem("albumInfo");
       if (loadAlbumInfo) {
         setAlbumInfo(JSON.parse(loadAlbumInfo));
       }
     };
-
-    // 앨범 정보를 가져와서 로컬 스토리지와 스토어에 저장하는 함수
     const fetchAndStoreAlbumInfo = () => {
       const token = localStorage.getItem("accessToken");
       const albumId = window.location.pathname.split("/")[2];

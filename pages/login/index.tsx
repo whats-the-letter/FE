@@ -12,9 +12,8 @@ const Login = () => {
   const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
   useEffect(() => {
-    
     const userInfo = localStorage.getItem("userInfo");
-    
+
     if (userInfo) {
       const { userId } = JSON.parse(userInfo);
       router.push(`/main/${userId}`);
