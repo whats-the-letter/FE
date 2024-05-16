@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import Loading from "@/components/units/Loading";
 import useGetToken from "@/hooks/useGetToken";
 import useUserInfoStore from "@/store/useUserInfoStore";
-import useAlbumInfoStore from "@/store/useAlbumInfoStore";
 
 export default function RedirectPage() {
   const router = useRouter();
