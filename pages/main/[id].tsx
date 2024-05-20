@@ -6,12 +6,22 @@ import Image from "next/image";
 import pin from "features/assets/lp/lp-pin.svg";
 
 import useUserInfoStore from "@/store/useUserInfoStore";
-import Loading from "@/components/units/Loading";
+
+import MainSkeleton from "@/components/units/Skeleton/MainSkeleton";
 
 const MainPage: React.FC = () => {
   const router = useRouter();
   const { userInfo, setUserInfo } = useUserInfoStore();
   const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadUserInfo = localStorage.getItem("userInfo");
+    if (loadUserInfo) {
+      setUserInfo(JSON.parse(loadUserInfo));
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     const loadUserInfo = localStorage.getItem("userInfo");
@@ -58,8 +68,10 @@ const MainPage: React.FC = () => {
   }, [userInfo.userId]);
 
   return (
-    <Suspense fallback={<Loading />}>
-      {userInfo && (
+    <Suspense fallback={<MainSkeleton />}>
+      {isLoading ? (
+        <MainSkeleton />
+      ) : (
         <div className="flex flex-col w-full h-screen p-2 items-center justify-center z-10 m-auto space-y-10 font-pretendard font-semibold ">
           <div className="relative">
             <img
