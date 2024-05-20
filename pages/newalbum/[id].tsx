@@ -13,6 +13,7 @@ import {
 import Image from "next/image";
 import letterBg from "/features/assets/letter/letter-bg.svg";
 import { useRouter } from "next/router";
+import { changeCover, changePhrase } from "@/utils/changeAssets";
 
 const backSelection: Record<string, React.JSX.Element> = {
   colorful: <BackgroundColorful />,
@@ -31,37 +32,7 @@ const ViewAlbum = () => {
     setIsFlipped(!isFlipped);
   };
 
-  const changePhrase = (albumPhrases: string) => {
-    switch (albumPhrases) {
-      case "HBD":
-        return "editor-1";
-      case "HEALTH":
-        return "editor-2";
-      case "LOVE":
-        return "editor-3";
-      case "MONEY":
-        return "editor-4";
-      case "SUCCESS":
-        return "editor-5";
-      default:
-        return "";
-    }
-  };
 
-  const changeCover = (albumCover: string) => {
-    switch (albumCover) {
-      case "LOVE":
-        return "editor-love";
-      case "MONEY":
-        return "editor-money";
-      case "SUCCESS":
-        return "editor-success";
-      case "HEALTH":
-        return "editor-health";
-      default:
-        return "";
-    }
-  };
 
   useEffect(() => {
     const storedUserInfo = localStorage.getItem("userInfo");
