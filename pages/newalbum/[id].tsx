@@ -14,6 +14,8 @@ import Image from "next/image";
 import letterBg from "/features/assets/letter/letter-bg.svg";
 import { useRouter } from "next/router";
 import { changeCover, changePhrase } from "@/utils/changeAssets";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "@/components/units/Loading";
 
 const backSelection: Record<string, React.JSX.Element> = {
   colorful: <BackgroundColorful />,
@@ -21,72 +23,65 @@ const backSelection: Record<string, React.JSX.Element> = {
   circles: <BackgroundCircles />,
 };
 
-const ViewAlbum = () => {
+const ViewAlbum: React.FC = () => {
   const router = useRouter();
-
-  const { userInfo, setUserInfo } = useUserInfoStore();
-  const { albumInfo, setAlbumInfo } = useAlbumInfoStore();
+  const { userInfo } = useUserInfoStore();
+  const { setAlbumInfo } = useAlbumInfoStore();
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
   };
 
-
+  const {
+    data: albumInfo,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery(
+    ["albumInfo", router.query.id],
+    async () => {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/album/view/${router.query.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data.albumInfo;
+    },
+    {
+      enabled: false,
+      cacheTime: 1000 * 60 * 60 * 24,
+      staleTime: 1000 * 60 * 5,
+      onSuccess: (data) => {
+        setAlbumInfo(data);
+      },
+    }
+  );
 
   useEffect(() => {
-    const storedUserInfo = localStorage.getItem("userInfo");
-    if (!storedUserInfo) {
-      localStorage.setItem("redirectAfterLogin", window.location.pathname);      
+    if (!userInfo.userId) {
+      localStorage.setItem("redirectAfterLogin", window.location.pathname);
       router.push(`/login`);
     } else {
-
-      setUserInfo(JSON.parse(storedUserInfo));
+      refetch();
     }
-  }, [router, setUserInfo]);
+  }, [userInfo.userId, router, refetch]);
 
-  useEffect(() => {
-    const loadAlbumInfoFromLocalStorage = () => {
-      const loadAlbumInfo = localStorage.getItem("albumInfo");
-      if (loadAlbumInfo) {
-        setAlbumInfo(JSON.parse(loadAlbumInfo));
-      }
-    };
-    const fetchAndStoreAlbumInfo = () => {
-      const token = localStorage.getItem("accessToken");
-      const albumId = window.location.pathname.split("/")[2];
+  if (isLoading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
 
-      if (token) {
-        axios
-          .get(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/api/album/view/${albumId}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res);
-            if (res.status === 200) {
-              // 앨범 정보를 로컬 스토리지와 스토어에 저장
-              localStorage.setItem(
-                "albumInfo",
-                JSON.stringify(res.data.albumInfo)
-              );
-              setAlbumInfo(res.data.albumInfo);
-              console.log(albumInfo);
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-    };
-
-    loadAlbumInfoFromLocalStorage();
-    fetchAndStoreAlbumInfo();
-  }, [userInfo, setAlbumInfo]);
+  if (isError) {
+    return <div>Error fetching album information</div>;
+  }
 
   return (
     <>
