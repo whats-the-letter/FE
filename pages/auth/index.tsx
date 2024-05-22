@@ -21,8 +21,7 @@ export default function RedirectPage() {
 
     if (code) {
       axios
-        .get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login/kakao/code?code=${code}`,
+        .get(          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login/kakao/code?code=${code}`,
           {
             withCredentials: true,
           }

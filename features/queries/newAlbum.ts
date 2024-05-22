@@ -7,3 +7,12 @@ export const submitNewAlbumMutation = (
     mutationKey: [ 'submit'],
     ...option,
 });
+
+
+export const getUserInfoQuery = (
+  option: UseMutationOptions<null, Error, NewAlbumFormValues>
+): UseMutationOptions<null, Error, NewAlbumFormValues> => ({
+    mutationKey: [ 'userInfo'],
+    ...option,
+});
+
