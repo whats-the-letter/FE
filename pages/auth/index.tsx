@@ -45,7 +45,6 @@ export default function RedirectPage() {
             ] = `Bearer ${accessToken}`;
 
             const userInfo = res.data.userInfo;
-            localStorage.setItem("userInfo", JSON.stringify(userInfo)); // userInfo를 localStorage에 저장
             setUserInfo(userInfo);
 
             const redirectPath =
