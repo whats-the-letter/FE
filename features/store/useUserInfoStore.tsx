@@ -17,6 +17,4 @@ const useUserInfoStore = create<UserInfoStoreProps>((set) => ({
   setUserInfo: (userInfo) => set({ userInfo }),
 }));
 
-
-
 export default useUserInfoStore;

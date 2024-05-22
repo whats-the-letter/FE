@@ -3,22 +3,22 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import kakao from "/features/assets/icons/kakao-icon.svg";
 import logo from "/features/assets/icons/logo.svg";
+import useUserInfoStore from "@/store/useUserInfoStore";
 
 const Login = () => {
-  const router = useRouter();
+
   const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
   const KAKAO_REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
-
   const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
-  useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo");
+  const router = useRouter();
+  const { userInfo, setUserInfo } = useUserInfoStore();
 
-    if (userInfo) {
-      const { userId } = JSON.parse(userInfo);
-      router.push(`/main/${userId}`);
+  useEffect(() => {
+    if (userInfo.userId) {
+      router.push(`/main/${userInfo.userId}`);
     }
-  }, [router]);
+  }, [userInfo.userId, router]);
 
   return (
     <>

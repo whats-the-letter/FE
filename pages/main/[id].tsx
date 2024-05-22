@@ -14,6 +14,7 @@ const MainPage: React.FC = () => {
 
   useEffect(() => {
     const userId = userInfo.userId;
+    const email = userInfo.email;
     const token = localStorage.getItem("accessToken");
     console.log(userId);
     if (token && userId) {
@@ -25,7 +26,6 @@ const MainPage: React.FC = () => {
         })
         .then((res) => {
           if (res.status === 200) {
-            console.log(res.data);
             const { email, userName, mainBackground, mainLp } =
               res.data.userInfo;
             startTransition(() => {
