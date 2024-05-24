@@ -17,9 +17,9 @@
 <path d="M353.25 742C351.109 745.716 347.891 745.716 345.75 742C347.891 745.716 346.289 748.5 342 748.5C346.281 748.5 347.891 751.284 345.75 755C347.891 751.284 351.109 751.284 353.25 755C351.109 751.284 352.711 748.5 357 748.5C352.719 748.5 351.109 745.716 353.25 742Z" fill="#111111"/>
 <path d="M119.41 186C67.026 186 1 209.495 1 245.01C1 280.526 44.6536 293.093 61.0236 293.093" stroke="#111111"/>
 <path d="M370 296.5C390.19 295.954 424.985 307.176 424.985 335.165C424.985 365 377 370 361 371.5" stroke="#111111"/>
-<rect x="45" y="152" width="336" height="200" fill="url(#pattern0)"/>
+<rect x="45" y="152" width="336" height="200" fill="url(#pattern0_1226_1103)"/>
 <defs>
-<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+<pattern id="pattern0_1226_1103" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_1226_1103" transform="scale(0.000849127 0.00142653)"/>
 </pattern>
 <radialGradient id="paint0_radial_1226_1103" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(213 506.527) rotate(89.9424) scale(530.912 643.321)">

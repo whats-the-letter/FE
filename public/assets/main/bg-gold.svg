@@ -81,7 +81,7 @@
 <g filter="url(#filter15_f_1226_1155)">
 <circle cx="254" cy="804" r="40" fill="#E2C098" fill-opacity="0.3"/>
 </g>
-<rect x="39" y="152" width="336" height="200" fill="url(#pattern0)"/>
+<rect x="39" y="152" width="336" height="200" fill="url(#pattern0_1226_1155)"/>
 <defs>
 <filter id="filter0_f_1226_1155" x="28" y="115" width="70" height="70" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
@@ -163,7 +163,7 @@
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feGaussianBlur stdDeviation="4" result="effect1_foregroundBlur_1226_1155"/>
 </filter>
-<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+<pattern id="pattern0_1226_1155" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_1226_1155" transform="scale(0.000849127 0.00142653)"/>
 </pattern>
 <radialGradient id="paint0_radial_1226_1155" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(607 1404.31) rotate(90) scale(774.754 595.596)">

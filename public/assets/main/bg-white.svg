@@ -137,9 +137,9 @@
 <path d="M59.0098 148.575H56.2549V151.151H59.0098V148.575Z" fill="#111111"/>
 <path d="M59.0098 146H56.2549V148.575H59.0098V146Z" fill="#111111"/>
 </g>
-<rect x="32" y="152" width="336" height="200" fill="url(#pattern0)"/>
+<rect x="32" y="152" width="336" height="200" fill="url(#pattern0_1225_1054)"/>
 <defs>
-<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+<pattern id="pattern0_1225_1054" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_1225_1054" transform="scale(0.000849127 0.00142653)"/>
 </pattern>
 <radialGradient id="paint0_radial_1225_1054" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 225) rotate(90) scale(225 345.94)">
