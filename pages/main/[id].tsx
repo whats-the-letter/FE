@@ -26,6 +26,7 @@ const MainPage: React.FC = () => {
         })
         .then((res) => {
           if (res.status === 200) {
+            console.log(res.data.userInfo);
             const { email, userName, mainBackground, mainLp } =
               res.data.userInfo;
             startTransition(() => {
@@ -54,8 +55,8 @@ const MainPage: React.FC = () => {
             <img
               className="w-full h-full object-cover "
               src={
-                infoSvg.mainBackground[
-                  userInfo.mainBackground as keyof typeof infoSvg.mainBackground
+                infoSvg.main[
+                  userInfo.mainBackground as keyof typeof infoSvg.main
                 ]
               }
               alt="preview-background"

@@ -84,6 +84,7 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
         if (iframe) {
           iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&start=0.5`;
           iframe.classList.remove("hidden");
+          
         }
       } catch (error) {
         console.error("음악 재생 실패", error);

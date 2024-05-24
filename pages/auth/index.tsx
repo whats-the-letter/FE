@@ -21,7 +21,8 @@ export default function RedirectPage() {
 
     if (code) {
       axios
-        .get(          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login/kakao/code?code=${code}`,
+        .get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login/kakao/code?code=${code}`,
           {
             withCredentials: true,
           }
@@ -45,7 +46,6 @@ export default function RedirectPage() {
 
             const userInfo = res.data.userInfo;
             setUserInfo(userInfo);
-            console.log(userInfo.email);
 
             //링크로 접속시 로그인 후 리다이렉트 가능하도록 이전 링크 로컬스토리지에 저장
             const redirectPath =

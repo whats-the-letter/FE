@@ -156,6 +156,15 @@ const ViewAlbum: React.FC = () => {
               <span className="text-center text-gray-400 text-sm font-normal z-10 w-full max-w-sm m-auto">
                 앨범을 클릭하여 뒷면을 확인하세요!
               </span>
+              <div id="youtubePlayer">
+                <iframe
+                  width="0"
+                  height="0"
+                  src={`https://www.youtube.com/embed/${albumInfo.youtubeUrlId}?autoplay=1&start=0.5`}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                />
+              </div>
             </div>
           </div>
         </div>
