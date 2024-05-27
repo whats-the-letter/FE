@@ -89,6 +89,9 @@ const Collection: React.FC = () => {
             >
               {/*https 이미지 에셋 오류 처리 필요 */}
               <span>{album.albumPhrases}</span>
+              <span>
+                {album.musicArtist} -{album.musicName}
+              </span>
             </div>
           ))}
         </div>

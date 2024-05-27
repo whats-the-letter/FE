@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import BackgroundBack from "./BackSelect-Animation/BackgroundBack";
 import useAlbumInfoStore from "@/store/useAlbumStore";
 import useGetToken from "@/hooks/useGetToken";
+import { determinePhrase } from "@/utils/changeAssets";
 
 export interface AlbumInfo {
   albumBackground: string;
@@ -55,22 +56,7 @@ const CompleteAlbum: React.FC<{
   const onClickModal = async () => {
     open();
   };
-  const determinePhrase = (albumPhrases: string) => {
-    switch (albumPhrases) {
-      case "editor-1":
-        return "HBD";
-      case "editor-2":
-        return "HEALTH";
-      case "editor-3":
-        return "LOVE";
-      case "editor-4":
-        return "MONEY";
-      case "editor-5":
-        return "SUCCESS";
-      default:
-        return "PARENTS";
-    }
-  };
+  
   const sendAlbumData = async () => {
     try {
       const formData = new FormData();

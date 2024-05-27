@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Loading from "@/components/units/Loading";
@@ -31,7 +31,7 @@ export default function RedirectPage() {
           if (res.status === 200) {
             let accessToken = res.headers.authorization;
             accessToken = accessToken.replace("Bearer ", "");
-            let expiresAt = new Date().getTime() + 3000 * 1000; // 토큰 만료 시간
+            let expiresAt = new Date().getTime() + 3000 * 1000;
             setToken({
               accessToken,
               refreshToken: res.data.refreshToken,
@@ -45,13 +45,13 @@ export default function RedirectPage() {
             ] = `Bearer ${accessToken}`;
 
             const userInfo = res.data.userInfo;
-            localStorage.setItem("userInfo", JSON.stringify(userInfo)); // userInfo를 localStorage에 저장
             setUserInfo(userInfo);
 
+            //링크로 접속시 로그인 후 리다이렉트 가능하도록 이전 링크 로컬스토리지에 저장
             const redirectPath =
               localStorage.getItem("redirectAfterLogin") ||
               `/main/${userInfo.userId}`;
-            localStorage.removeItem("redirectAfterLogin"); // 저장된 리디렉션 경로 삭제
+            localStorage.removeItem("redirectAfterLogin");
             router.push(redirectPath);
           }
         })
