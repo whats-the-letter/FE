@@ -45,9 +45,13 @@ export default function RedirectPage() {
             ] = `Bearer ${accessToken}`;
 
             const userInfo = res.data.userInfo;
-            setUserInfo(userInfo);
+            const email = userInfo.email;
+            console.log(email)
+            setUserInfo({
+              ...userInfo,
+              email,
+            });
 
-            //링크로 접속시 로그인 후 리다이렉트 가능하도록 이전 링크 로컬스토리지에 저장
             const redirectPath =
               localStorage.getItem("redirectAfterLogin") ||
               `/main/${userInfo.userId}`;

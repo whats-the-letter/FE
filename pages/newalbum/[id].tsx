@@ -12,6 +12,7 @@ import {
 } from "@/utils/data";
 import Image from "next/image";
 import letterBg from "/features/assets/letter/letter-bg.svg";
+
 import { useRouter } from "next/router";
 import { changeCover, changePhrase } from "@/utils/changeAssets";
 import { useQuery } from "@tanstack/react-query";
@@ -114,10 +115,12 @@ const ViewAlbum: React.FC = () => {
               >
                 <div className={`card ${isFlipped ? "flipped" : ""}`}>
                   <div className="card-front z-10">
+                  
                     <img
                       src={albumSelection[changeCover(albumInfo.albumCover)]}
                       alt="albumCover"
                     />
+
                     <img
                       src={
                         phrasesSelection[changePhrase(albumInfo.albumPhrases)]
