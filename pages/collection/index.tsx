@@ -89,7 +89,7 @@ const Collection: React.FC = () => {
           </span>
         </div>
         <div
-          className="grid grid-cols-2 gap-4 overflow-y-auto w-full h-[430px]
+          className="grid grid-cols-2 overflow-y-auto w-full h-[480px]
         "
         >
           {albums.map((album: AlbumInfoList) => (
@@ -141,10 +141,12 @@ const Collection: React.FC = () => {
           ))}
         </div>
 
-        <Link href="/newalbum">
+        <Link
+        className="w-full"
+        href="/newalbum">
           <button
             type="button"
-            className="bg-black rounded-md text-center w-64 h-10 p-2 m-auto items-center text-white text-sm "
+            className="bg-black rounded-md text-center w-full h-10 p-2 m-auto items-center text-white text-sm "
           >
             <span>나도 앨범 보내기</span>
           </button>
