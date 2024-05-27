@@ -34,7 +34,7 @@ const MainPage: React.FC = () => {
         .then((res) => {
           if (res.status === 200) {
             console.log(res.data.userInfo);
-            const { email, userName, mainBackground, mainLp, playList } =
+            const { email, userName, mainBackground, mainLp, playlist } =
               res.data.userInfo;
             startTransition(() => {
               setUserInfo({
@@ -43,7 +43,7 @@ const MainPage: React.FC = () => {
                 userName,
                 mainBackground: mainBackground.toLowerCase(),
                 mainLp: mainLp.toLowerCase(),
-                playList: playList,
+                playlist: playlist,
               });
               console.log(userInfo);
             });
@@ -99,17 +99,19 @@ const MainPage: React.FC = () => {
               src={playListButton[`playlist-${userInfo.mainBackground}`]}
               alt="playlist"
             />
-            <div className="absolute bottom-[23%] left-[10%]">
-              {userInfo &&
-                userInfo.playList &&
-                userInfo.playList.map((_, index) => (
-                  <div key={index}>
-                    {index + 1}. [{index}]
-                  </div>
-                ))}
-              {userInfo && userInfo.playList && (
-                <div>총 {userInfo.playList.length}명</div>
-              )}
+          </div>
+          <div className="absolute bottom-[22%] left-[10%] z-20 w-[340px] p-3">
+            <div className="flex flex-wrap gap-1 w-fulljustify-center items-center">
+              {userInfo.playlist.slice(0, 5).map((item, idx) => (
+                <div key={idx} className="text-semibold px-2 py-1">
+                  <span className="text-sm">
+                    {idx + 1}. {item}
+                  </span>
+                </div>
+              ))}
+              <span className="text-sm">
+                ...Sincerely, <strong>{userInfo.playlist.length}</strong> people
+              </span>
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import menu from "../../features/assets/icons/menu.svg";
 import axios from "axios";
 import useGetToken from "@/hooks/useGetToken";
+import useUserInfoStore from "@/store/useUserInfoStore";
 
 export interface CollectionProps {
   albumInfoList: AlbumInfoList[];
@@ -30,13 +31,16 @@ const Collection: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [albums, setAlbums] = useState<AlbumInfoList[]>([]);
   const { token, refreshAccessToken } = useGetToken();
+  const { userInfo, setUserInfo } = useUserInfoStore();
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
   useEffect(() => {
-    if (token.accessToken) {
+    if (token.accessToken && userInfo.userId) {
+      console.log(token.accessToken);
+      console.log(userInfo.userId);
       axios
         .get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/album/collection`, {
           headers: {
@@ -45,11 +49,11 @@ const Collection: React.FC = () => {
         })
         .then((res) => {
           setAlbums(res.data.albumInfoList);
+          console.log(res.data.albumInfoList);
         })
         .catch(async (err) => {
           if (err.response.status === 401) {
-            await refreshAccessToken(); // 토큰이 만료된 경우 새로고침
-            // 새로고침된 토큰으로 다시 시도
+            await refreshAccessToken();
             axios
               .get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/album/collection`, {
                 headers: {
@@ -58,6 +62,7 @@ const Collection: React.FC = () => {
               })
               .then((res) => {
                 setAlbums(res.data.albumInfoList);
+                console.log(res.data.albumInfoList);
               })
               .catch((error) => console.log(error));
           } else {
@@ -65,7 +70,7 @@ const Collection: React.FC = () => {
           }
         });
     }
-  }, [token.accessToken, refreshAccessToken]);
+  }, [token.accessToken, refreshAccessToken, userInfo.userId]);
 
   return (
     <>
@@ -87,11 +92,18 @@ const Collection: React.FC = () => {
               key={album.albumId}
               className="flex flex-col items-center justify-center w-full h-full bg-gray-200 rounded-md"
             >
-              {/*https 이미지 에셋 오류 처리 필요 */}
+              <Image
+                src={album.albumCover}
+                width={200}
+                height={200}
+                alt="albumCover"
+              />
+              <span>{album.musicName}</span>
+              <span>{album.musicArtist}</span>
+              <span>{album.fromName}</span>
+              <span>{album.toName}</span>
               <span>{album.albumPhrases}</span>
-              <span>
-                {album.musicArtist} -{album.musicName}
-              </span>
+              <span>{album.letter}</span>
             </div>
           ))}
         </div>

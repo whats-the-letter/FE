@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { changeCover, changePhrase } from "@/utils/changeAssets";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/units/Loading";
+import AlreadyAdd from "@/components/units/AlreadyAdd";
 
 const backSelection: Record<string, React.JSX.Element> = {
   colorful: <BackgroundColorful />,
@@ -71,6 +72,21 @@ const ViewAlbum: React.FC = () => {
     }
   }, [userInfo.userId, router, refetch]);
 
+  const addToCollection = async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/album/collection/${router.query.id}`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {}
+  };
+
   if (isLoading) {
     return (
       <div>
@@ -80,7 +96,7 @@ const ViewAlbum: React.FC = () => {
   }
 
   if (isError) {
-    return <div>Error fetching album information</div>;
+    return <AlreadyAdd />;
   }
 
   return (
@@ -156,6 +172,21 @@ const ViewAlbum: React.FC = () => {
               <span className="text-center text-gray-400 text-sm font-normal z-10 w-full max-w-sm m-auto">
                 앨범을 클릭하여 뒷면을 확인하세요!
               </span>
+              <div className="flex flex-col space-y-2 w-full max-w-sm m-auto z-10">
+                <button
+                  className="bg-black text-white w-full  py-2 rounded-md z-10"
+                  onClick={addToCollection}
+                >
+                  <span className="text-sm">내 컬렉션에 추가</span>
+                </button>
+                <button
+                  onClick={() => router.push(`/main/${userInfo.userId}`)}
+                  className="bg-black text-white w-full  py-2 rounded-md z-10"
+                >
+                  <span className="text-sm">메인으로 가기</span>
+                </button>
+              </div>
+
               <div id="youtubePlayer">
                 <iframe
                   width="0"

@@ -4,8 +4,7 @@ import { Fragment, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import kakaoIcon from "/features/assets/icons/kakao-icon.svg";
 import exit from "/features/assets/icons/exit_button.svg";
-import { useRouter } from "next/router";
-import { shareToCopyLink, shareToKaKaoLink } from "@/utils/utils";
+
 declare global {
   interface Window {
     Kakao: any;
@@ -15,6 +14,7 @@ declare global {
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onConfirm?: () => void;
   title: string;
   description: string;
   btnText?: string;
@@ -26,6 +26,7 @@ interface ModalProps {
 export default function Modal({
   isOpen,
   onClose,
+  onConfirm,
   title,
   description,
   btnText,
@@ -46,7 +47,7 @@ export default function Modal({
   const handleShareKakao = () => {
     const { Kakao } = window;
     // /newalbum/{albumid} 부분만 잘라서 보내기
-    const albumPath = window.location.pathname.split('/')[2];
+    const albumPath = window.location.pathname.split("/")[2];
     console.log(albumPath, "albumPath");
     Kakao.Share.sendCustom({
       templateId: 101443,

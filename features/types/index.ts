@@ -4,5 +4,5 @@ export type UserInfo = {
   email: string;
   mainBackground: string;
   mainLp: string;
-  playList: string[];
+  playlist: string[];
 };

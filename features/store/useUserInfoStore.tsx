@@ -13,7 +13,7 @@ const useUserInfoStore = create<UserInfoStoreProps>((set) => ({
     email: "",
     mainBackground: "",
     mainLp: "",
-    playList: [],
+    playlist: [],
   },
   setUserInfo: (userInfo) => set({ userInfo }),
 }));
