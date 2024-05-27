@@ -1,9 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useOverlay } from "@toss/use-overlay";
-import { Fragment, useEffect } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import kakaoIcon from "/features/assets/icons/kakao-icon.svg";
 import exit from "/features/assets/icons/exit_button.svg";
+import { useRouter } from "next/router";
+import { shareToCopyLink, shareToKaKaoLink } from "@/utils/utils";
 declare global {
   interface Window {
     Kakao: any;
@@ -16,7 +18,6 @@ interface ModalProps {
   title: string;
   description: string;
   btnText?: string;
-  onConfirm: () => void;
   showCloseBtn?: boolean;
   closeBtnText?: string;
   children?: React.ReactNode;
@@ -28,12 +29,11 @@ export default function Modal({
   title,
   description,
   btnText,
-  onConfirm,
   showCloseBtn,
   closeBtnText,
   children,
 }: ModalProps) {
-  const copyToClipboard = () => {
+  const handleCopyLink = () => {
     const linkToCopy = window.location.href;
     navigator.clipboard.writeText(linkToCopy);
   };
@@ -43,14 +43,15 @@ export default function Modal({
     console.log(window.Kakao.isInitialized());
   }
 
-  const KakaoShare = () => {
-    const { Kakao, location } = window;
-    Kakao.Share.createCustomButton({
-      container: "#kakao-link-btn",
+  const handleShareKakao = () => {
+    const { Kakao } = window;
+    // /newalbum/{albumid} 부분만 잘라서 보내기
+    const albumPath = window.location.pathname.split('/')[2];
+    console.log(albumPath, "albumPath");
+    Kakao.Share.sendCustom({
       templateId: 101443,
       templateArgs: {
-        title: "나만의 LP를 만들어보세요!",
-        description: "나만의 LP를 만들어보세요!",
+        ALBUM_PATH: `newalbum/${albumPath}`,
       },
     });
   };
@@ -108,38 +109,37 @@ export default function Modal({
                     <p className="text-xs text-center text-[#9E9E9E] mb-6">
                       {description}
                     </p>
-                    
-                      <a
-                        id="kakao-link-btn"
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          KakaoShare();
-                        }}
-                        className="w-full flex justify-center items-center gap-3 bg-[#FEE500] rounded-md p-3 mb-3"
-                      >
-                        {btnText ?? (
-                          <div className="w-full flex justify-center items-center ">
-                            <Image
-                              src={kakaoIcon}
-                              alt="kakao"
-                              className="w-4 mr-2"
-                            />
-                            <p className="text-xs text-[#371D1E] text-center font-semibold ">
-                              카카오톡으로 공유
-                            </p>
-                          </div>
-                        )}
-                      </a>
-                      <button
-                        type="button"
-                        className="w-full rounded-md bg-[#eaeaea] text-[#7a7a7a] text-xs font-bold focus:outline-none whitespace-nowrap p-3"
-                        onClick={copyToClipboard}
-                      >
-                        링크 복사
-                      </button>
-                    </div>
-                  
+
+                    <a
+                      id="kakao-link-btn"
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleShareKakao();
+                      }}
+                      className="w-full flex justify-center items-center gap-3 bg-[#FEE500] rounded-md p-3 mb-3"
+                    >
+                      {btnText ?? (
+                        <div className="w-full flex justify-center items-center ">
+                          <Image
+                            src={kakaoIcon}
+                            alt="kakao"
+                            className="w-4 mr-2"
+                          />
+                          <p className="text-xs text-[#371D1E] text-center font-semibold ">
+                            카카오톡으로 공유
+                          </p>
+                        </div>
+                      )}
+                    </a>
+                    <button
+                      type="button"
+                      className="w-full rounded-md bg-[#eaeaea] text-[#7a7a7a] text-xs font-bold focus:outline-none whitespace-nowrap p-3"
+                      onClick={handleCopyLink}
+                    >
+                      링크 복사
+                    </button>
+                  </div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
