@@ -99,19 +99,20 @@ const MainPage: React.FC = () => {
               src={playListButton[`playlist-${userInfo.mainBackground}`]}
               alt="playlist"
             />
-          </div>
-          <div className="absolute bottom-[22%] left-[10%] z-20 w-[340px] p-3">
-            <div className="flex flex-wrap gap-1 w-fulljustify-center items-center">
-              {userInfo.playlist.slice(0, 5).map((item, idx) => (
-                <div key={idx} className="text-semibold px-2 py-1">
-                  <span className="text-sm">
-                    {idx + 1}. {item}
-                  </span>
-                </div>
-              ))}
-              <span className="text-sm">
-                ...Sincerely, <strong>{userInfo.playlist.length}</strong> people
-              </span>
+            <div className=" absolute bottom-[18%] left-5 z-20 w-[340px] p-2">
+              <div className="flex flex-wrap space-x-1 w-fulljustify-center items-center">
+                {userInfo.playlist.slice(0, 5).map((item, idx) => (
+                  <div key={idx} className="text-semibold px-2 py-1">
+                    <span className="text-sm">
+                      {idx + 1}. {item}
+                    </span>
+                  </div>
+                ))}
+                <span className="text-sm">
+                  ...Sincerely, <strong>{userInfo.playlist.length}</strong>{" "}
+                  people
+                </span>
+              </div>
             </div>
           </div>
         </div>
