@@ -156,6 +156,13 @@ const ViewAlbum: React.FC = () => {
               <span className="text-center text-gray-400 text-sm font-normal z-10 w-full max-w-sm m-auto">
                 앨범을 클릭하여 뒷면을 확인하세요!
               </span>
+              <button
+                onClick={() => router.push("/newalbum")}
+                className="bg-black text-white w-full  py-2 rounded-md z-10"
+              >
+                <span className="text-sm">나도 앨범 보내기</span>
+              </button>
+
               <div id="youtubePlayer">
                 <iframe
                   width="0"
