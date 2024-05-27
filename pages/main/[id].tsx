@@ -8,52 +8,60 @@ import Image from "next/image";
 import pin from "features/assets/lp/lp-pin.svg";
 import menu from "../../features/assets/icons/menu.svg";
 import Sidebar from "@/components/units/Sidebar";
+import { useQuery } from "@tanstack/react-query";
+
+const getUserInfo = async (userId: string, token: string | null) => {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/main/${userId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data.userInfo;
+};
 
 const MainPage: React.FC = () => {
   const router = useRouter();
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const { userInfo, setUserInfo } = useUserInfoStore();
-  const [isPending, startTransition] = useTransition();
-
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
-  useEffect(() => {
-    const userId = userInfo.userId;
-    const email = userInfo.email;
-    const token = localStorage.getItem("accessToken");
-    console.log(userId);
-    if (token && userId) {
-      axios
-        .get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user/main/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            console.log(res.data.userInfo);
-            const { email, userName, mainBackground, mainLp, playlist } =
-              res.data.userInfo;
-            startTransition(() => {
-              setUserInfo({
-                ...userInfo,
-                email,
-                userName,
-                mainBackground: mainBackground.toLowerCase(),
-                mainLp: mainLp.toLowerCase(),
-                playlist: playlist,
-              });
-              console.log(userInfo);
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
+
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+  
+  const { data, isLoading, error } = useQuery(
+    ["userInfo", userInfo.userId],
+    () => getUserInfo(userInfo.userId, token),
+    {
+      // enabled: !!userInfo.userId && !!token,
+      onSuccess: (data) => {
+        const { email, userName, mainBackground, mainLp, playlist } = data;
+        console.log(data)
+        setUserInfo({
+          ...userInfo,
+          email,
+          userName,
+          mainBackground: mainBackground.toLowerCase(),
+          mainLp: mainLp.toLowerCase(),
+          playlist: playlist,
         });
+      },
+
+      onError: (error) => {
+        console.log(error);
+      },
     }
-  }, [userInfo.userId]);
+  );
+
+  
+  if (isLoading) return <Loading />;
+  if (error) return <div>Error loading data</div>;
 
   return (
     <Suspense fallback={<Loading />}>
