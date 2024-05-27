@@ -7,9 +7,11 @@ import help from "@/assets/icons/help.svg";
 import logout from "@/assets/icons/logout.svg";
 import close from "@/assets/icons/exit_button.svg";
 import wtl from "@/assets/icons/wtl.svg";
+import useUserInfoStore from "@/store/useUserInfoStore";
 
 interface SidebarProps {
   isSidebarOpen: boolean;
+
   setSidebarOpen: (isSidebarOpen: boolean) => void;
 }
 export default function Sidebar({
@@ -17,6 +19,9 @@ export default function Sidebar({
   setSidebarOpen,
 }: SidebarProps) {
   const sidebarRef = useRef(null);
+  const { userInfo } = useUserInfoStore();
+  const { userName } = userInfo;
+  
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -55,7 +60,7 @@ export default function Sidebar({
             >
               <div className="flex flex-row items-center gap-2">
                 <Image src={wtl} alt="profile" className="w-7 h-7 mr-2" />
-                <span className="text-xl my-4 ">닉네임</span>
+                <span className="text-xl my-4 ">{userName}님</span>
               </div>
               <Link href="/googleForm">
                 <div className="flex flex-row items-center gap-2">

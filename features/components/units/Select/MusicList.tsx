@@ -23,7 +23,7 @@ export interface MusicProps {
 
 //eslint-disable-next-line
 const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
-  ({ onMusicChange }) => {
+  ({ onMusicChange },ref) => {
     const [musicData, setMusicData] = useState<MusicProps[]>([]);
     const [selectedMusicId, setSelectedMusicId] = useState<string | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -84,7 +84,6 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
         if (iframe) {
           iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&start=0.5`;
           iframe.classList.remove("hidden");
-          
         }
       } catch (error) {
         console.error("음악 재생 실패", error);
@@ -147,7 +146,7 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
             ))}
           </div>
           <SearchBar onSearch={handleSearch} />
-          <div className="w-full h-[300px] overflow-y-scroll py-8 flex flex-col justify-start">
+          <div className="w-full h-80 overflow-y-scroll">
             {searchResultList.length === 0 ? (
               <div className="flex flex-col items-center justify-center w-full h-full gap-5 px-2">
                 <Image
@@ -165,7 +164,7 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
               searchResultList.map((item) => (
                 <div
                   key={item.musicId}
-                  className="flex w-full h-full py-2 hover:bg-gray-200 cursor-pointer px-2"
+                  className="flex flex-row items-center justify-start w-full h-14 px-2 gap-2 cursor-pointer hover:bg-gray-100"
                   onClick={() => handleMusicBoxClick(item.youtubeUrlId)}
                 >
                   <img

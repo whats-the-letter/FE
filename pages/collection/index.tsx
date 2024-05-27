@@ -51,6 +51,7 @@ const Collection: React.FC = () => {
   const router = useRouter();
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const { userInfo } = useUserInfoStore();
+  
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -141,9 +142,7 @@ const Collection: React.FC = () => {
           ))}
         </div>
 
-        <Link
-        className="w-full"
-        href="/newalbum">
+        <Link className="w-full" href="/newalbum">
           <button
             type="button"
             className="bg-black rounded-md text-center w-full h-10 p-2 m-auto items-center text-white text-sm "
@@ -152,7 +151,8 @@ const Collection: React.FC = () => {
           </button>
         </Link>
       </div>
-      <Sidebar isSidebarOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Sidebar 
+      isSidebarOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} />
     </>
   );
 };
