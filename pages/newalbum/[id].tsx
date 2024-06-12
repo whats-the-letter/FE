@@ -18,6 +18,7 @@ import { changeCover, changePhrase } from "@/utils/changeAssets";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/units/Loading";
 import AlreadyAdd from "@/components/units/AlreadyAdd";
+import { motion, AnimatePresence } from "framer-motion";
 
 const backSelection: Record<string, React.JSX.Element> = {
   colorful: <BackgroundColorful />,
@@ -30,7 +31,7 @@ const ViewAlbum: React.FC = () => {
   const { userInfo } = useUserInfoStore();
   const { setAlbumInfo } = useAlbumInfoStore();
   const [isFlipped, setIsFlipped] = useState(false);
-  const [showBothSides, setShowBothSides] = useState(false); // 상태 추가
+  const [showBothSides, setShowBothSides] = useState(false);
 
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
@@ -81,9 +82,9 @@ const ViewAlbum: React.FC = () => {
   const addToCollection = async () => {
     try {
       const token = localStorage.getItem("accessToken");
-      const response = await axios.put(
+      await axios.put(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/album/collection/${router.query.id}`,
-
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -120,14 +121,95 @@ const ViewAlbum: React.FC = () => {
               {backSelection[albumInfo.albumBackground.toLowerCase()]}
             </div>
             <div className="flex flex-col items-center justify-center w-full h-full z-10 max-w-sm max-h-sm m-auto font-pretendard space-y-6">
-              {!showBothSides ? (
-                //펼쳐보기 전 플립 상태
-                <div
-                  className="z-10 relative cursor-pointer perspective-500 h-[288px] w-[288px]"
-                  onClick={handleCardClick}
-                >
-                  <div className={`card ${isFlipped ? "flipped" : ""}`}>
-                    <div className="card-front z-10">
+              <AnimatePresence>
+                {!showBothSides ? (
+                  //펼쳐보기 전 플립 상태
+                  <motion.div
+                    className="z-10 relative cursor-pointer perspective-500 h-[288px] w-[288px]"
+                    onClick={handleCardClick}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <motion.div
+                      className={`card ${isFlipped ? "flipped" : ""}`}
+                      initial={{ rotateY: 0 }}
+                      animate={{ rotateY: isFlipped ? 180 : 0 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <div className="card-front z-10">
+                        <img
+                          src={
+                            albumSelection[changeCover(albumInfo.albumCover)]
+                          }
+                          alt="albumCover"
+                        />
+
+                        <img
+                          src={
+                            phrasesSelection[
+                              changePhrase(albumInfo.albumPhrases)
+                            ]
+                          }
+                          className="absolute top-[23%] left-[40%] transform -translate-x-1/2 -translate-y-1/2"
+                          alt="phrases"
+                        />
+                        <div className="w-36 absolute top-[91.2%] left-2/3 transform -translate-x-1/2 -translate-y-1/2 flex text-[10px]">
+                          <span className="truncate inline-block text-center whitespace-nowrap overflow-hidden text-ellipsis">
+                            <strong>{albumInfo.musicName}</strong>-
+                            <strong> {albumInfo.musicArtist}</strong>
+                          </span>
+                        </div>
+
+                        <img
+                          className="absolute top-[61%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[240px] h-[133px]"
+                          src={`https://i1.ytimg.com/vi/${albumInfo.youtubeUrlId}/maxresdefault.jpg`}
+                          alt="music-thumbnail"
+                        />
+                      </div>
+                      <div className="card-back">
+                        <span className="absolute top-6 left-8 z-10 w-full text-left text-[10px]">
+                          To. <strong>{albumInfo.toName}</strong>
+                        </span>
+                        <Image
+                          src={letterBg}
+                          alt="letterBg"
+                          className="absolute inset-0 w-full h-full z-0"
+                        />
+                        <img
+                          src={
+                            letterSelection[
+                              `${changeCover(albumInfo.albumCover)}-letter`
+                            ]
+                          }
+                          className="z-30"
+                        />
+
+                        <div className="flex justify-center items-center text-[10px] absolute w-full h-full max-w-[200px] max-h-[200px] z-20">
+                          {albumInfo.letter}
+                        </div>
+                        <span className="absolute bottom-5 right-1/4 text-right z-10 w-full text-[10px]">
+                          From. <strong>{albumInfo.fromName}</strong>
+                        </span>
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                ) : (
+                  // 펼쳐보기 2개의 이미지 상태
+                  <motion.div
+                    className="flex flex-col items-center space-y-6"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <motion.div
+                      className="card-front z-10 relative h-[288px] w-[288px]"
+                      initial={{ y: -300, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.6 }}
+                    >
                       <img
                         src={albumSelection[changeCover(albumInfo.albumCover)]}
                         alt="albumCover"
@@ -135,7 +217,9 @@ const ViewAlbum: React.FC = () => {
 
                       <img
                         src={
-                          phrasesSelection[changePhrase(albumInfo.albumPhrases)]
+                          phrasesSelection[
+                            changePhrase(albumInfo.albumPhrases)
+                          ]
                         }
                         className="absolute top-[23%] left-[40%] transform -translate-x-1/2 -translate-y-1/2"
                         alt="phrases"
@@ -152,9 +236,15 @@ const ViewAlbum: React.FC = () => {
                         src={`https://i1.ytimg.com/vi/${albumInfo.youtubeUrlId}/maxresdefault.jpg`}
                         alt="music-thumbnail"
                       />
-                    </div>
-                    <div className="card-back">
-                      <span className="absolute top-6 left-8 z-10 w-full text-left text-[10px]">
+                    </motion.div>
+
+                    <motion.div
+                      className="card-back relative h-[288px] w-[288px]"
+                      initial={{ y: -300, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <span className="absolute top-6 left-8 z-20 w-full text-left text-[10px]">
                         To. <strong>{albumInfo.toName}</strong>
                       </span>
                       <Image
@@ -168,74 +258,18 @@ const ViewAlbum: React.FC = () => {
                             `${changeCover(albumInfo.albumCover)}-letter`
                           ]
                         }
-                        className="z-30"
+                        className="absolute z-10"
                       />
-
                       <div className="flex justify-center items-center text-[10px] absolute w-full h-full max-w-[200px] max-h-[200px] z-20">
                         {albumInfo.letter}
                       </div>
-                      <span className="absolute bottom-5 right-1/4 text-right z-10 w-full text-[10px]">
+                      <span className="absolute bottom-5 right-1/4 text-right z-20 w-full text-[10px]">
                         From. <strong>{albumInfo.fromName}</strong>
                       </span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                // 펼쳐보기 2개의 이미지 상태
-                <div className="flex flex-col items-center space-y-6">
-                  <div className="card-front z-10 relative h-[288px] w-[288px]">
-                    <img
-                      src={albumSelection[changeCover(albumInfo.albumCover)]}
-                      alt="albumCover"
-                    />
-
-                    <img
-                      src={
-                        phrasesSelection[changePhrase(albumInfo.albumPhrases)]
-                      }
-                      className="absolute top-[23%] left-[40%] transform -translate-x-1/2 -translate-y-1/2"
-                      alt="phrases"
-                    />
-                    <div className="w-36 absolute top-[91.2%] left-2/3 transform -translate-x-1/2 -translate-y-1/2 flex text-[10px]">
-                      <span className="truncate inline-block text-center whitespace-nowrap overflow-hidden text-ellipsis">
-                        <strong>{albumInfo.musicName}</strong>-
-                        <strong> {albumInfo.musicArtist}</strong>
-                      </span>
-                    </div>
-
-                    <img
-                      className="absolute top-[61%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[240px] h-[133px]"
-                      src={`https://i1.ytimg.com/vi/${albumInfo.youtubeUrlId}/maxresdefault.jpg`}
-                      alt="music-thumbnail"
-                    />
-                  </div>
-
-                  <div className="card-back relative h-[288px] w-[288px]">
-                    <span className="absolute top-6 left-8 z-20 w-full text-left text-[10px]">
-                      To. <strong>{albumInfo.toName}</strong>
-                    </span>
-                    <Image
-                      src={letterBg}
-                      alt="letterBg"
-                      className="absolute inset-0 w-full h-full z-0"
-                    />
-                    <img
-                      src={
-                        letterSelection[
-                          `${changeCover(albumInfo.albumCover)}-letter`
-                        ]
-                      }
-                      className="absolute z-10" // 수정된 부분
-                    />
-                    <div className="flex justify-center items-center text-[10px] absolute w-full h-full max-w-[200px] max-h-[200px] z-20">
-                      {albumInfo.letter}
-                    </div>
-                    <span className="absolute bottom-5 right-1/4 text-right z-20 w-full text-[10px]">
-                      From. <strong>{albumInfo.fromName}</strong>
-                    </span>
-                  </div>
-                </div>
-              )}
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
               <span className="text-center text-gray-400 text-sm font-normal z-10 w-full max-w-sm m-auto">
                 앨범을 클릭하여 뒷면을 확인하세요!
               </span>
