@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import useAlbumInfoStore from "@/store/useAlbumStore";
 import useUserInfoStore from "@/store/useUserInfoStore";
@@ -11,14 +11,15 @@ import {
   phrasesSelection,
 } from "@/utils/data";
 import Image from "next/image";
+import download from "/features/assets/icons/download.svg";
 import letterBg from "/features/assets/letter/letter-bg.svg";
-
 import { useRouter } from "next/router";
 import { changeCover, changePhrase } from "@/utils/changeAssets";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/units/Loading";
 import AlreadyAdd from "@/components/units/AlreadyAdd";
 import { motion, AnimatePresence } from "framer-motion";
+import * as htmlToImage from "html-to-image";
 
 const backSelection: Record<string, React.JSX.Element> = {
   colorful: <BackgroundColorful />,
@@ -32,14 +33,49 @@ const ViewAlbum: React.FC = () => {
   const { setAlbumInfo } = useAlbumInfoStore();
   const [isFlipped, setIsFlipped] = useState(false);
   const [showBothSides, setShowBothSides] = useState(false);
+  const albumRef = useRef<HTMLDivElement>(null); // 앨범 부분을 참조할 ref
 
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
   };
 
   const handleShowBothSides = () => {
-    setShowBothSides(!showBothSides);
+    if (showBothSides) {
+      setShowBothSides(false);
+    } else {
+      if (isFlipped) {
+        setIsFlipped(false);
+        setTimeout(() => {
+          setShowBothSides(true);
+        }, 300); // 애니메이션 지속 시간과 일치하도록 설정 (0.3초)
+      } else {
+        setShowBothSides(true);
+      }
+    }
   };
+
+  // const handleSaveImage = async () => {
+  //   if (albumRef.current === null) {
+  //     return;
+  //   }
+  //   try {
+  //     const dataUrl = await htmlToImage.toPng(albumRef.current, {
+  //       style: {
+  //         transform: "scale(1)",
+  //         transformOrigin: "top left",
+  //       },
+  //       cacheBust: true,
+  //     });
+  //     const link = document.createElement("a");
+  //     link.href = dataUrl;
+  //     link.download = "album.png";
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  //   } catch (error) {
+  //     console.error("Error saving image:", error);
+  //   }
+  // };
 
   const {
     data: albumInfo,
@@ -111,12 +147,24 @@ const ViewAlbum: React.FC = () => {
       {albumInfo && (
         <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm font-semibold">
           <button
-            className="border-1 border z-20"
+            className=" z-20 w-full flex justify-end
+            items-center space-x-2 px-8 py-4
+            
+            "
             onClick={handleShowBothSides}
           >
-            펼쳐보기
+            <Image src={download} alt="download" />
           </button>
-          <div className="flex flex-col text-center justify-center items-center w-full max-w-sm px-8 z-10 font-pretendard">
+          {/* <button
+            onClick={handleSaveImage}
+            className="w-full flex justify-end z-20"
+          >
+            <Image src={download} alt="download" />
+          </button> */}
+          <div
+            className="flex flex-col text-center justify-center items-center w-full max-w-sm px-8 z-10 font-pretendard"
+            ref={albumRef} // 참조를 여기에서 설정
+          >
             <div className="relative -z-10">
               {backSelection[albumInfo.albumBackground.toLowerCase()]}
             </div>
@@ -130,13 +178,13 @@ const ViewAlbum: React.FC = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.1 }}
                   >
                     <motion.div
                       className={`card ${isFlipped ? "flipped" : ""}`}
                       initial={{ rotateY: 0 }}
                       animate={{ rotateY: isFlipped ? 180 : 0 }}
-                      transition={{ duration: 0.6 }}
+                      transition={{ duration: 0.1 }}
                     >
                       <div className="card-front z-10">
                         <img
@@ -202,13 +250,13 @@ const ViewAlbum: React.FC = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.3 }}
                   >
                     <motion.div
                       className="card-front z-10 relative h-[288px] w-[288px]"
                       initial={{ y: -300, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.6 }}
+                      transition={{ duration: 0.3 }}
                     >
                       <img
                         src={albumSelection[changeCover(albumInfo.albumCover)]}
@@ -217,9 +265,7 @@ const ViewAlbum: React.FC = () => {
 
                       <img
                         src={
-                          phrasesSelection[
-                            changePhrase(albumInfo.albumPhrases)
-                          ]
+                          phrasesSelection[changePhrase(albumInfo.albumPhrases)]
                         }
                         className="absolute top-[23%] left-[40%] transform -translate-x-1/2 -translate-y-1/2"
                         alt="phrases"
@@ -242,7 +288,7 @@ const ViewAlbum: React.FC = () => {
                       className="card-back relative h-[288px] w-[288px]"
                       initial={{ y: -300, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.6 }}
+                      transition={{ duration: 0.8 }}
                     >
                       <span className="absolute top-6 left-8 z-20 w-full text-left text-[10px]">
                         To. <strong>{albumInfo.toName}</strong>
