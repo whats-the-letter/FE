@@ -146,15 +146,6 @@ const ViewAlbum: React.FC = () => {
     <>
       {albumInfo && (
         <div className="flex flex-col w-full h-screen items-center justify-center z-10 m-auto max-w-screen-sm max-h-screen-sm font-semibold">
-          <button
-            className=" z-20 w-full flex justify-end
-            items-center space-x-2 px-8 py-4
-            
-            "
-            onClick={handleShowBothSides}
-          >
-            <Image src={download} alt="download" />
-          </button>
           {/* <button
             onClick={handleSaveImage}
             className="w-full flex justify-end z-20"
@@ -165,6 +156,15 @@ const ViewAlbum: React.FC = () => {
             className="flex flex-col text-center justify-center items-center w-full max-w-sm px-8 z-10 font-pretendard"
             ref={albumRef} // 참조를 여기에서 설정
           >
+            <button
+              className=" z-20 w-full flex justify-end
+            items-center space-x-2 mb-8 px-2 py-2
+            "
+              onClick={handleShowBothSides}
+            >
+              <Image src={download} alt="download" />
+            </button>
+
             <div className="relative -z-10">
               {backSelection[albumInfo.albumBackground.toLowerCase()]}
             </div>
