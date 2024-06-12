@@ -4,6 +4,7 @@ import { Fragment, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import kakaoIcon from "/features/assets/icons/kakao-icon.svg";
 import exit from "/features/assets/icons/exit_button.svg";
+import Toast from "../units/Toast";
 
 declare global {
   interface Window {
@@ -34,9 +35,15 @@ export default function Modal({
   closeBtnText,
   children,
 }: ModalProps) {
+  const [toast, setToast] = useState("");
   const handleCopyLink = () => {
     const linkToCopy = window.location.href;
+
     navigator.clipboard.writeText(linkToCopy);
+    setToast("링크가 복사되었습니다.");
+    setTimeout(() => {
+      setToast("");
+    }, 3000);
   };
 
   if (!window.Kakao.isInitialized()) {
@@ -140,6 +147,7 @@ export default function Modal({
                     >
                       링크 복사
                     </button>
+                    <Toast message={toast} duration={3000} />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
