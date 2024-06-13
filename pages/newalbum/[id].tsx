@@ -20,6 +20,7 @@ import Loading from "@/components/units/Loading";
 import AlreadyAdd from "@/components/units/AlreadyAdd";
 import { motion, AnimatePresence } from "framer-motion";
 import * as htmlToImage from "html-to-image";
+import toast from "react-hot-toast";
 
 const backSelection: Record<string, React.JSX.Element> = {
   colorful: <BackgroundColorful />,
@@ -52,6 +53,7 @@ const ViewAlbum: React.FC = () => {
         setShowBothSides(true);
       }
     }
+    toast.success("앨범 이미지가 저장되었습니다.");
   };
 
   // const handleSaveImage = async () => {
@@ -127,7 +129,10 @@ const ViewAlbum: React.FC = () => {
           },
         }
       );
-    } catch (error) {}
+      toast.success("내 컬렉션에 추가되었습니다.");
+    } catch (error) {
+      toast.error("이미 누군가가 컬렉션에 추가한 앨범입니다.");
+    }
   };
 
   if (isLoading) {
@@ -288,7 +293,7 @@ const ViewAlbum: React.FC = () => {
                       className="card-back relative h-[288px] w-[288px]"
                       initial={{ y: -300, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.8 }}
+                      transition={{ duration: 1.3 }}
                     >
                       <span className="absolute top-6 left-8 z-20 w-full text-left text-[10px]">
                         To. <strong>{albumInfo.toName}</strong>
